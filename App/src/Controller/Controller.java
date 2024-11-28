@@ -16,7 +16,7 @@ public abstract class Controller {
         Controller.storage = storage;
     }
 
-    //===============================================================================
+    //==============================  Fad  ===============================================
 
     /**
      * Create a "Fad"
@@ -40,7 +40,7 @@ public abstract class Controller {
         return storage.getFade();
     }
 
-    // ================================================================
+    // ======================= New Make ========================================
 
     /** Create a "NewMake"
      * params not nullable
@@ -62,7 +62,7 @@ public abstract class Controller {
         return storage.getNewMakes();
     }
 
-    //===============================================================================================
+    //================================== Påfyldning ===========================================================
 
 
     public static Påfyldning createPåfyldning(String medarbejder, LocalDateTime dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt){
@@ -79,7 +79,11 @@ public abstract class Controller {
        return storage.getPåfyldninger();
     }
 
-    //================================================================================================
+    //========================================================================================================
+
+    public static MængdePåfyldt createMængdePåfyldt(NewMake newMake, double mængde){
+        return new MængdePåfyldt(newMake, mængde);
+    }
 
 
 

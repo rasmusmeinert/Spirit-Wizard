@@ -2,7 +2,9 @@ package Model;
 
 import Controller.Controller;
 import Controller.Storage;
+import GUI.PåfyldningsGui;
 import Storage.ListStorage;
+import javafx.application.Application;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class App {
 
         System.out.println(Controller.getPåfyldninger());
 
+        Application.launch(PåfyldningsGui.class);
 
         ListStorage.saveStorage(storage);
     }

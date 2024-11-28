@@ -3,7 +3,7 @@ package Model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class NewMake implements Serializable {
+public class NewMake implements Printable, Serializable {
     private String navn;
     private LocalDateTime startDato;
     private LocalDateTime slutDato;
@@ -20,16 +20,18 @@ public class NewMake implements Serializable {
         this.alkoholPct = alkoholPct;
     }
 
-
     @Override
     public String toString() {
-        return "NewMake{" +
-                "navn='" + navn + '\'' +
-                ", startDato=" + startDato +
-                ", slutDato=" + slutDato +
-                ", startMængde=" + startMængde +
-                ", aktuelMængde=" + aktuelMængde +
-                ", alkoholPct=" + alkoholPct +
-                '}';
+        return navn;
+    }
+
+    @Override
+    public String print() {
+        return String.format("Navn: %s \n" +
+                "Destillationsperiode : %s -> %s \n" +
+                "Mængde Produceret: %.2f L \n" +
+                "Aktuel Mængde: %.2f L \n" +
+                "Alkohol Procent: %.2f", navn, startDato, slutDato, startMængde, aktuelMængde, alkoholPct);
+
     }
 }

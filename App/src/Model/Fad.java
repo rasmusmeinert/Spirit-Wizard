@@ -2,7 +2,7 @@ package Model;
 
 import java.io.Serializable;
 
-public class Fad implements Serializable{
+public class Fad implements Printable, Serializable{
     private int nummer;
     private String trætype;
     private double størrelse;
@@ -16,14 +16,18 @@ public class Fad implements Serializable{
         this.tidligereIndhold = tidligereIndhold;
     }
 
+
+
     @Override
     public String toString() {
-        return "Fad{" +
-                "nummer=" + nummer +
-                ", trætype='" + trætype + '\'' +
-                ", størrelse=" + størrelse +
-                ", tidligereIndhold='" + tidligereIndhold + '\'' +
-                ", påfyldt=" + påfyldt +
-                '}';
+        return Integer.toString(nummer);
+    }
+
+    @Override
+    public String print() {
+        return String.format("Fad Nummer: %d \n" +
+                "Træsort: %s \n" +
+                "Størrelse: %.2f L \n" +
+                "Tidligere Indhold: %s \n", nummer, trætype,størrelse,tidligereIndhold);
     }
 }
