@@ -1,5 +1,7 @@
 package GUI;
 
+import Model.Printable;
+
 public interface Observer {
-    void update();
+    void update(Printable printable);
 }

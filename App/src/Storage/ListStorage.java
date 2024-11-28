@@ -2,6 +2,8 @@ package Storage;
 
 import Controller.Storage;
 import Model.Fad;
+import Model.NewMake;
+import Model.Påfyldning;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,20 +11,48 @@ import java.util.List;
 
 public class ListStorage implements Storage, Serializable {
     private final List<Fad> fade = new ArrayList<>();
+    private final List<NewMake> newMakes = new ArrayList<>();
+    private final List<Påfyldning> påfyldninger = new ArrayList<>();
 
-    @Override
     public List<Fad> getFade() {
         return new ArrayList<>(fade);
     }
 
-    @Override
+    public List<NewMake> getNewMakes() {
+        return new ArrayList<>(newMakes);
+    }
+
     public void storeFad(Fad fad) {
         fade.add(fad);
     }
 
-    @Override
     public void deleteFad(Fad fad) {
         fade.remove(fad);
+    }
+
+    public void storeNewMake(NewMake newMake) {
+        newMakes.add(newMake);
+    }
+
+    public void deleteNewMake(NewMake newMake) {
+        newMakes.remove(newMake);
+    }
+
+    @Override
+    public List<Påfyldning> getPåfyldninger() {
+        return new ArrayList<>(påfyldninger);
+    }
+
+    @Override
+    public void storePåfyldning(Påfyldning påfyldning) {
+        påfyldninger.add(påfyldning);
+
+    }
+
+    @Override
+    public void deletePåfyldning(Påfyldning påfyldning) {
+        påfyldninger.remove(påfyldning);
+
     }
 
     //============================================================================
@@ -32,7 +62,7 @@ public class ListStorage implements Storage, Serializable {
              ObjectInputStream objIn = new ObjectInputStream(fileIn)) {
             Object obj = objIn.readObject();
             ListStorage storage = (ListStorage) obj;
-            System.out.println("Storage loaded from file" + fileName);
+            System.out.println("Storage loaded from file " + fileName);
             return storage;
 
         } catch (IOException | ClassNotFoundException e) {

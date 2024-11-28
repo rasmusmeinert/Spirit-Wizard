@@ -1,6 +1,13 @@
 package Controller;
 
 import Model.Fad;
+import Model.MængdePåfyldt;
+import Model.NewMake;
+import Model.Påfyldning;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Controller {
     private static Storage storage;
@@ -9,12 +16,75 @@ public abstract class Controller {
         Controller.storage = storage;
     }
 
-    //===============================================================================
+    //==============================  Fad  ===============================================
 
-    public static Fad createFad(int nummer, String trætype, double størrelse, String tidligereIndhold){
+    /**
+     * Create a "Fad"
+     * pre: nummer and størrelse > 0
+     */
+    public static Fad createFad(int nummer, String trætype, double størrelse, String tidligereIndhold) {
         Fad fad = new Fad(nummer, trætype, størrelse, tidligereIndhold);
         storage.storeFad(fad);
         return fad;
     }
+
+    /** Delete a "Fad"
+     */
+    public static void deleteFad(Fad fad) {
+        storage.deleteFad(fad);
+    }
+
+
+
+    public static List<Fad> getFade() {
+        return storage.getFade();
+    }
+
+    // ======================= New Make ========================================
+
+    /** Create a "NewMake"
+     * params not nullable
+     */
+    public static NewMake createNewMake(String navn, LocalDateTime startDato, LocalDateTime slutDato, double startMængde, double alkoholPct) {
+        NewMake newMake = new NewMake(navn, startDato, slutDato, startMængde, alkoholPct);
+        storage.storeNewMake(newMake);
+        return newMake;
+    }
+
+
+    /** Delete a NewMake
+     */
+    public static void deleteNewMake(NewMake newMake) {
+        storage.deleteNewMake(newMake);
+    }
+
+    public static List<NewMake> getNewMakes() {
+        return storage.getNewMakes();
+    }
+
+    //================================== Påfyldning ===========================================================
+
+
+    public static Påfyldning createPåfyldning(String medarbejder, LocalDateTime dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt){
+        Påfyldning påfyldning = new Påfyldning(medarbejder,dato, fad, mængdePåfyldt);
+        storage.storePåfyldning(påfyldning);
+        return påfyldning;
+    }
+
+    public static void deletePåfyldning(Påfyldning påfyldning){
+        storage.deletePåfyldning(påfyldning);
+    }
+
+    public static List<Påfyldning> getPåfyldninger(){
+       return storage.getPåfyldninger();
+    }
+
+    //========================================================================================================
+
+    public static MængdePåfyldt createMængdePåfyldt(NewMake newMake, double mængde){
+        return new MængdePåfyldt(newMake, mængde);
+    }
+
+
 
 }
