@@ -1,6 +1,8 @@
 package Model;
 
-public class Fad {
+import java.io.Serializable;
+
+public class Fad implements Serializable{
     private int nummer;
     private String trætype;
     private double størrelse;
@@ -12,5 +14,16 @@ public class Fad {
         this.trætype = trætype;
         this.størrelse = størrelse;
         this.tidligereIndhold = tidligereIndhold;
+    }
+
+    @Override
+    public String toString() {
+        return "Fad{" +
+                "nummer=" + nummer +
+                ", trætype='" + trætype + '\'' +
+                ", størrelse=" + størrelse +
+                ", tidligereIndhold='" + tidligereIndhold + '\'' +
+                ", påfyldt=" + påfyldt +
+                '}';
     }
 }
