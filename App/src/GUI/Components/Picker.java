@@ -1,26 +1,29 @@
 package GUI.Components;
 
-import GUI.Observer;
 import Model.Printable;
 import javafx.scene.control.ComboBox;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Picker<T> extends ComboBox {
     private final List<Observer> observers = new ArrayList<>();
 
-    public Picker() {
-        this.setOnAction(e -> notifyObservers());
+    public Picker(Collection list) {
+        getItems().setAll(list);
+        setOnAction(e -> notifyObservers());
+        getSelectionModel().select(0);
     }
 
-    public void addObserver(Observer observer){
+    public void addObserver(Observer observer) {
         observers.add(observer);
+        notifyObservers();
     }
 
-    private void notifyObservers(){
-        for (Observer observer : observers){
-            observer.update((Printable) this.getSelectionModel().getSelectedItem());
+    private void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(getSelectionModel().getSelectedItem());
         }
     }
 

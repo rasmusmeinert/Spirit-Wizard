@@ -62,6 +62,19 @@ public abstract class Controller {
         return storage.getNewMakes();
     }
 
+
+    //Returns NewMakes that are not used up
+    public static List<NewMake> getAktuelleNewMakes(){
+        List<NewMake> newMakes = storage.getNewMakes();
+        List<NewMake> aktuelleNewMakes = new ArrayList<>();
+        for (NewMake newMake : newMakes){
+            if (newMake.getAktuelMængde() != 0){
+                aktuelleNewMakes.add(newMake);
+            }
+        }
+        return aktuelleNewMakes;
+    }
+
     //================================== Påfyldning ===========================================================
 
 
