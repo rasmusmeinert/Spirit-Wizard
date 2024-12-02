@@ -24,6 +24,10 @@ public class Fad implements Printable, Serializable{
         return Integer.toString(nummer);
     }
 
+    public boolean isPåfyldt(){
+        return påfyldt;
+    }
+
     @Override
     public String print() {
         return String.format("Fad Nummer: %d \n" +

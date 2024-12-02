@@ -28,10 +28,20 @@ public class NewMake implements Printable, Serializable {
     @Override
     public String print() {
         return String.format("Navn: %s \n" +
-                "Destillationsperiode : %s -> %s \n" +
+                "Start dato: %s\n" +
+                "Slut dato: %s \n" +
                 "Mængde Produceret: %.2f L \n" +
                 "Aktuel Mængde: %.2f L \n" +
-                "Alkohol Procent: %.2f", navn, startDato, slutDato, startMængde, aktuelMængde, alkoholPct);
+                "Alkohol Procent: %.2f", navn, formaterDato(startDato), formaterDato(slutDato), startMængde, aktuelMængde, alkoholPct);
 
+    }
+
+    public String formaterDato(LocalDateTime dato){
+        return String.format("%d/%d/%d %d:%d", dato.getDayOfMonth(),dato.getMonthValue(),dato.getYear(),dato.getHour(),dato.getMinute());
+    }
+
+
+    public double getAktuelMængde() {
+        return aktuelMængde;
     }
 }
