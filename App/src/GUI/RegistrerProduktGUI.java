@@ -1,10 +1,7 @@
 package GUI;
 
 import Controller.Controller;
-import GUI.Components.InfoBox;
-import GUI.Components.Input;
-import GUI.Components.ObjectList;
-import GUI.Components.Picker;
+import GUI.Components.*;
 import Model.Fad;
 import Model.MængdePåfyldt;
 import Model.NewMake;
@@ -26,9 +23,10 @@ import java.util.List;
 
 public class RegistrerProduktGUI extends Application {
     private final List<Påfyldning> valgtePåfyldninger = new ArrayList<>();
-    private final Input inputMængde = new Input("Mængde: ");
+    private Validation MængdeValidation;
+    private final Input inputMængde = new Input("Mængde: ", MængdeValidation);
     private final InfoBox påfyldningsInfo = new InfoBox();
-    private final Picker<NewMake> pickerPåfyldninger = new Picker<>();
+    private final Picker<Påfyldning> pickerPåfyldninger = new Picker<>(Controller.getPåfyldninger());
     private final ObjectList<MængdePåfyldt> lvwValgtePåfyldninger = new ObjectList();
     private final Button btnAddPåfyldning = new Button("+");
     private final Button btnRemovePåfyldning = new Button("-");
