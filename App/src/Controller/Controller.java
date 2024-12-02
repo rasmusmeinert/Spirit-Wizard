@@ -5,6 +5,7 @@ import Model.MængdePåfyldt;
 import Model.NewMake;
 import Model.Påfyldning;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,18 @@ public abstract class Controller {
         return storage.getFade();
     }
 
+    //Returnere tomme fade
+    public static List<Fad> getTommeFade(){
+        List<Fad> fade = storage.getFade();
+        List<Fad> tommeFade = new ArrayList<>();
+        for (Fad fad : fade){
+            if (!fad.isPåfyldt()){
+                tommeFade.add(fad);
+            }
+        }
+        return tommeFade;
+    }
+
     // ======================= New Make ========================================
 
     /** Create a "NewMake"
@@ -62,10 +75,23 @@ public abstract class Controller {
         return storage.getNewMakes();
     }
 
+
+    //Returns NewMakes that are not used up
+    public static List<NewMake> getAktuelleNewMakes(){
+        List<NewMake> newMakes = storage.getNewMakes();
+        List<NewMake> aktuelleNewMakes = new ArrayList<>();
+        for (NewMake newMake : newMakes){
+            if (newMake.getAktuelMængde() != 0){
+                aktuelleNewMakes.add(newMake);
+            }
+        }
+        return aktuelleNewMakes;
+    }
+
     //================================== Påfyldning ===========================================================
 
 
-    public static Påfyldning createPåfyldning(String medarbejder, LocalDateTime dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt){
+    public static Påfyldning createPåfyldning(String medarbejder, LocalDate dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt){
         Påfyldning påfyldning = new Påfyldning(medarbejder,dato, fad, mængdePåfyldt);
         storage.storePåfyldning(påfyldning);
         return påfyldning;
