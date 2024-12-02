@@ -3,6 +3,7 @@ package Controller;
 import Model.Fad;
 import Model.NewMake;
 import Model.Påfyldning;
+import Model.WhiskyProdukt;
 
 import java.util.List;
 
@@ -20,4 +21,7 @@ public interface Storage {
 
     void storePåfyldning(Påfyldning påfyldning);
     void deletePåfyldning(Påfyldning påfyldning);
+
+    void storeWhiskyProdukt(WhiskyProdukt whiskyProdukt);
+    void deleteWhiskyProdukt(WhiskyProdukt whiskyProdukt);
 }

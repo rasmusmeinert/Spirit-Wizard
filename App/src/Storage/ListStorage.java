@@ -4,6 +4,7 @@ import Controller.Storage;
 import Model.Fad;
 import Model.NewMake;
 import Model.Påfyldning;
+import Model.WhiskyProdukt;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class ListStorage implements Storage, Serializable {
     private final List<Fad> fade = new ArrayList<>();
     private final List<NewMake> newMakes = new ArrayList<>();
     private final List<Påfyldning> påfyldninger = new ArrayList<>();
+    private final List<WhiskyProdukt> whiskyProdukter = new ArrayList<>();
 
     public List<Fad> getFade() {
         return new ArrayList<>(fade);
@@ -38,6 +40,13 @@ public class ListStorage implements Storage, Serializable {
         newMakes.remove(newMake);
     }
 
+    public void storeWhiskyProdukt(WhiskyProdukt whiskyProdukt) {
+        whiskyProdukter.add(whiskyProdukt);
+    }
+    public void deleteWhiskyProdukt(WhiskyProdukt whiskyProdukt) {
+        whiskyProdukter.remove(whiskyProdukt);
+    }
+
     @Override
     public List<Påfyldning> getPåfyldninger() {
         return new ArrayList<>(påfyldninger);
@@ -52,7 +61,6 @@ public class ListStorage implements Storage, Serializable {
     @Override
     public void deletePåfyldning(Påfyldning påfyldning) {
         påfyldninger.remove(påfyldning);
-
     }
 
     //============================================================================

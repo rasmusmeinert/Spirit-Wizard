@@ -15,8 +15,9 @@ public class Fad implements Printable, Serializable{
         this.størrelse = størrelse;
         this.tidligereIndhold = tidligereIndhold;
     }
-
-
+    public void setPåfyldt(boolean bool) {
+        påfyldt = bool;
+    }
 
     @Override
     public String toString() {

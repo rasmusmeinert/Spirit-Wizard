@@ -9,20 +9,36 @@ public class Påfyldning implements Serializable {
     private LocalDate dato;
     private Fad fad;
     private List<MængdePåfyldt> mængdePåfyldt;
+    private double samletMængde;
 
     public Påfyldning(String medarbejder, LocalDate dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt) {
         this.medarbejder = medarbejder;
         this.dato = dato;
         this.fad = fad;
         this.mængdePåfyldt = mængdePåfyldt;
+        this.samletMængde = udregnSamletMængde();
     }
 
-    public double getSamletMængde(){
+    private double udregnSamletMængde(){
         double samletMængde = 0;
         for (MængdePåfyldt  mængde : mængdePåfyldt){
             samletMængde += mængde.getMængde();
         }
         return samletMængde;
+    }
+    public void reducerMængde(double mængdeTappet){
+        samletMængde -= mængdeTappet;
+        if (samletMængde <= 0) {
+            fad.setPåfyldt(false);
+        }
+    }
+
+    public LocalDate getDato() {
+        return dato;
+    }
+
+    public Fad getFad() {
+        return fad;
     }
 
     @Override
@@ -30,8 +46,8 @@ public class Påfyldning implements Serializable {
         return "Påfyldning{" +
                 "medarbejder='" + medarbejder + '\'' +
                 ", dato=" + dato +
-                ", \n fad=" + fad +
-                ", \n mængdePåfyldt=" + mængdePåfyldt +
+                ",\n fad=" + fad +
+                ",\n mængdePåfyldt=" + mængdePåfyldt +
                 '}';
     }
 }
