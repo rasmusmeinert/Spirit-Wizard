@@ -19,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class PåfyldningsGui extends Application {
 
         //==================== New Makes ==============================================//
 
-        Label lblNewMakes = new Label("New Makes");
+        Label lblNewMakes = new Label("New makes");
         pane.add(lblNewMakes, 0, 0);
         pane.add(pickerNewMakes, 0, 1);
         pickerNewMakes.getItems().setAll(Controller.getNewMakes());
@@ -72,7 +73,7 @@ public class PåfyldningsGui extends Application {
         pane.add(btnAddNewMake, 1, 3);
         btnAddNewMake.setOnAction(e -> addNewMake());
 
-        Label lblValgteNewMakes = new Label("Valgte NewMakes");
+        Label lblValgteNewMakes = new Label("Valgte new makes");
         pane.add(lblValgteNewMakes, 2, 0);
         GridPane.setHalignment(lblValgteNewMakes, HPos.CENTER);
         pane.add(lvwValgteNewMakes, 2, 2);
@@ -82,7 +83,7 @@ public class PåfyldningsGui extends Application {
 
         //==================== Fade =================================================//
 
-        Label lblFad = new Label("Fad");
+        Label lblFad = new Label("Ledige fad");
         pane.add(lblFad, 0, 4);
         pane.add(pickerFad, 0, 5);
         pickerFad.addObserver(ibFadInfo);
@@ -130,7 +131,7 @@ public class PåfyldningsGui extends Application {
     public void createPåfyldning(){
         Fad fad = (Fad) pickerFad.getSelectionModel().getSelectedItem();
         String medarbejder = inputMedarbejder.getTextField().getText();
-        Controller.createPåfyldning(medarbejder, LocalDateTime.now(),fad,valgteNewMakes);
+        Controller.createPåfyldning(medarbejder, LocalDate.now(),fad,valgteNewMakes);
         System.out.println(Controller.getPåfyldninger());
     }
 }
