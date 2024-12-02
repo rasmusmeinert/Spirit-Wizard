@@ -44,4 +44,9 @@ public class ObjectList<T> extends ListView {
             notifyButtons(true);
         }
     }
+
+    public void listChange(){
+        notifyPickers();
+        getSelectionModel().select(0);
+    }
 }
