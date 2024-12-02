@@ -68,6 +68,7 @@ public class PåfyldningsGui extends Application {
         pane.add(pickerNewMakes, 0, 1);
         pickerNewMakes.addObserver(ibNewMakeInfo);
         pickerNewMakes.addObserver((Observer) mængdeValidation);
+        pickerNewMakes.addObserver(inputMængde);
         pane.add(ibNewMakeInfo, 0, 2, 2, 1);
         pane.add(inputMængde, 0, 3);
         inputMængde.addObserver(btnAddNewMake);

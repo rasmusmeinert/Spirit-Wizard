@@ -16,7 +16,7 @@ public class InfoBox extends TextArea implements Observer {
     @Override
     public void update(Object message) {
         if (message == null){
-            setText("Intet valgt");
+            setText("");
         } else {
             Printable printableMessage = (Printable) message;
             setText(printableMessage.print());

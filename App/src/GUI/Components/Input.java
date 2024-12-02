@@ -52,9 +52,14 @@ public class Input extends VBox implements Observer {
             notifyObservers(false);
             errorMessage.setText("");
         } else {
-            textField.setStyle("-fx-focus-color: red");
-            notifyObservers(true);
-            errorMessage.setText(validation.getErrorMessage());
+            if (getText().isEmpty()){
+                notifyObservers(true);
+                errorMessage.setText("");
+            } else {
+                notifyObservers(true);
+                textField.setStyle("-fx-focus-color: red");
+                errorMessage.setText(validation.getErrorMessage());
+            }
         }
     }
 
@@ -75,6 +80,7 @@ public class Input extends VBox implements Observer {
 
     @Override
     public void update(Object message) {
+        validateTextField();
         if (message == null){
             setDisable(true);
         } else {
