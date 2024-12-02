@@ -21,9 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PåfyldningsGui extends Application {
-    private final List<MængdePåfyldt> valgteNewMakes = new ArrayList<>();
-
-
     private final Validation mængdeValidation = new MængdeValidation();
     private final Input inputMængde = new Input("Mængde", mængdeValidation);
 
@@ -41,7 +38,7 @@ public class PåfyldningsGui extends Application {
 
     private final CustomButton btnAddNewMake = new CustomButton("+");
     private final CustomButton btnRemoveNewMake = new CustomButton("-");
-    private final CustomButton btnOpret = new CustomButton("Opret");
+    private final CreateButton btnOpret = new CreateButton();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -104,7 +101,6 @@ public class PåfyldningsGui extends Application {
         VBox opretBox = new VBox();
         opretBox.setAlignment(Pos.TOP_CENTER);
         opretBox.setSpacing(15);
-        btnOpret.setMinSize(100, 50);
         opretBox.getChildren().addAll(inputMedarbejder, cbxFlytFad, btnOpret);
         pane.add(opretBox, 2, 6);
         btnOpret.setOnAction(e -> createPåfyldning());
@@ -113,8 +109,7 @@ public class PåfyldningsGui extends Application {
     //Fjerne en NewMake fra de valgte Newmakes
     private void removeNewMake() {
         MængdePåfyldt valgteNewMake = (MængdePåfyldt) olValgteNewMakes.getSelectionModel().getSelectedItem();
-        valgteNewMakes.remove(olValgteNewMakes.getSelectionModel().getSelectedIndex());
-        olValgteNewMakes.getItems().setAll(valgteNewMakes);
+        olValgteNewMakes.getItems().remove(valgteNewMake);
     }
 
     //Tilføj en newMake til valgte newMakes, med mængde
@@ -122,9 +117,7 @@ public class PåfyldningsGui extends Application {
         NewMake valgteNewMake = (NewMake) pickerNewMakes.getSelectionModel().getSelectedItem();
         double mængde = Double.parseDouble(inputMængde.getText());
         MængdePåfyldt mængdePåfyldt = Controller.createMængdePåfyldt(valgteNewMake, mængde);
-        valgteNewMakes.add(mængdePåfyldt);
-        olValgteNewMakes.getItems().setAll(valgteNewMakes);
-
+        olValgteNewMakes.getItems().add(mængdePåfyldt);
         inputMængde.clear();
 
     }
@@ -133,7 +126,7 @@ public class PåfyldningsGui extends Application {
     public void createPåfyldning() {
         Fad fad = (Fad) pickerFad.getSelectionModel().getSelectedItem();
         String medarbejder = inputMedarbejder.getText();
-        Controller.createPåfyldning(medarbejder, LocalDate.now(), fad, valgteNewMakes);
+        Controller.createPåfyldning(medarbejder, LocalDate.now(), fad, olValgteNewMakes.getItems());
         System.out.println(Controller.getPåfyldninger());
     }
 }
