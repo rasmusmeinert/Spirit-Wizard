@@ -1,11 +1,12 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class WhiskyProdukt {
+public class WhiskyProdukt implements Serializable {
     private String navn;
     private double alder;
     private String type;

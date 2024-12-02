@@ -19,6 +19,10 @@ public class Påfyldning implements Serializable {
         this.samletMængde = udregnSamletMængde();
     }
 
+    public double getSamletMængde() {
+        return samletMængde;
+    }
+
     private double udregnSamletMængde(){
         double samletMængde = 0;
         for (MængdePåfyldt  mængde : mængdePåfyldt){

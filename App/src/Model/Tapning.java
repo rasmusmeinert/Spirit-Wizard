@@ -1,9 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Tapning {
+public class Tapning implements Serializable {
     private double mængde;
     private LocalDate dato;
     private Påfyldning påfyldning;

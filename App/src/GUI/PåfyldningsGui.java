@@ -35,7 +35,8 @@ public class PåfyldningsGui extends Application {
     private final Picker<NewMake> pickerNewMakes = new Picker<>(Controller.getAktuelleNewMakes());
     private final Picker<Fad> pickerFad = new Picker<>(Controller.getTommeFade());
 
-    private final ObjectList<MængdePåfyldt> olValgteNewMakes = new ObjectList();
+    private final Validation fadValidation = new MængdeValidation();
+    private final ObjectListWithMessage<MængdePåfyldt> olValgteNewMakes = new ObjectListWithMessage<>(fadValidation);
 
     private final CustomButton btnAddNewMake = new CustomButton("+");
     private final CustomButton btnRemoveNewMake = new CustomButton("-");
@@ -80,10 +81,11 @@ public class PåfyldningsGui extends Application {
         lblValgteNewMakes.setStyle("-fx-font-weight: bold");
         pane.add(lblValgteNewMakes, 2, 0);
         GridPane.setHalignment(lblValgteNewMakes, HPos.CENTER);
-        pane.add(olValgteNewMakes, 2, 2);
+        pane.add(olValgteNewMakes, 2, 2 , 1, 2);
         olValgteNewMakes.addObserver(btnRemoveNewMake);
         olValgteNewMakes.addObserver(pickerNewMakes);
         GridPane.setHalignment(olValgteNewMakes, HPos.CENTER);
+        GridPane.setValignment(olValgteNewMakes, VPos.TOP);
         pane.add(btnRemoveNewMake, 2, 3);
         GridPane.setValignment(btnRemoveNewMake, VPos.TOP);
         btnRemoveNewMake.setOnAction(e -> removeNewMake());
@@ -95,6 +97,8 @@ public class PåfyldningsGui extends Application {
         pane.add(lblFad, 0, 4);
         pane.add(pickerFad, 0, 5);
         pickerFad.addObserver(ibFadInfo);
+        pickerFad.addObserver((Observer) fadValidation);
+        pickerFad.addObserver(olValgteNewMakes);
         pane.add(ibFadInfo, 0, 6, 2, 1);
 
         //============================ Medarbejder / Fadflyt / Opret ===============//
@@ -109,11 +113,11 @@ public class PåfyldningsGui extends Application {
 
     //Fjerne en NewMake fra de valgte Newmakes
     private void removeNewMake() {
-        MængdePåfyldt valgteNewMake = (MængdePåfyldt) olValgteNewMakes.getSelectionModel().getSelectedItem();
-        olValgteNewMakes.getItems().remove(valgteNewMake);
+        olValgteNewMakes.removeSelectedItem();
     }
 
     //Tilføj en newMake til valgte newMakes, med mængde
+    //Todo put ind i ObjectList
     public void addNewMake() {
         NewMake valgteNewMake = (NewMake) pickerNewMakes.getSelectionModel().getSelectedItem();
         double mængde = Double.parseDouble(inputMængde.getText());

@@ -19,6 +19,10 @@ public class Fad implements Printable, Serializable{
         påfyldt = bool;
     }
 
+    public double getStørrelse() {
+        return størrelse;
+    }
+
     @Override
     public String toString() {
         return Integer.toString(nummer);

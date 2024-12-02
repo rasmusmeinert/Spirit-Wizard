@@ -89,29 +89,4 @@ public class RegistrerProduktGUI extends Application {
             lvwValgtePåfyldninger.getItems().setAll(valgtePåfyldninger);
         }
     }
-
-    //TODO
-    //Måske kan det her gøres pænere
-//    public void addNewMake() {
-//        NewMake valgteNewMake = (NewMake) pickerPåfyldninger.getSelectionModel().getSelectedItem();
-//        boolean valgtFør = false;
-//        for (MængdePåfyldt mængdePåfyldt : valgtePåfyldninger) {
-//            if (valgteNewMake.equals(mængdePåfyldt.getNewMake())) {
-//                valgtFør = true;
-//            }
-//        }
-//        if (!valgtFør) {
-//            double mængde = Double.parseDouble(inputMængde.getTextField().getText());
-//            MængdePåfyldt mængdePåfyldt = Controller.createMængdePåfyldt(valgteNewMake,mængde);
-//            valgtePåfyldninger.add(mængdePåfyldt);
-//            lvwValgtePåfyldninger.getItems().setAll(valgtePåfyldninger);
-//        }
-//    }
-
-//    public void createPåfyldning(){
-//        Fad fad = (Fad) pickerFad.getSelectionModel().getSelectedItem();
-//        String medarbejder = inputMedarbejder.getTextField().getText();
-//        Controller.createPåfyldning(medarbejder, LocalDate.now(),fad,valgtePåfyldninger);
-//        System.out.println(Controller.getPåfyldninger());
-//    }
 }
