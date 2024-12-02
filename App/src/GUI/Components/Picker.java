@@ -58,7 +58,4 @@ public class Picker<T> extends ComboBox implements Observer {
             setDisable(false);
         }
     }
-
-//Todo
-//Hold øje med controller, og opdater hvis noget skabes osv.
 }
