@@ -20,7 +20,11 @@ public class MængdeValidation implements Observer,Validation {
 
     @Override
     public void update(Object message) {
-        NewMake newMake = (NewMake) message;
-        max = newMake.getAktuelMængde();
+        if (message != null){
+            NewMake newMake = (NewMake) message;
+            max = newMake.getAktuelMængde();
+        } else {
+            max = 0;
+        }
     }
 }

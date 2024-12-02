@@ -16,13 +16,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PåfyldningsGui extends Application {
     private final List<MængdePåfyldt> valgteNewMakes = new ArrayList<>();
-    private final List<NewMake> aktuelleNewMakes = Controller.getAktuelleNewMakes();
 
 
     private final Validation mængdeValidation = new MængdeValidation();
@@ -35,12 +34,10 @@ public class PåfyldningsGui extends Application {
     private final InfoBox ibNewMakeInfo = new InfoBox();
     private final InfoBox ibFadInfo = new InfoBox();
 
-    //TODO
-    //Hent Aktuelle NewMakes, og Tomme Fade, ikke alle fade og newMakes
-    private final Picker<NewMake> pickerNewMakes = new Picker<>(aktuelleNewMakes);
-    private final Picker<Fad> pickerFad = new Picker<>(Controller.getFade());
+    private final Picker<NewMake> pickerNewMakes = new Picker<>(Controller.getAktuelleNewMakes());
+    private final Picker<Fad> pickerFad = new Picker<>(Controller.getTommeFade());
 
-    private final ObjectList<MængdePåfyldt> lvwValgteNewMakes = new ObjectList();
+    private final ObjectList<MængdePåfyldt> olValgteNewMakes = new ObjectList();
 
     private final CustomButton btnAddNewMake = new CustomButton("+");
     private final CustomButton btnRemoveNewMake = new CustomButton("-");
@@ -84,9 +81,10 @@ public class PåfyldningsGui extends Application {
         lblValgteNewMakes.setStyle("-fx-font-weight: bold");
         pane.add(lblValgteNewMakes, 2, 0);
         GridPane.setHalignment(lblValgteNewMakes, HPos.CENTER);
-        pane.add(lvwValgteNewMakes, 2, 2);
-        lvwValgteNewMakes.addObserver(btnRemoveNewMake);
-        GridPane.setHalignment(lvwValgteNewMakes, HPos.CENTER);
+        pane.add(olValgteNewMakes, 2, 2);
+        olValgteNewMakes.addObserver(btnRemoveNewMake);
+        olValgteNewMakes.addObserver(pickerNewMakes);
+        GridPane.setHalignment(olValgteNewMakes, HPos.CENTER);
         pane.add(btnRemoveNewMake, 2, 3);
         GridPane.setValignment(btnRemoveNewMake, VPos.TOP);
         btnRemoveNewMake.setOnAction(e -> removeNewMake());
@@ -112,39 +110,29 @@ public class PåfyldningsGui extends Application {
     }
 
     //Fjerne en NewMake fra de valgte Newmakes
-    //Todo this also super duper sucks
     private void removeNewMake() {
-        MængdePåfyldt valgteNewMake = (MængdePåfyldt) lvwValgteNewMakes.getSelectionModel().getSelectedItem();
-        valgteNewMakes.remove(lvwValgteNewMakes.getSelectionModel().getSelectedIndex());
-        lvwValgteNewMakes.getItems().setAll(valgteNewMakes);
-        aktuelleNewMakes.add(valgteNewMake.getNewMake());
-        pickerNewMakes.getItems().setAll(aktuelleNewMakes);
-        pickerNewMakes.getSelectionModel().select(0);
+        MængdePåfyldt valgteNewMake = (MængdePåfyldt) olValgteNewMakes.getSelectionModel().getSelectedItem();
+        valgteNewMakes.remove(olValgteNewMakes.getSelectionModel().getSelectedIndex());
+        olValgteNewMakes.getItems().setAll(valgteNewMakes);
     }
 
-    //TODO
-    //Måske kan det her gøres MEGET pænere, men lige nu virker det jo
+    //Tilføj en newMake til valgte newMakes, med mængde
     public void addNewMake() {
         NewMake valgteNewMake = (NewMake) pickerNewMakes.getSelectionModel().getSelectedItem();
         double mængde = Double.parseDouble(inputMængde.getText());
         MængdePåfyldt mængdePåfyldt = Controller.createMængdePåfyldt(valgteNewMake, mængde);
         valgteNewMakes.add(mængdePåfyldt);
-        lvwValgteNewMakes.getItems().setAll(valgteNewMakes);
-
-
-        //Todo this sucks
-        aktuelleNewMakes.remove(valgteNewMake);
-        pickerNewMakes.getItems().setAll(aktuelleNewMakes);
-        pickerNewMakes.getSelectionModel().select(0);
+        olValgteNewMakes.getItems().setAll(valgteNewMakes);
 
         inputMængde.clear();
 
     }
 
+
     public void createPåfyldning() {
         Fad fad = (Fad) pickerFad.getSelectionModel().getSelectedItem();
         String medarbejder = inputMedarbejder.getText();
-        Controller.createPåfyldning(medarbejder, LocalDateTime.now(), fad, valgteNewMakes);
+        Controller.createPåfyldning(medarbejder, LocalDate.now(), fad, valgteNewMakes);
         System.out.println(Controller.getPåfyldninger());
     }
 }

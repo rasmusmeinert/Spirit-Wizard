@@ -1,16 +1,16 @@
 package Model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Påfyldning implements Serializable {
     private String medarbejder;
-    private LocalDateTime dato;
+    private LocalDate dato;
     private Fad fad;
     private List<MængdePåfyldt> mængdePåfyldt;
 
-    public Påfyldning(String medarbejder, LocalDateTime dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt) {
+    public Påfyldning(String medarbejder, LocalDate dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt) {
         this.medarbejder = medarbejder;
         this.dato = dato;
         this.fad = fad;

@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Input extends VBox {
+public class Input extends VBox implements Observer {
     private final Label label = new Label();
     private final TextField textField = new TextField();
     private final Label errorMessage = new Label("");
@@ -71,5 +71,14 @@ public class Input extends VBox {
 
     public void clear() {
         textField.clear();
+    }
+
+    @Override
+    public void update(Object message) {
+        if (message == null){
+            setDisable(true);
+        } else {
+            setDisable(false);
+        }
     }
 }
