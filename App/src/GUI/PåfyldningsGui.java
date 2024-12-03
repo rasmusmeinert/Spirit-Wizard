@@ -32,7 +32,7 @@ public class PåfyldningsGui extends Application {
     private final InfoBox ibNewMakeInfo = new InfoBox();
     private final InfoBox ibFadInfo = new InfoBox();
 
-    private final Picker<NewMake> pickerNewMakes = new Picker<>(Controller.getAktuelleNewMakes());
+    private final Picker<NewMake> pickerNewMakes = new Picker<>(Controller.getAktuelleNewMakes(), new MængdeUpdater());
     private final Picker<Fad> pickerFad = new Picker<>(Controller.getTommeFade());
 
     private final Validation fadValidation = new MængdeValidation();

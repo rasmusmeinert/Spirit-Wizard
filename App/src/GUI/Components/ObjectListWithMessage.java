@@ -14,7 +14,7 @@ import java.util.List;
 public class ObjectListWithMessage<T> extends VBox implements Observer {
     private final List<Observer> observers = new ArrayList<>();
     private final ListView<T> listView = new ListView<>();
-    private final Label lblErrorMessage = new Label("Error");
+    private final Label lblErrorMessage = new Label("");
     private Validation validator;
 
 
@@ -71,6 +71,20 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
         this.setAlignment(Pos.CENTER);
     }
 
+    public ObjectListWithMessage() {
+        setSpacing(15);
+        setMaxWidth(200);
+        setMaxHeight(150);
+        listView.setMinHeight(150);
+        listView.getSelectionModel().selectedItemProperty().addListener(e -> selectionChange());
+        listView.getItems().addListener((ListChangeListener) e -> listChange());
+        getChildren().addAll(listView, lblErrorMessage);
+
+        lblErrorMessage.setStyle("-fx-text-fill: red");
+        this.setAlignment(Pos.CENTER);
+    }
+
+
     public void selectionChange() {
         if (listView.getSelectionModel().getSelectedItem() != null) {
             notifyButtons(false);
@@ -88,21 +102,26 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
     //Todo virker kun med mængder, hjælp
     public void checkIfValid() {
         if (!getItems().isEmpty()) {
-            double totalMængde = 0;
-            for (Object object : listView.getItems()) {
-                MængdePåfyldt mængde = (MængdePåfyldt) object;
-                totalMængde += mængde.getMængde();
-            }
-            if (validator.isValid(String.valueOf(totalMængde))) {
-                lblErrorMessage.setText("");
-                notifyCreateButton(false);
+            if (getItems().get(0).getClass().equals(MængdePåfyldt.class)) {
+                double totalMængde = 0;
+                for (Object object : listView.getItems()) {
+                    MængdePåfyldt mængde = (MængdePåfyldt) object;
+                    totalMængde += mængde.getMængde();
+                }
+                if (validator.isValid(String.valueOf(totalMængde))) {
+                    lblErrorMessage.setText("");
+                    notifyCreateButton(false);
+                } else {
+                    lblErrorMessage.setText("Samlede mængde for høj");
+                    notifyCreateButton(true);
+                }
             } else {
-                lblErrorMessage.setText("Samlede mængde for høj");
-                notifyCreateButton(true);
+                notifyCreateButton(false);
             }
         } else {
             lblErrorMessage.setText("");
             notifyCreateButton(true);
+
         }
     }
 

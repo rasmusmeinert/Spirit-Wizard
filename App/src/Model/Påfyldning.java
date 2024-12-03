@@ -25,10 +25,6 @@ public class Påfyldning implements Serializable, Printable {
         return samletMængde;
     }
 
-    public double getSamletMængde() {
-        return samletMængde;
-    }
-
     private double udregnSamletMængde(){
         double samletMængde = 0;
         for (MængdePåfyldt  mængde : mængdePåfyldt){

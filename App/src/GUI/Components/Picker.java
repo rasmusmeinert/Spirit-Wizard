@@ -4,6 +4,7 @@ import Controller.Controller;
 import Model.MængdePåfyldt;
 import Model.NewMake;
 import Model.Printable;
+import Model.Påfyldning;
 import javafx.scene.control.ComboBox;
 
 import java.util.ArrayList;
@@ -12,13 +13,20 @@ import java.util.List;
 
 public class Picker<T> extends ComboBox implements Observer {
     private final List<Observer> observers = new ArrayList<>();
+    private ListUpdater listUpdater;
+
+    public Picker(Collection list, ListUpdater listUpdater) {
+        getItems().setAll(list);
+        setOnAction(e -> onAction());
+        getSelectionModel().select(0);
+        this.listUpdater = listUpdater;
+    }
 
     public Picker(Collection list) {
         getItems().setAll(list);
         setOnAction(e -> onAction());
         getSelectionModel().select(0);
     }
-
     public void addObserver(Observer observer) {
         observers.add(observer);
         notifyObservers();
@@ -31,28 +39,14 @@ public class Picker<T> extends ComboBox implements Observer {
     }
 
     @Override
-    //TODO lav til interface feldt, afhængig af hvilke typer der arbejdes med
     public void update(Object message) {
-        List<NewMake> nyListe = new ArrayList<>();
-        List<MængdePåfyldt> mængder = (List<MængdePåfyldt>) message;
-        for (Object newMake : Controller.getAktuelleNewMakes()) {
-            boolean found = false;
-            for (MængdePåfyldt mængdePåfyldt : mængder) {
-                if (mængdePåfyldt.getNewMake().equals(newMake)) {
-                    found = true;
-                }
-            }
-            if (!found) {
-                nyListe.add((NewMake) newMake);
-            }
-        }
-        getItems().setAll(nyListe);
+        getItems().setAll(listUpdater.update(message));
         getSelectionModel().select(0);
     }
 
-    public void onAction(){
+    public void onAction() {
         notifyObservers();
-        if (getItems().isEmpty()){
+        if (getItems().isEmpty()) {
             setDisable(true);
         } else {
             setDisable(false);
