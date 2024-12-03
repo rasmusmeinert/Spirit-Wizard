@@ -90,6 +90,9 @@ public abstract class Controller {
     public static Påfyldning createPåfyldning(String medarbejder, LocalDate dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt){
         Påfyldning påfyldning = new Påfyldning(medarbejder,dato, fad, mængdePåfyldt);
         fad.setPåfyldt(true);
+        for (MængdePåfyldt mp : mængdePåfyldt) {
+            mp.getNewMake().reducerMængde(mp.getMængde());
+        }
         storage.storePåfyldning(påfyldning);
         return påfyldning;
     }

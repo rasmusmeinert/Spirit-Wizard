@@ -60,5 +60,8 @@ public class App {
         List<Tapning> tapninger1 = List.of(tapning1);
         WhiskyProdukt whiskyProdukt = Controller.createWhiskyProdukt("Kaptajnens", 52, 0.5, "Kaptajnens pishamrende skipperskrås whisky!", 0.1, tapninger1);
         System.out.println(whiskyProdukt);
+        System.out.println("hup");
+        System.out.println(whiskyProdukt.print());
+        System.out.println("hup");
     }
 }

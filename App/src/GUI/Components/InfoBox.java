@@ -21,6 +21,5 @@ public class InfoBox extends TextArea implements Observer {
             Printable printableMessage = (Printable) message;
             setText(printableMessage.print());
         }
-
     }
 }

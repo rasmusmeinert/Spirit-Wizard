@@ -4,12 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Påfyldning implements Serializable {
+public class Påfyldning implements Serializable, Printable {
     private String medarbejder;
     private LocalDate dato;
     private Fad fad;
     private List<MængdePåfyldt> mængdePåfyldt;
     private double samletMængde;
+    private double samletMængdePåfyldt;
 
     public Påfyldning(String medarbejder, LocalDate dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt) {
         this.medarbejder = medarbejder;
@@ -17,6 +18,11 @@ public class Påfyldning implements Serializable {
         this.fad = fad;
         this.mængdePåfyldt = mængdePåfyldt;
         this.samletMængde = udregnSamletMængde();
+        this.samletMængdePåfyldt = samletMængde;
+    }
+
+    public double getSamletMængde() {
+        return samletMængde;
     }
 
     public double getSamletMængde() {
@@ -47,11 +53,18 @@ public class Påfyldning implements Serializable {
 
     @Override
     public String toString() {
-        return "Påfyldning{" +
-                "medarbejder='" + medarbejder + '\'' +
-                ", dato=" + dato +
-                ",\n fad=" + fad +
-                ",\n mængdePåfyldt=" + mængdePåfyldt +
-                '}';
+        return fad.toString();
+    }
+
+    @Override
+    public String print() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Lagret %s af %s \n" +
+                "%.2f liter \n" +
+                "Består af: \n", dato, medarbejder, samletMængde));
+        for(MængdePåfyldt mp : mængdePåfyldt) {
+            sb.append(String.format("%s (%.2f %%) \n", mp.getNewMake(), ((mp.getMængde() / this.samletMængdePåfyldt) * 100)));
+        }
+        return sb.toString();
     }
 }

@@ -6,7 +6,7 @@ import java.time.Year;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class WhiskyProdukt implements Serializable {
+public class WhiskyProdukt implements Serializable, Printable {
     private String navn;
     private double alder;
     private String type;
@@ -80,5 +80,12 @@ public class WhiskyProdukt implements Serializable {
                 ", mængdeVandTilFortynding=" + mængdeVandTilFortynding +
                 ", tapninger=" + tapninger +
                 '}';
+    }
+
+    @Override
+    public String print() {
+        return String.format("%s \n" +
+                "%d års %s whisky\n" +
+                "%.2f cl, %d %%", navn, (int)alder, type, flaskeStørrelse, (int)alkoholProcent);
     }
 }
