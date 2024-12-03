@@ -26,7 +26,6 @@ public class App {
 
         System.out.println(Controller.getPåfyldninger());
 
-//        Application.launch(PåfyldningsGui.class);
         Application.launch(RegistrerProduktGUI.class);
 
         ListStorage.saveStorage(storage);

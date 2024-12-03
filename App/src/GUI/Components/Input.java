@@ -52,7 +52,7 @@ public class Input extends VBox implements Observer {
             notifyObservers(false);
             errorMessage.setText("");
         } else {
-            if (getText().isEmpty()){
+            if (getText().isEmpty()) {
                 notifyObservers(true);
                 errorMessage.setText("");
             } else {
@@ -66,12 +66,17 @@ public class Input extends VBox implements Observer {
     //Toggles button
     public void notifyObservers(Boolean disable) {
         for (Observer observer : observers) {
-            observer.update(disable);
+            if (observer.getClass().equals(CreateButton.class)) {
+                observer.update(new UpdateMessage(this,disable));
+            } else {
+                observer.update(disable);
+            }
         }
     }
 
     public void addObserver(Observer observer) {
         observers.add(observer);
+        notifyObservers(true);
     }
 
     public void clear() {
@@ -81,7 +86,7 @@ public class Input extends VBox implements Observer {
     @Override
     public void update(Object message) {
         validateTextField();
-        if (message == null){
+        if (message == null) {
             setDisable(true);
         } else {
             setDisable(false);

@@ -2,9 +2,6 @@ package GUI;
 
 import Controller.Controller;
 import GUI.Components.*;
-import Model.Fad;
-import Model.MængdePåfyldt;
-import Model.NewMake;
 import Model.Påfyldning;
 import javafx.application.Application;
 import javafx.geometry.HPos;
@@ -19,25 +16,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 public class RegistrerProduktGUI extends Application {
-    private final List<Påfyldning> valgtePåfyldninger = new ArrayList<>();
-    private Validation MængdeValidation;
+    private final Validation MængdeValidation = new MængdeValidation();
+    private final Validation StringValidation = new StringValidation();
+    private final Validation NumberValidation = new NumberValidation();
     private final Input inputMængde = new Input("Mængde: ", MængdeValidation);
-    private final Input inputFortynding = new Input("Fortynding: ", MængdeValidation);
-    private final Input inputAlkoholProcent = new Input("ABV (%):", MængdeValidation);
-    private final Input inputFlaskeStørrelse = new Input("Flaskestørrelse (cl):", MængdeValidation);
-    private final Input inputNavn = new Input("Navn:", MængdeValidation);
+    private final Input inputFortynding = new Input("Fortynding: ", NumberValidation);
+    private final Input inputAlkoholProcent = new Input("ABV (%):", NumberValidation);
+    private final Input inputFlaskeStørrelse = new Input("Flaskestørrelse (cl):", NumberValidation );
+    private final Input inputNavn = new Input("Navn:", StringValidation);
     private final InfoBox påfyldningsInfo = new InfoBox();
-    private final Picker<Påfyldning> pickerPåfyldninger = new Picker<>(Controller.getPåfyldninger());
-    private final ObjectList<MængdePåfyldt> lvwValgtePåfyldninger = new ObjectList();
+    private final Picker<Påfyldning> pickerPåfyldninger = new Picker<>(Controller.getTapbarePåfyldninger(), new PåfyldningsUpdater());
+    private final ObjectListWithMessage<Påfyldning> lvwValgtePåfyldninger = new ObjectListWithMessage<>();
     private final TextArea txtABeskerivelse = new TextArea();
-    private final Button btnAddPåfyldning = new Button("+");
-    private final Button btnRemovePåfyldning = new Button("-");
-    private final Button btnOpret = new Button("Opret");
+    private final CustomButton btnAddPåfyldning = new CustomButton("+");
+    private final CustomButton btnRemovePåfyldning = new CustomButton("-");
+    private final CreateButton btnOpret = new CreateButton("Opret");
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -61,10 +55,12 @@ public class RegistrerProduktGUI extends Application {
         Label lblNewMakes = new Label("Fade");
         pane.add(lblNewMakes, 0, 0);
         pane.add(pickerPåfyldninger, 0, 1);
-        pickerPåfyldninger.getItems().setAll(Controller.getTapbarePåfyldninger());
         pickerPåfyldninger.addObserver(påfyldningsInfo);
+        pickerPåfyldninger.addObserver((Observer) MængdeValidation);
+        pickerPåfyldninger.addObserver(inputMængde);
         pane.add(påfyldningsInfo, 0, 2, 2, 1);
         pane.add(inputMængde, 0, 3);
+        inputMængde.addObserver(btnAddPåfyldning);
         pane.add(btnAddPåfyldning, 1, 3);
 
         //====================== Valgte fade ==================
@@ -73,9 +69,12 @@ public class RegistrerProduktGUI extends Application {
         pane.add(lblValgteNewMakes, 2, 0);
         GridPane.setHalignment(lblValgteNewMakes, HPos.CENTER);
         pane.add(lvwValgtePåfyldninger, 2, 2);
+        lvwValgtePåfyldninger.addObserver(pickerPåfyldninger);
+        lvwValgtePåfyldninger.addObserver(btnRemovePåfyldning);
+        lvwValgtePåfyldninger.addObserver(btnOpret);
         GridPane.setHalignment(lvwValgtePåfyldninger, HPos.CENTER);
-        pane.add(btnRemovePåfyldning,2,3);
-        btnRemovePåfyldning.setOnAction(e -> removeNewMake());
+        pane.add(btnRemovePåfyldning, 2, 3);
+        btnRemovePåfyldning.setOnAction(e -> removePåfyldning());
 
         //=================== Fortynding, Alkoholprocent og seperators ===========================//
 
@@ -84,8 +83,10 @@ public class RegistrerProduktGUI extends Application {
         pane.add(horizontalSeparator, 0, 4, 3, 1);
 
         pane.add(inputFortynding, 0, 5);
+        inputFortynding.addObserver(btnOpret);
         pane.add(inputAlkoholProcent, 1, 5);
-        //btnAddPåfyldning.setOnAction(e -> addNewMake());
+        inputAlkoholProcent.addObserver(btnOpret);
+        btnAddPåfyldning.setOnAction(e -> addPåfyldning());
 
         Separator horizontalSeparator2 = new Separator();
         horizontalSeparator2.setPrefWidth(300);
@@ -98,6 +99,7 @@ public class RegistrerProduktGUI extends Application {
         pane.add(lblProduktInformation, 0, 7);
 
         pane.add(inputFlaskeStørrelse, 0, 8);
+        inputFlaskeStørrelse.addObserver(btnOpret);
 
         Label lblAntalFlasker = new Label("Antal flasker: ");
         pane.add(lblAntalFlasker, 1, 8);
@@ -106,59 +108,34 @@ public class RegistrerProduktGUI extends Application {
         pane.add(lblType, 2, 8);
 
         pane.add(inputNavn, 0, 9);
+        inputNavn.addObserver(btnOpret);
 
         Label lblAlder = new Label("Alder: ");
-        pane.add(lblAlder,2, 9);
+        pane.add(lblAlder, 2, 9);
 
         Label lblBeskrivelse = new Label("Beskrivelse:");
         pane.add(lblBeskrivelse, 0, 10);
         lblBeskrivelse.setAlignment(Pos.TOP_LEFT);
-        pane.add(txtABeskerivelse, 1, 10);
+        pane.add(txtABeskerivelse, 0, 11);
 
 
         //============================ Opret ===============//
 
         //Kan dette simplificeres da der ikke skal være andet sammen med opret knappen?
-        VBox opretBox = new VBox();
-        opretBox.setAlignment(Pos.TOP_CENTER);
-        opretBox.setSpacing(35);
-        btnOpret.setMinSize(100, 50);
-        opretBox.getChildren().addAll(btnOpret);
-        pane.add(opretBox, 2, 10);
+        pane.add(btnOpret, 2, 10);
         //btnOpret.setOnAction(e -> createPåfyldning());
+    }
+
+    public void addPåfyldning() {
+        Påfyldning valgtePåfyldning = (Påfyldning) pickerPåfyldninger.getSelectionModel().getSelectedItem();
+        lvwValgtePåfyldninger.getItems().add(valgtePåfyldning);
+        inputMængde.clear();
+
     }
 
     //TODO
     // Virker ikke ordenligt endnu
-    private void removeNewMake() {
-        if (!valgtePåfyldninger.isEmpty()){
-            valgtePåfyldninger.remove(lvwValgtePåfyldninger.getSelectionModel().getSelectedIndex());
-            lvwValgtePåfyldninger.getItems().setAll(valgtePåfyldninger);
-        }
+    private void removePåfyldning() {
+        lvwValgtePåfyldninger.removeSelectedItem();
     }
-
-    //TODO
-    //Måske kan det her gøres pænere
-//    public void addNewMake() {
-//        NewMake valgteNewMake = (NewMake) pickerPåfyldninger.getSelectionModel().getSelectedItem();
-//        boolean valgtFør = false;
-//        for (MængdePåfyldt mængdePåfyldt : valgtePåfyldninger) {
-//            if (valgteNewMake.equals(mængdePåfyldt.getNewMake())) {
-//                valgtFør = true;
-//            }
-//        }
-//        if (!valgtFør) {
-//            double mængde = Double.parseDouble(inputMængde.getTextField().getText());
-//            MængdePåfyldt mængdePåfyldt = Controller.createMængdePåfyldt(valgteNewMake,mængde);
-//            valgtePåfyldninger.add(mængdePåfyldt);
-//            lvwValgtePåfyldninger.getItems().setAll(valgtePåfyldninger);
-//        }
-//    }
-
-//    public void createPåfyldning(){
-//        Fad fad = (Fad) pickerFad.getSelectionModel().getSelectedItem();
-//        String medarbejder = inputMedarbejder.getTextField().getText();
-//        Controller.createPåfyldning(medarbejder, LocalDate.now(),fad,valgtePåfyldninger);
-//        System.out.println(Controller.getPåfyldninger());
-//    }
 }

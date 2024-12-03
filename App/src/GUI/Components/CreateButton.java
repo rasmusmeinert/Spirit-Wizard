@@ -8,27 +8,33 @@ import java.util.List;
 import java.util.Map;
 
 public class CreateButton extends Button implements Observer {
-    //Map<Object, boolean> flags = new HashMap<Object, boolean>();
+    Map<Object, Boolean> flags = new HashMap<Object, Boolean>();
 
     public CreateButton() {
         setMinSize(100, 50);
         setText("Opret");
+        setDisable(true);
     }
 
     public CreateButton(String s) {
         super(s);
-        setMinSize(100,50);
+        setMinSize(100, 50);
+        setDisable(true);
     }
 
     @Override
     public void update(Object message) {
-//        boolean valid = true;
-//        for (boolean flag : flags){
-//            if (!flag){
-//                valid = false;
-//            }
-//        }
-//        setDisable(!valid);
+        UpdateMessage updateMessage = (UpdateMessage) message;
 
+        //Tilføjer et flag per object der sender beskeder til knappen
+        flags.put(updateMessage.getObject(), (Boolean) updateMessage.getMessage());
+        boolean valid = true;
+        //Looper igennem flag, hvis den finder et der ikke er valid, så sluk for knap
+        for (boolean flag : flags.values()) {
+            if (flag) {
+                valid = false;
+            }
+        }
+        setDisable(!valid);
     }
 }
