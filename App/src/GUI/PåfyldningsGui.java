@@ -84,6 +84,7 @@ public class PåfyldningsGui extends Application {
         pane.add(olValgteNewMakes, 2, 2 , 1, 2);
         olValgteNewMakes.addObserver(btnRemoveNewMake);
         olValgteNewMakes.addObserver(pickerNewMakes);
+        olValgteNewMakes.addObserver(btnOpret);
         GridPane.setHalignment(olValgteNewMakes, HPos.CENTER);
         GridPane.setValignment(olValgteNewMakes, VPos.TOP);
         pane.add(btnRemoveNewMake, 2, 3);
@@ -107,6 +108,7 @@ public class PåfyldningsGui extends Application {
         opretBox.setAlignment(Pos.TOP_CENTER);
         opretBox.setSpacing(15);
         opretBox.getChildren().addAll(inputMedarbejder, cbxFlytFad, btnOpret);
+        inputMedarbejder.addObserver(btnOpret);
         pane.add(opretBox, 2, 6);
         btnOpret.setOnAction(e -> createPåfyldning());
     }
@@ -117,7 +119,7 @@ public class PåfyldningsGui extends Application {
     }
 
     //Tilføj en newMake til valgte newMakes, med mængde
-    //Todo put ind i ObjectList
+    //Todo put ind i ObjectList??
     public void addNewMake() {
         NewMake valgteNewMake = (NewMake) pickerNewMakes.getSelectionModel().getSelectedItem();
         double mængde = Double.parseDouble(inputMængde.getText());

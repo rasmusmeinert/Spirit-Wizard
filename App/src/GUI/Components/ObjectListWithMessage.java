@@ -18,6 +18,8 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
     private Validation validator;
 
 
+    //====================== Observers =======================================//
+
     public void addObserver(Observer observer) {
         observers.add(observer);
     }
@@ -30,6 +32,14 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
         }
     }
 
+    public void notifyCreateButton(boolean disable) {
+        for (Observer observer : observers) {
+            if (observer.getClass().equals(CreateButton.class)) {
+                observer.update(new UpdateMessage(this, disable));
+            }
+        }
+    }
+
     public void notifyPickers() {
         for (Observer observer : observers) {
             if (observer.getClass().equals(Picker.class)) {
@@ -38,6 +48,14 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
         }
     }
 
+    //=============================== Update ==============================================//
+
+    @Override
+    public void update(Object message) {
+        checkIfValid();
+    }
+
+    //================================================================================//
 
     public ObjectListWithMessage(Validation validator) {
         setSpacing(15);
@@ -69,20 +87,29 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
 
     //Todo virker kun med mængder, hjælp
     public void checkIfValid() {
-        if (!getItems().isEmpty()){
+        if (!getItems().isEmpty()) {
             double totalMængde = 0;
             for (Object object : listView.getItems()) {
                 MængdePåfyldt mængde = (MængdePåfyldt) object;
                 totalMængde += mængde.getMængde();
             }
-            if (validator.isValid(String.valueOf(totalMængde))){
+            if (validator.isValid(String.valueOf(totalMængde))) {
                 lblErrorMessage.setText("");
+                notifyCreateButton(false);
             } else {
                 lblErrorMessage.setText("Samlede mængde for høj");
+                notifyCreateButton(true);
             }
         } else {
             lblErrorMessage.setText("");
+            notifyCreateButton(true);
         }
+    }
+
+
+    public void removeSelectedItem() {
+        removeObject(getSelectedItem());
+        checkIfValid();
     }
 
     public void removeObject(Object object) {
@@ -97,14 +124,6 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
         return listView.getItems();
     }
 
-    public void removeSelectedItem() {
-        removeObject(getSelectedItem());
-        checkIfValid();
-    }
 
-    @Override
-    public void update(Object message) {
-        checkIfValid();
-    }
 }
 

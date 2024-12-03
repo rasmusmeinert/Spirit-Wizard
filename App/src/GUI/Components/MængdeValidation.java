@@ -33,7 +33,7 @@ public class MængdeValidation implements Observer, Validation {
     }
 
     //TODO
-    //Det her kan måske gøres generisk i stedet for det her helvede
+    //Det her kan måske gøres mere generisk i stedet for det her helvede
     @Override
     public void update(Object message) {
         if (message != null) {
