@@ -20,6 +20,10 @@ public class NewMake implements Printable, Serializable {
         this.alkoholPct = alkoholPct;
     }
 
+    public void reducerMængde(double mængdeTappet){
+        aktuelMængde -= mængdeTappet;
+    }
+
     @Override
     public String toString() {
         return navn;
