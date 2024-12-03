@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CreateButton extends Button implements Observer {
-    Map<Object, boolean> flags = new HashMap<Object, boolean>();
+    //Map<Object, boolean> flags = new HashMap<Object, boolean>();
 
     public CreateButton() {
         setMinSize(100, 50);
