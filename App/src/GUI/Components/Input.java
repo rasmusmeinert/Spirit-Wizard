@@ -1,35 +1,45 @@
 package GUI.Components;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Input extends VBox implements Observer {
+/**
+ * A label and a textfield, with a validation
+ */
+public class Input extends GridPane implements Observer {
     private final Label label = new Label();
     private final TextField textField = new TextField();
     private final Label errorMessage = new Label("");
     private final Validation validation;
     private final List<Observer> observers = new ArrayList<>();
 
-    //Creates a Label with given String, also creates a TextField, with a Validator that checks if input is correct
+    /**
+    Creates a Label with given String, also creates a TextField, with a Validator that checks if input is correct
+     */
     public Input(String labelString, Validation validation) {
         label.setText(labelString);
         textField.setMaxWidth(150);
+//        setGridLinesVisible(true);
 
-        HBox box = new HBox();
-        box.setSpacing(10);
-        box.setAlignment(Pos.BASELINE_LEFT);
-        box.getChildren().addAll(label, textField);
-        getChildren().addAll(box, errorMessage);
+
+        add(label,0,0);
+        add(textField,1,0);
+        add(errorMessage,1,1);
+        GridPane.setHalignment(textField, HPos.RIGHT);
+
+
 
         errorMessage.setStyle("-fx-text-fill: red");
 
-        setSpacing(5);
+        setVgap(5);
         setAlignment(Pos.CENTER);
         this.validation = validation;
         textField.textProperty().addListener(e -> {
@@ -41,11 +51,21 @@ public class Input extends VBox implements Observer {
         return textField.getText();
     }
 
+
+    public void setWidth(int width){
+        label.setMinWidth(width);
+    }
+
+    public int getTextAsInt(){
+        return Integer.parseInt(getText());
+    }
     public TextField getTextField() {
         return textField;
     }
 
-    //Checks if input is correct, also notifies observing buttons
+    /**
+     *Checks if input is correct, also notifies observing buttons
+     */
     public void validateTextField() {
         if (validation.isValid(textField.getText())) {
             textField.setStyle("");
@@ -63,7 +83,10 @@ public class Input extends VBox implements Observer {
         }
     }
 
-    //Toggles button
+    /**
+     * Toggles observing buttons
+     * @param disable
+     */
     public void notifyObservers(Boolean disable) {
         for (Observer observer : observers) {
             if (observer.getClass().equals(CreateButton.class)) {

@@ -3,6 +3,7 @@ package Model;
 import Controller.Controller;
 import Controller.Storage;
 import GUI.PåfyldningsGui;
+import GUI.RegistrerLagerGUI;
 import GUI.RegistrerProduktGUI;
 import Storage.ListStorage;
 import javafx.application.Application;
@@ -25,8 +26,7 @@ public class App {
         }
 
         System.out.println(Controller.getPåfyldninger());
-
-        Application.launch(RegistrerProduktGUI.class);
+        Application.launch(RegistrerLagerGUI.class);
 
         ListStorage.saveStorage(storage);
     }
@@ -41,7 +41,6 @@ public class App {
         Påfyldning påfyldning1 = Controller.createPåfyldning("Martin",LocalDate.now(),fad1, mængderPåfyldt);
 
         //Test af getTapbarePåfyldninger
-        System.out.println("\n hej");
         NewMake NM12P = Controller.createNewMake("NM12P", LocalDateTime.of(2012, 10, 12, 12, 24), LocalDateTime.of(2012,10,12,22,30), 20, 64);
         NewMake NM22P = Controller.createNewMake("NM22P", LocalDateTime.of(2022, 10, 12, 12, 24), LocalDateTime.of(2022,10,12,22,30), 20, 64);
         Fad fad3 = Controller.createFad(2, "ask", 100, "Sherry");
@@ -59,8 +58,10 @@ public class App {
         List<Tapning> tapninger1 = List.of(tapning1);
         WhiskyProdukt whiskyProdukt = Controller.createWhiskyProdukt("Kaptajnens", 52, 0.5, "Kaptajnens pishamrende skipperskrås whisky!", 0.1, tapninger1);
         System.out.println(whiskyProdukt);
-        System.out.println("hup");
         System.out.println(whiskyProdukt.print());
-        System.out.println("hup");
+
+        //Test af Lager
+        Lager lager1 = Controller.createLager("Lars Lager", "Lars Tyndskids Mark 7, 8450 Hammel", 15, 7);
+        System.out.println(lager1);
     }
 }
