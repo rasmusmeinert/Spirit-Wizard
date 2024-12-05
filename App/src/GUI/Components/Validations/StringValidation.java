@@ -1,6 +1,6 @@
-package GUI.Components;
+package GUI.Components.Validations;
 
-public class StringValidation implements Validation{
+public class StringValidation implements Validation {
     private String errorMessage = "Indtast et ord";
     @Override
     public boolean isValid(String string) {

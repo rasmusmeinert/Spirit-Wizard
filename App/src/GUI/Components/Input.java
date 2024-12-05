@@ -1,5 +1,8 @@
 package GUI.Components;
 
+import GUI.Components.DynamicLabels.AntalFlaskerLabel;
+import GUI.Components.DynamicLabels.DynamicLabel;
+import GUI.Components.Validations.Validation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -45,6 +48,15 @@ public class Input extends VBox implements Observer {
         return textField;
     }
 
+    public Double getTextAsDouble() {
+        try {
+            return Double.parseDouble(this.textField.getText());
+        }
+        catch (NumberFormatException e) {
+            return 0.;
+        }
+    }
+
     //Checks if input is correct, also notifies observing buttons
     public void validateTextField() {
         if (validation.isValid(textField.getText())) {
@@ -67,8 +79,15 @@ public class Input extends VBox implements Observer {
     public void notifyObservers(Boolean disable) {
         for (Observer observer : observers) {
             if (observer.getClass().equals(CreateButton.class)) {
-                observer.update(new UpdateMessage(this,disable));
-            } else {
+                observer.update(new UpdateMessage(this, disable));
+            }
+            else if(observer.getClass().equals(AntalFlaskerLabel.class)) {
+                observer.update(new UpdateMessage(this.label.getText(), this.getTextAsDouble()));
+            }
+            else if(observer.getClass().getSuperclass().equals(DynamicLabel.class)) {
+                observer.update(this.getTextAsDouble());
+            }
+            else {
                 observer.update(disable);
             }
         }
@@ -79,8 +98,16 @@ public class Input extends VBox implements Observer {
         notifyObservers(true);
     }
 
+    public void setTextFieldPrefWidth(int size) {
+        textField.setPrefWidth(size);
+    }
+
     public void clear() {
         textField.clear();
+    }
+
+    public String getLabelText() {
+        return this.label.getText();
     }
 
     @Override

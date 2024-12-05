@@ -2,6 +2,9 @@ package GUI;
 
 import Controller.Controller;
 import GUI.Components.*;
+import GUI.Components.Validations.MængdeValidation;
+import GUI.Components.Validations.StringValidation;
+import GUI.Components.Validations.Validation;
 import Model.Fad;
 import Model.MængdePåfyldt;
 import Model.NewMake;
@@ -17,9 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PåfyldningsGui extends Application {
     private final Validation mængdeValidation = new MængdeValidation();
@@ -46,6 +46,7 @@ public class PåfyldningsGui extends Application {
     public void start(Stage stage) throws Exception {
         GridPane pane = new GridPane();
         initContent(pane);
+        pane.setGridLinesVisible(true);
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
@@ -54,7 +55,7 @@ public class PåfyldningsGui extends Application {
     }
 
     public void initContent(GridPane pane) {
-//        pane.setGridLinesVisible(true);
+        pane.setGridLinesVisible(false);
         pane.setPadding(new Insets(15));
         pane.setHgap(15);
         pane.setVgap(15);

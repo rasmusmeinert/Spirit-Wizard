@@ -1,5 +1,6 @@
-package GUI.Components;
+package GUI.Components.Validations;
 
+import GUI.Components.Observer;
 import Model.Fad;
 import Model.NewMake;
 import Model.Påfyldning;
