@@ -1,9 +1,9 @@
-package GUI.Components;
+package GUI.Components.Validations;
 
 /**
  * A validation behaviour that checks if a given string is a valid number above 0
  */
-public class NumberValidation implements Validation{
+public class NumberValidation implements Validation {
     private String errorMessage = "Indtast et tal";
     @Override
     public boolean isValid(String string){

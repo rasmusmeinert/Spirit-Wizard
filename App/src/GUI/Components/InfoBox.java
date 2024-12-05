@@ -26,4 +26,9 @@ public class InfoBox extends TextArea implements Observer {
             setText(printableMessage.print());
         }
     }
+
+    @Override
+    protected double computePrefHeight(double v) {
+        return super.computePrefHeight(v);
+    }
 }

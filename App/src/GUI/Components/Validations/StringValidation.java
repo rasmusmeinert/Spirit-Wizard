@@ -1,10 +1,6 @@
-package GUI.Components;
+package GUI.Components.Validations;
 
-
-/**
- * A validation behaviour that checks if a given string only contains letters and spaces
- */
-public class StringValidation implements Validation{
+public class StringValidation implements Validation {
     private String errorMessage = "Indtast et ord";
     @Override
     public boolean isValid(String string) {

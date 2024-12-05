@@ -26,7 +26,9 @@ public class App {
         }
 
         System.out.println(Controller.getPåfyldninger());
-        Application.launch(RegistrerLagerGUI.class);
+
+        Application.launch(RegistrerProduktGUI.class);
+//        Application.launch(PåfyldningsGui.class);
 
         ListStorage.saveStorage(storage);
     }
@@ -41,11 +43,11 @@ public class App {
         Påfyldning påfyldning1 = Controller.createPåfyldning("Martin",LocalDate.now(),fad1, mængderPåfyldt);
 
         //Test af getTapbarePåfyldninger
-        NewMake NM12P = Controller.createNewMake("NM12P", LocalDateTime.of(2012, 10, 12, 12, 24), LocalDateTime.of(2012,10,12,22,30), 20, 64);
-        NewMake NM22P = Controller.createNewMake("NM22P", LocalDateTime.of(2022, 10, 12, 12, 24), LocalDateTime.of(2022,10,12,22,30), 20, 64);
+        NewMake NM12P = Controller.createNewMake("NM12P", LocalDateTime.of(2012, 10, 12, 12, 24), LocalDateTime.of(2012,10,12,22,30), 200, 64);
+        NewMake NM22P = Controller.createNewMake("NM22P", LocalDateTime.of(2022, 10, 12, 12, 24), LocalDateTime.of(2022,10,12,22,30), 200, 64);
         Fad fad3 = Controller.createFad(2, "ask", 100, "Sherry");
         Fad fad4 = Controller.createFad(4, "ask", 100, "Bourbon");
-        List<MængdePåfyldt> mængderPåfyldt2 = List.of(new MængdePåfyldt(NM12P,15));
+        List<MængdePåfyldt> mængderPåfyldt2 = List.of(new MængdePåfyldt(NM12P,150));
         List<MængdePåfyldt> mængderPåfyldt3 = List.of(new MængdePåfyldt(NM12P,15), (new MængdePåfyldt(NM22P, 20)));
         Påfyldning påfyldning2 = Controller.createPåfyldning("Jens", LocalDate.of(2018, 10, 12), fad2, mængderPåfyldt2);
         Påfyldning påfyldning3 = Controller.createPåfyldning("Magnus", LocalDate.of(2021, 12, 1), fad3, mængderPåfyldt3);
