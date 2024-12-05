@@ -25,10 +25,10 @@ public class App {
             Controller.setStorage(storage);
         }
 
-        System.out.println(Controller.getPåfyldninger());
+        Application.launch(RegistrerProduktGUI.class);
+//        Application.launch(PåfyldningsGui.class);
+//        Application.launch(RegistrerLagerGUI.class);
 
-//        Application.launch(RegistrerProduktGUI.class);
-        Application.launch(PåfyldningsGui.class);
 
         ListStorage.saveStorage(storage);
     }

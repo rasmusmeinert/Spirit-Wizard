@@ -1,5 +1,7 @@
 package GUI.Components;
 
+import GUI.Components.Observer;
+import GUI.Components.UpdateMessage;
 import javafx.scene.control.Button;
 
 import java.util.ArrayList;

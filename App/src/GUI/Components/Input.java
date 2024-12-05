@@ -32,6 +32,7 @@ public class Input extends GridPane implements Observer {
 //        setGridLinesVisible(true);
 
 
+
         add(label,0,0);
         add(textField,1,0);
         add(errorMessage,1,1);
@@ -42,6 +43,7 @@ public class Input extends GridPane implements Observer {
         errorMessage.setStyle("-fx-text-fill: red");
 
         setVgap(5);
+        setHgap(5);
         setAlignment(Pos.CENTER);
         this.validation = validation;
         textField.textProperty().addListener(e -> {
