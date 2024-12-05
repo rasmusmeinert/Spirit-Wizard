@@ -27,7 +27,8 @@ public abstract class Controller {
         return fad;
     }
 
-    /** Delete a "Fad"
+    /**
+     * Delete a "Fad"
      */
     public static void deleteFad(Fad fad) {
         storage.deleteFad(fad);
@@ -38,11 +39,11 @@ public abstract class Controller {
     }
 
     //Returnere tomme fade
-    public static List<Fad> getTommeFade(){
+    public static List<Fad> getTommeFade() {
         List<Fad> fade = storage.getFade();
         List<Fad> tommeFade = new ArrayList<>();
-        for (Fad fad : fade){
-            if (!fad.isPåfyldt()){
+        for (Fad fad : fade) {
+            if (!fad.isPåfyldt()) {
                 tommeFade.add(fad);
             }
         }
@@ -51,7 +52,8 @@ public abstract class Controller {
 
     // ======================= New Make ========================================
 
-    /** Create a "NewMake"
+    /**
+     * Create a "NewMake"
      * params not nullable
      */
     public static NewMake createNewMake(String navn, LocalDateTime startDato, LocalDateTime slutDato, double startMængde, double alkoholPct) {
@@ -61,7 +63,8 @@ public abstract class Controller {
     }
 
 
-    /** Delete a NewMake
+    /**
+     * Delete a NewMake
      */
     public static void deleteNewMake(NewMake newMake) {
         storage.deleteNewMake(newMake);
@@ -73,11 +76,11 @@ public abstract class Controller {
 
 
     //Returns NewMakes that are not used up
-    public static List<NewMake> getAktuelleNewMakes(){
+    public static List<NewMake> getAktuelleNewMakes() {
         List<NewMake> newMakes = storage.getNewMakes();
         List<NewMake> aktuelleNewMakes = new ArrayList<>();
-        for (NewMake newMake : newMakes){
-            if (newMake.getAktuelMængde() != 0){
+        for (NewMake newMake : newMakes) {
+            if (newMake.getAktuelMængde() > 0) {
                 aktuelleNewMakes.add(newMake);
             }
         }
@@ -87,8 +90,8 @@ public abstract class Controller {
     //================================== Påfyldning ===========================================================
 
 
-    public static Påfyldning createPåfyldning(String medarbejder, LocalDate dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt){
-        Påfyldning påfyldning = new Påfyldning(medarbejder,dato, fad, mængdePåfyldt);
+    public static Påfyldning createPåfyldning(String medarbejder, LocalDate dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt) {
+        Påfyldning påfyldning = new Påfyldning(medarbejder, dato, fad, mængdePåfyldt);
         fad.setPåfyldt(true);
         for (MængdePåfyldt mp : mængdePåfyldt) {
             mp.getNewMake().reducerMængde(mp.getMængde());
@@ -97,26 +100,27 @@ public abstract class Controller {
         return påfyldning;
     }
 
-    public static void deletePåfyldning(Påfyldning påfyldning){
+    public static void deletePåfyldning(Påfyldning påfyldning) {
         påfyldning.getFad().setPåfyldt(false);
         storage.deletePåfyldning(påfyldning);
     }
 
-    public static List<Påfyldning> getPåfyldninger(){
-       return storage.getPåfyldninger();
+    public static List<Påfyldning> getPåfyldninger() {
+        return storage.getPåfyldninger();
     }
 
     //========================================================================================================
 
-    public static MængdePåfyldt createMængdePåfyldt(NewMake newMake, double mængde){
+    public static MængdePåfyldt createMængdePåfyldt(NewMake newMake, double mængde) {
         return new MængdePåfyldt(newMake, mængde);
     }
 
     //=============================Tapninger===========================================================
 
-    /** Returner Påfyldninger som har lagret mindst tre år
+    /**
+     * Returner Påfyldninger som har lagret mindst tre år
      */
-    public static ArrayList<Påfyldning> getTapbarePåfyldninger(){
+    public static ArrayList<Påfyldning> getTapbarePåfyldninger() {
         ArrayList<Påfyldning> tapbarePåfyldninger = new ArrayList<>();
         for (Påfyldning p : storage.getPåfyldninger()) {
             //Tjekker om påfyldningens dato er mere end 3 år gammel
@@ -143,5 +147,13 @@ public abstract class Controller {
 
         storage.storeWhiskyProdukt(whiskyProdukt);
         return whiskyProdukt;
+    }
+
+    //====================================== Lager ========================================================
+
+    public static Lager createLager(String navn, String lokation, int reoler, int hylderPerReol) {
+        Lager lager = new Lager(navn, lokation, reoler, hylderPerReol);
+        storage.storeLager(lager);
+        return lager;
     }
 }

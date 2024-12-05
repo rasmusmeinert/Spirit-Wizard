@@ -6,6 +6,9 @@ import GUI.Components.DynamicLabels.AlderLabel;
 import GUI.Components.DynamicLabels.AntalFlaskerLabel;
 import GUI.Components.DynamicLabels.TypeLabel;
 import GUI.Components.Validations.*;
+import GUI.Components.Validations.MængdeValidation;
+import GUI.Components.Validations.Validation;
+import GUI.Components.CreateButton;
 import Model.Påfyldning;
 import Model.Tapning;
 import javafx.application.Application;
@@ -23,8 +26,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class RegistrerProduktGUI extends Application {
-    private final Validation MængdeValidation = new MængdeValidation();
-    private final Input inputMængde = new Input("Mængde: ", MængdeValidation);
+    private final Validation mængdeValidation = new MængdeValidation();
+    private final Input inputMængde = new Input("Mængde: ", mængdeValidation);
     private final Input inputFortynding = new Input("Fortynding (Liter): ", new NumberValidationWithZero());
     private final Input inputAlkoholProcent = new Input("ABV (%):", new NumberValidation());
     private final Input inputFlaskeStørrelse = new Input("Flaskestørrelse (Liter): ", new NumberValidation() );
@@ -61,7 +64,7 @@ public class RegistrerProduktGUI extends Application {
 
         Label lblFade = new Label("Fade");
         pickerPåfyldninger.addObserver(påfyldningsInfo);
-        pickerPåfyldninger.addObserver((Observer) MængdeValidation);
+        pickerPåfyldninger.addObserver((Observer) mængdeValidation);
         pickerPåfyldninger.addObserver(inputMængde);
         HBox mængdeBox = new HBox(inputMængde, btnAddPåfyldning);
         mængdeBox.setSpacing(15);

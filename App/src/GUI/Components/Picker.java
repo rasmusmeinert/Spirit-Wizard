@@ -11,6 +11,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
+/**
+ * A ComboBox, with a ListUpdater, that makes sure the correct items are available.
+ * If set to observe a ObjectList it will not contain the items in corresponding Objectlist
+ * @param <T>
+ */
 public class Picker<T> extends ComboBox implements Observer {
     private final List<Observer> observers = new ArrayList<>();
     private ListUpdater listUpdater;

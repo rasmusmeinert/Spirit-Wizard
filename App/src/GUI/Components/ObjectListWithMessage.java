@@ -12,6 +12,11 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * A Listview that holds objects,
+ * @param <T>
+ */
 public class ObjectListWithMessage<T> extends VBox implements Observer {
     private final List<Observer> observers = new ArrayList<>();
     private final ListView<T> listView = new ListView<>();
@@ -25,6 +30,10 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
         observers.add(observer);
     }
 
+    /**
+     * Notify butons that should be disabled if the list is empty
+     * @param disable
+     */
     public void notifyButtons(boolean disable) {
         for (Observer observer : observers) {
             if (observer.getClass().equals(CustomButton.class)) {
@@ -33,6 +42,11 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
         }
     }
 
+
+    /**
+     * Notify any create buttons with the ObjectList contains valid objects
+     * @param disable
+     */
     public void notifyCreateButton(boolean disable) {
         for (Observer observer : observers) {
             if (observer.getClass().equals(CreateButton.class)) {
@@ -41,6 +55,10 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
         }
     }
 
+
+    /**
+     * Notify any observing pickers, so they can change their contents to match this objectlist
+     */
     public void notifyPickers() {
         for (Observer observer : observers) {
             if (observer.getClass().equals(Picker.class)) {
@@ -57,7 +75,6 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
     }
 
     //=============================== Update ==============================================//
-
     @Override
     public void update(Object message) {
         checkIfValid();
@@ -108,7 +125,7 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
         listView.getSelectionModel().select(0);
     }
 
-    //Todo virker kun med mængder, hjælp
+    //TODO Gad godt at putte det her i et interfache
     public void checkIfValid() {
         if (!getItems().isEmpty()) {
             if (getItems().get(0).getClass().equals(MængdePåfyldt.class)) {

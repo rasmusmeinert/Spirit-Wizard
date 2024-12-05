@@ -6,6 +6,10 @@ import Model.Påfyldning;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Compares a list of Påfyldning, with the list in the storage, only returns the one that are unique to the storage
+ */
 public class PåfyldningsUpdater implements ListUpdater {
     @Override
     public List<Object> update(Object list) {

@@ -1,5 +1,7 @@
 package GUI.Components;
 
+import GUI.Components.Observer;
+import GUI.Components.UpdateMessage;
 import javafx.scene.control.Button;
 
 import java.util.ArrayList;
@@ -7,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * A button that observes multiple other objects, is enabled if all the observed objects are valid
+ */
 public class CreateButton extends Button implements Observer {
     Map<Object, Boolean> flags = new HashMap<Object, Boolean>();
 

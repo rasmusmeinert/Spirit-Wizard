@@ -6,6 +6,9 @@ import Model.MængdePåfyldt;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Compares a list of MængdePåfyldt, with the list of NewMakes the storage, only returns the one that are unique to the storage
+ */
 public class MængdeUpdater implements ListUpdater {
 
     public List<Object> update(Object list) {

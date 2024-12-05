@@ -5,6 +5,9 @@ import Model.Fad;
 import Model.NewMake;
 import Model.Påfyldning;
 
+/**
+ * A validation behaviour that checks if a given string is a number below a maximum value observed.
+ */
 public class MængdeValidation implements Observer, Validation {
     private double max;
     private String errorMessage;
@@ -35,6 +38,11 @@ public class MængdeValidation implements Observer, Validation {
 
     //TODO
     //Det her kan måske gøres mere generisk i stedet for det her helvede
+
+    /**
+     * Depending on what object the validation is send, it sets the max value to a corresponding number
+     * @param message
+     */
     @Override
     public void update(Object message) {
         if (message != null) {

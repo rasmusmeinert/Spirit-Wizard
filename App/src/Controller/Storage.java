@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.Fad;
-import Model.NewMake;
-import Model.Påfyldning;
-import Model.WhiskyProdukt;
+import Model.*;
 
 import java.util.List;
 
@@ -24,4 +21,8 @@ public interface Storage {
 
     void storeWhiskyProdukt(WhiskyProdukt whiskyProdukt);
     void deleteWhiskyProdukt(WhiskyProdukt whiskyProdukt);
+
+    void storeLager(Lager lager);
+
+    void deleteLager(Lager lager);
 }
