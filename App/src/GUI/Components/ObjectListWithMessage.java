@@ -1,6 +1,7 @@
 package GUI.Components;
 
 import GUI.Components.DynamicLabels.DynamicLabel;
+import GUI.Components.Validations.Validation;
 import Model.MængdePåfyldt;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;

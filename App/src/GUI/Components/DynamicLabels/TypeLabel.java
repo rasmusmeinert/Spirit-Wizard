@@ -37,14 +37,13 @@ public class TypeLabel extends DynamicLabel {
             }
         }
         //Hvis fortyndingsMængde ændres
-        else if (object.getClass().equals(String.class)){
-            String input = (String)object;
-            if (input.isEmpty() && typeNavn != "") {
+        else if (object.getClass().equals(Double.class)){
+            double input = (Double)object;
+            if (input > 0.01 && typeNavn != "") {
                 caskStrength = ", cask strength";
             }
-            else if (!input.isEmpty()){
-                String inputFortynding = String.valueOf(input);
-                fortyndingsMængde = Double.valueOf(inputFortynding);
+            else {
+                fortyndingsMængde = input;
                 caskStrength = "";
             }
         }

@@ -2,6 +2,7 @@ package GUI.Components;
 
 import GUI.Components.DynamicLabels.AntalFlaskerLabel;
 import GUI.Components.DynamicLabels.DynamicLabel;
+import GUI.Components.Validations.Validation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -9,9 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Input extends VBox implements Observer {
     private final Label label = new Label();
@@ -49,6 +48,15 @@ public class Input extends VBox implements Observer {
         return textField;
     }
 
+    public Double getTextAsDouble() {
+        try {
+            return Double.parseDouble(this.textField.getText());
+        }
+        catch (NumberFormatException e) {
+            return 0.;
+        }
+    }
+
     //Checks if input is correct, also notifies observing buttons
     public void validateTextField() {
         if (validation.isValid(textField.getText())) {
@@ -74,10 +82,10 @@ public class Input extends VBox implements Observer {
                 observer.update(new UpdateMessage(this, disable));
             }
             else if(observer.getClass().equals(AntalFlaskerLabel.class)) {
-                observer.update(new UpdateMessage(this.label.getText(), this.textField.getText()));
+                observer.update(new UpdateMessage(this.label.getText(), this.getTextAsDouble()));
             }
             else if(observer.getClass().getSuperclass().equals(DynamicLabel.class)) {
-                observer.update(textField.getText());
+                observer.update(this.getTextAsDouble());
             }
             else {
                 observer.update(disable);

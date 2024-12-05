@@ -2,6 +2,9 @@ package GUI;
 
 import Controller.Controller;
 import GUI.Components.*;
+import GUI.Components.Validations.MængdeValidation;
+import GUI.Components.Validations.StringValidation;
+import GUI.Components.Validations.Validation;
 import Model.Fad;
 import Model.MængdePåfyldt;
 import Model.NewMake;
@@ -17,9 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PåfyldningsGui extends Application {
     private final Validation mængdeValidation = new MængdeValidation();

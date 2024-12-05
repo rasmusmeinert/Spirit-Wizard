@@ -5,8 +5,8 @@ import GUI.Components.*;
 import GUI.Components.DynamicLabels.AlderLabel;
 import GUI.Components.DynamicLabels.AntalFlaskerLabel;
 import GUI.Components.DynamicLabels.TypeLabel;
+import GUI.Components.Validations.*;
 import Model.Påfyldning;
-import com.sun.scenario.effect.impl.prism.PrRenderInfo;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -18,21 +18,16 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.xml.stream.FactoryConfigurationError;
-
 public class RegistrerProduktGUI extends Application {
     private final Validation MængdeValidation = new MængdeValidation();
-    private final Validation StringValidation = new StringValidation();
-    private final Validation NumberValidation = new NumberValidation();
     private final Input inputMængde = new Input("Mængde: ", MængdeValidation);
-    private final Input inputFortynding = new Input("Fortynding (Liter): ", NumberValidation);
-    private final Input inputAlkoholProcent = new Input("ABV (%):", NumberValidation);
-    private final Input inputFlaskeStørrelse = new Input("Flaskestørrelse (Liter): ", NumberValidation );
-    private final Input inputNavn = new Input("Navn:", StringValidation);
+    private final Input inputFortynding = new Input("Fortynding (Liter): ", new NumberValidationWithZero());
+    private final Input inputAlkoholProcent = new Input("ABV (%):", new NumberValidation());
+    private final Input inputFlaskeStørrelse = new Input("Flaskestørrelse (Liter): ", new NumberValidation() );
+    private final Input inputNavn = new Input("Navn:", new StringValidation());
     private final InfoBox påfyldningsInfo = new InfoBox();
     private final Picker<Påfyldning> pickerPåfyldninger = new Picker<>(Controller.getTapbarePåfyldninger(), new PåfyldningsUpdater());
     private final ObjectListWithMessage<Påfyldning> lvwValgtePåfyldninger = new ObjectListWithMessage<>();
@@ -42,7 +37,7 @@ public class RegistrerProduktGUI extends Application {
     private final CreateButton btnOpret = new CreateButton("Opret");
     private final TypeLabel lblType = new TypeLabel("Type: ");
     private final AlderLabel lblAlder = new AlderLabel("Alder: ");
-    private final AntalFlaskerLabel lblAntalFlakser = new AntalFlaskerLabel("Antal flasker: ", inputFlaskeStørrelse, inputFortynding);
+    private final AntalFlaskerLabel lblAntalFlakser = new AntalFlaskerLabel("Antal flasker: ", inputFlaskeStørrelse.getLabelText(), inputFortynding.getLabelText());
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -152,7 +147,7 @@ public class RegistrerProduktGUI extends Application {
         pane.add(lblProduktInformation, 0, 4);
         HBox dynamiskeLabelsBox = new HBox(lblAntalFlakser, lblType, lblAlder);
         dynamiskeLabelsBox.setSpacing(60);
-        pane.add(dynamiskeLabelsBox, 0, 5, 1, 1);
+        pane.add(dynamiskeLabelsBox, 0, 5, 2, 1);
 
 //        Label lblBeskrivelse = new Label("Beskrivelse:");
 //        pane.add(lblBeskrivelse, 0, 10);

@@ -14,10 +14,10 @@ public class AntalFlaskerLabel extends DynamicLabel{
     private double mængdePåfyldninger;
     private double mængdeFortyning;
     private double flaskeStørrelse;
-    private Input input1;
-    private Input input2;
+    private String  input1;
+    private String  input2;
 
-    public AntalFlaskerLabel(String text, Input input1, Input input2) {
+    public AntalFlaskerLabel(String text, String  input1, String  input2) {
         super(text);
         labelName = text;
         this.input1 = input1;
@@ -50,11 +50,11 @@ public class AntalFlaskerLabel extends DynamicLabel{
             UpdateMessage um = (UpdateMessage) object;
             System.out.println(String.valueOf(um.getObject()));
             String inputLabel = String.valueOf(um.getObject());
-            String inputTal = String.valueOf(um.getMessage());
+            double input = (double) um.getMessage();
             //Hvis flaskestørrelse ændres
-            if (inputLabel.equals(input1.getLabelText())) {
-                if (!inputTal.isEmpty()) {
-                    flaskeStørrelse = Double.parseDouble(inputTal);
+            if (inputLabel.equals(input1)) {
+                if (input > 0.01) {
+                    flaskeStørrelse = input;
                 }
                 else {
                     flaskeStørrelse = 0;
@@ -62,9 +62,9 @@ public class AntalFlaskerLabel extends DynamicLabel{
                 }
             }
             //Hvis fortynding ændres
-            else if (inputLabel.equals(input2.getLabelText())) {
-                if (!inputTal.isEmpty()) {
-                    mængdeFortyning = Double.parseDouble(inputTal);
+            else if (inputLabel.equals(input2)) {
+                if (input > 0.01) {
+                    mængdeFortyning = input;
                 }
                 else {
                     mængdeFortyning = 0;
