@@ -27,8 +27,8 @@ public class App {
 
         System.out.println(Controller.getPåfyldninger());
 
-        Application.launch(RegistrerProduktGUI.class);
-//        Application.launch(PåfyldningsGui.class);
+//        Application.launch(RegistrerProduktGUI.class);
+        Application.launch(PåfyldningsGui.class);
 
         ListStorage.saveStorage(storage);
     }

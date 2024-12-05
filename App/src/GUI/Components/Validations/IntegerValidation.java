@@ -1,6 +1,8 @@
-package GUI.Components;
+package GUI.Components.Validations;
 
-public class IntegerValidation implements Validation{
+import GUI.Components.Validations.Validation;
+
+public class IntegerValidation implements Validation {
     private String errorMessage = "Indtast et heltal";
     @Override
     public boolean isValid(String string){

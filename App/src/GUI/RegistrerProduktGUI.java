@@ -22,8 +22,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class RegistrerProduktGUI extends Application {
-    private final Validation MængdeValidation = new MængdeValidation();
-    private final Input inputMængde = new Input("Mængde: ", MængdeValidation);
+    private final Validation mængdeValidation = new MængdeValidation();
+    private final Input inputMængde = new Input("Mængde: ", mængdeValidation);
     private final Input inputFortynding = new Input("Fortynding (Liter): ", new NumberValidationWithZero());
     private final Input inputAlkoholProcent = new Input("ABV (%):", new NumberValidation());
     private final Input inputFlaskeStørrelse = new Input("Flaskestørrelse (Liter): ", new NumberValidation() );
@@ -60,7 +60,7 @@ public class RegistrerProduktGUI extends Application {
 
         Label lblFade = new Label("Fade");
         pickerPåfyldninger.addObserver(påfyldningsInfo);
-        pickerPåfyldninger.addObserver((Observer) MængdeValidation);
+        pickerPåfyldninger.addObserver((Observer) mængdeValidation);
         pickerPåfyldninger.addObserver(inputMængde);
         HBox mængdeBox = new HBox(inputMængde, btnAddPåfyldning);
         mængdeBox.setSpacing(15);

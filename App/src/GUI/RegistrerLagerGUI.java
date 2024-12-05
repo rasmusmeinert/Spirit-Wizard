@@ -2,6 +2,7 @@ package GUI;
 
 import Controller.Controller;
 import GUI.Components.*;
+import GUI.Components.Validations.*;
 import Model.Lager;
 import javafx.application.Application;
 import javafx.geometry.HPos;

@@ -1,5 +1,6 @@
 package GUI.Components;
 
+import GUI.Components.DynamicLabels.*;
 import javafx.geometry.HPos;
 import GUI.Components.Validations.Validation;
 import javafx.geometry.Pos;

@@ -1,4 +1,4 @@
-package GUI.Components;
+package GUI.Components.Validations;
 
 public class AdresseValidation implements Validation {
     private String errorMessage = "Indtast en Adresse";
