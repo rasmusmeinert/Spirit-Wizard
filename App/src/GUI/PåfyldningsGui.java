@@ -46,6 +46,7 @@ public class PåfyldningsGui extends Application {
     public void start(Stage stage) throws Exception {
         GridPane pane = new GridPane();
         initContent(pane);
+        pane.setGridLinesVisible(true);
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
@@ -54,7 +55,7 @@ public class PåfyldningsGui extends Application {
     }
 
     public void initContent(GridPane pane) {
-//        pane.setGridLinesVisible(true);
+        pane.setGridLinesVisible(false);
         pane.setPadding(new Insets(15));
         pane.setHgap(15);
         pane.setVgap(15);

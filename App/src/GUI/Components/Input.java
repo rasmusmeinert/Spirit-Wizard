@@ -1,5 +1,7 @@
 package GUI.Components;
 
+import GUI.Components.DynamicLabels.AntalFlaskerLabel;
+import GUI.Components.DynamicLabels.DynamicLabel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -7,7 +9,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Input extends VBox implements Observer {
     private final Label label = new Label();
@@ -67,8 +71,15 @@ public class Input extends VBox implements Observer {
     public void notifyObservers(Boolean disable) {
         for (Observer observer : observers) {
             if (observer.getClass().equals(CreateButton.class)) {
-                observer.update(new UpdateMessage(this,disable));
-            } else {
+                observer.update(new UpdateMessage(this, disable));
+            }
+            else if(observer.getClass().equals(AntalFlaskerLabel.class)) {
+                observer.update(new UpdateMessage(this.label.getText(), this.textField.getText()));
+            }
+            else if(observer.getClass().getSuperclass().equals(DynamicLabel.class)) {
+                observer.update(textField.getText());
+            }
+            else {
                 observer.update(disable);
             }
         }
@@ -79,8 +90,16 @@ public class Input extends VBox implements Observer {
         notifyObservers(true);
     }
 
+    public void setTextFieldPrefWidth(int size) {
+        textField.setPrefWidth(size);
+    }
+
     public void clear() {
         textField.clear();
+    }
+
+    public String getLabelText() {
+        return this.label.getText();
     }
 
     @Override

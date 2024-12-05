@@ -1,8 +1,8 @@
 package GUI.Components;
 
+import GUI.Components.DynamicLabels.DynamicLabel;
 import Model.MængdePåfyldt;
 import javafx.collections.ListChangeListener;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -43,6 +43,13 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
     public void notifyPickers() {
         for (Observer observer : observers) {
             if (observer.getClass().equals(Picker.class)) {
+                observer.update(listView.getItems());
+            }
+        }
+    }
+    public void notifyDynamicLabels() {
+        for (Observer observer : observers) {
+            if (observer.getClass().getSuperclass().equals(DynamicLabel.class)) {
                 observer.update(listView.getItems());
             }
         }
@@ -96,6 +103,7 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
     public void listChange() {
         notifyPickers();
         checkIfValid();
+        notifyDynamicLabels();
         listView.getSelectionModel().select(0);
     }
 
