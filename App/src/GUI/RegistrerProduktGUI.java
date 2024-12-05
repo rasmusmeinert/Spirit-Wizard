@@ -10,6 +10,7 @@ import GUI.Components.Validations.MængdeValidation;
 import GUI.Components.Validations.Validation;
 import GUI.Components.CreateButton;
 import Model.Påfyldning;
+import Model.Tapning;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -33,7 +34,7 @@ public class RegistrerProduktGUI extends Application {
     private final Input inputNavn = new Input("Navn:", new StringValidation());
     private final InfoBox påfyldningsInfo = new InfoBox();
     private final Picker<Påfyldning> pickerPåfyldninger = new Picker<>(Controller.getTapbarePåfyldninger(), new PåfyldningsUpdater());
-    private final ObjectListWithMessage<Påfyldning> lvwValgtePåfyldninger = new ObjectListWithMessage<>();
+    private final ObjectListWithMessage<Tapning> lvwValgtePåfyldninger = new ObjectListWithMessage<>();
     private final TextArea txtABeskerivelse = new TextArea();
     private final CustomButton btnAddPåfyldning = new CustomButton("+");
     private final CustomButton btnRemovePåfyldning = new CustomButton("-");
@@ -168,8 +169,8 @@ public class RegistrerProduktGUI extends Application {
     }
 
     public void addPåfyldning() {
-        Påfyldning valgtePåfyldning = (Påfyldning) pickerPåfyldninger.getSelectionModel().getSelectedItem();
-        lvwValgtePåfyldninger.getItems().add(valgtePåfyldning);
+        Tapning tapning = new Tapning(inputMængde.getTextAsDouble(), (Påfyldning) pickerPåfyldninger.getSelectionModel().getSelectedItem());
+        lvwValgtePåfyldninger.getItems().add(tapning);
         inputMængde.clear();
 
     }
