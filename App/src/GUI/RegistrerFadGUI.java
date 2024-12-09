@@ -1,6 +1,7 @@
 package GUI;
 
 import Controller.Controller;
+import GUI.Components.ConfirmationWindow;
 import GUI.Components.CreateButton;
 import GUI.Components.Input;
 import GUI.Components.Validations.*;
@@ -13,10 +14,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class RegistrerFadGUI extends Application {
+public class RegistrerFadGUI extends Tab {
     private final Input inputNummer = new Input("Nummer: ", new NumberValidation());
     private final Input inputTrætype = new Input("Trætype: ", new StringValidation());
     private final Input inputTidligereIndhold = new Input("Tidligere indhold: ", new StringValidation());
@@ -24,17 +26,20 @@ public class RegistrerFadGUI extends Application {
 
     private final CreateButton btnCreate = new CreateButton();
 
-    @Override
-    public void start(Stage stage) throws Exception {
+
+    public RegistrerFadGUI(String s) {
+        super(s);
         GridPane pane = new GridPane();
         initContent(pane);
+        setContent(pane);
 
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setMinHeight(650);
-        stage.setMinWidth(650);
-        stage.show();
+    }
+
+    public void clearContent() {
+        inputNummer.clear();
+        inputStørrelse.clear();
+        inputTidligereIndhold.clear();
+        inputTrætype.clear();
     }
 
     public void initContent(GridPane pane) {
@@ -45,7 +50,7 @@ public class RegistrerFadGUI extends Application {
         pane.setVgap(10);
         int labelWidth = 95;
 
-        Label lblRegistrerFad = new Label("Registrer fad");
+        Label lblRegistrerFad = new Label("Opret Fad");
         lblRegistrerFad.setStyle("-fx-font-weight: bold");
         GridPane.setHalignment(lblRegistrerFad, HPos.CENTER);
         pane.add(lblRegistrerFad, 0, 0);
@@ -66,13 +71,19 @@ public class RegistrerFadGUI extends Application {
         inputStørrelse.setWidth(labelWidth);
         inputStørrelse.addObserver(btnCreate);
 
-        pane.add(btnCreate,0,5);
-        GridPane.setHalignment(btnCreate,HPos.CENTER);
+        pane.add(btnCreate, 0, 5);
+        GridPane.setHalignment(btnCreate, HPos.CENTER);
         btnCreate.setOnAction(e -> opretFad());
     }
 
-    public void opretFad(){
-        Fad fad = Controller.createFad(inputNummer.getTextAsInt(), inputTrætype.getText(),inputStørrelse.getTextAsDouble(),inputTidligereIndhold.getText());
-        System.out.println(fad);
+    public void opretFad() {
+        Fad fad = new Fad(inputNummer.getTextAsInt(), inputTrætype.getText(), inputStørrelse.getTextAsDouble(), inputTidligereIndhold.getText());
+        ConfirmationWindow alert = new ConfirmationWindow(fad);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == alert.getButtonTypes().get(1)) {
+                Controller.createFad(inputNummer.getTextAsInt(), inputTrætype.getText(), inputStørrelse.getTextAsDouble(), inputTidligereIndhold.getText());
+                clearContent();
+            }
+        });
     }
 }

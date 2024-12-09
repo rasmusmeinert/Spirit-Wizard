@@ -32,7 +32,7 @@ public class AntalFlaskerLabel extends DynamicLabel{
 
         //Hvis valgte fade ændres
         if (object.getClass().equals(ObservableListWrapper.class)) {
-            ArrayList<Tapning> liste = (ArrayList)object;
+            List<Tapning> liste = (List)object;
             if (liste.isEmpty()) {
                 mængdePåfyldninger = 0;
                 this.setText(labelName);

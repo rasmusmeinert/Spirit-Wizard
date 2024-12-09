@@ -43,7 +43,6 @@ public class RegistrerProduktGUI extends Tab implements Observer {
     private final AlderLabel lblAlder = new AlderLabel("Alder: ");
     private final AntalFlaskerLabel lblAntalFlakser = new AntalFlaskerLabel("Antal flasker: ", inputFlaskeStørrelse.getLabelText(), inputFortynding.getLabelText());
 
-
     public RegistrerProduktGUI(String s) {
         super(s);
         GridPane pane = new GridPane();
@@ -59,6 +58,7 @@ public class RegistrerProduktGUI extends Tab implements Observer {
         inputFortynding.clear();
         inputMængde.clear();
         inputNavn.clear();
+        txtABeskerivelse.clear();
         lvwValgtePåfyldninger.getItems().clear();
         pickerPåfyldninger.getSelectionModel().select(0);
     }
@@ -177,12 +177,17 @@ public class RegistrerProduktGUI extends Tab implements Observer {
         pickerPåfyldninger.getItems().setAll(Controller.getTapbarePåfyldninger());
     }
 
+
     public void opretWhiskyProdukt() {
         ArrayList<Tapning> tapninger = new ArrayList<>(lvwValgtePåfyldninger.getItems());
-        Controller.createWhiskyProdukt(inputNavn.getText(), inputAlkoholProcent.getTextAsDouble(), inputFlaskeStørrelse.getTextAsDouble(), txtABeskerivelse.getText(), inputFortynding.getTextAsDouble(), tapninger);
-        lvwValgtePåfyldninger.getItems().clear();
-        inputNavn.clear();
-        txtABeskerivelse.clear();
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(inputNavn.getText(), inputAlkoholProcent.getTextAsDouble(), inputFlaskeStørrelse.getTextAsDouble(), txtABeskerivelse.getText(), inputFortynding.getTextAsDouble(), tapninger);
+        ConfirmationWindow alert = new ConfirmationWindow(whiskyProdukt);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == alert.getButtonTypes().get(1)){
+                Controller.createWhiskyProdukt(inputNavn.getText(), inputAlkoholProcent.getTextAsDouble(), inputFlaskeStørrelse.getTextAsDouble(), txtABeskerivelse.getText(), inputFortynding.getTextAsDouble(), tapninger);
+                clearContent();
+            }
+        });
     }
 }
 

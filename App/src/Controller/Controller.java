@@ -229,7 +229,6 @@ public abstract class Controller {
     //================================== WhiskyProdukt =====================================================
     public static WhiskyProdukt createWhiskyProdukt(String navn, double alkoholProcent, double flaskeStørrelse, String beskrivelse, double mængdeVandTilFortynding, ArrayList<Tapning> tapninger) {
         WhiskyProdukt whiskyProdukt = new WhiskyProdukt(navn, alkoholProcent, flaskeStørrelse, beskrivelse, mængdeVandTilFortynding, tapninger);
-
         //Her reduceres mængden af de påfylgninger som er brugt, og fade markeres som tomme, hvis de bliver tømt.
         for (Tapning t : tapninger) {
             t.getPåfyldning().reducerMængde(t.getMængde());

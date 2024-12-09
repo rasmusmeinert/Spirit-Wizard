@@ -1,9 +1,11 @@
 package GUI;
 
 import Controller.Controller;
+import GUI.Components.ConfirmationWindow;
 import GUI.Components.CreateButton;
 import GUI.Components.Input;
 import GUI.Components.LocalDateTimePicker;
+import GUI.Components.Validations.AdresseValidation;
 import GUI.Components.Validations.LocalDateTimeValidator;
 import GUI.Components.Validations.NumberValidation;
 import GUI.Components.Validations.StringValidation;
@@ -15,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -25,8 +28,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class RegistrerNewMakeGUI extends Application {
-    private final Input inputNavn = new Input("Navn: ", new StringValidation());
+public class RegistrerNewMakeGUI extends Tab {
+    private final Input inputNavn = new Input("Navn: ", new AdresseValidation());
     private final Input inputStartDato = new Input("Start dato: ", new LocalDateTimeValidator());
     private final Input inputSlutDato = new Input("Slut dato: ", new LocalDateTimeValidator());
     private final Input inputMængde = new Input("Mængde (liter): ", new NumberValidation());
@@ -34,17 +37,12 @@ public class RegistrerNewMakeGUI extends Application {
 
     private final CreateButton btnCreate = new CreateButton();
 
-    @Override
-    public void start(Stage stage) throws Exception {
+
+    public RegistrerNewMakeGUI(String s) {
+        super(s);
         GridPane pane = new GridPane();
         initContent(pane);
-
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setMinHeight(650);
-        stage.setMinWidth(650);
-        stage.show();
+        setContent(pane);
     }
 
     public void initContent(GridPane pane) {
@@ -55,7 +53,7 @@ public class RegistrerNewMakeGUI extends Application {
         pane.setVgap(10);
         int labelWidth = 110;
 
-        Label lblRegistrerFad = new Label("Registrer new make");
+        Label lblRegistrerFad = new Label("Opret NewMake");
         lblRegistrerFad.setStyle("-fx-font-weight: bold");
         GridPane.setHalignment(lblRegistrerFad, HPos.CENTER);
         pane.add(lblRegistrerFad, 0, 0);
@@ -95,12 +93,23 @@ public class RegistrerNewMakeGUI extends Application {
         }
     }
 
-    public void opretNewMake(){
-        NewMake newMake = Controller.createNewMake(inputNavn.getText(), LocalDateTime.parse(inputStartDato.getText()), LocalDateTime.parse(inputSlutDato.getText()), inputMængde.getTextAsDouble(), inputAlkoholProcent.getTextAsDouble());
+    private void clearContent(){
         inputNavn.clear();
         inputStartDato.clear();
         inputSlutDato.clear();
         inputMængde.clear();
         inputAlkoholProcent.clear();
+
+    }
+
+    public void opretNewMake(){
+        NewMake newMake = new NewMake(inputNavn.getText(), LocalDateTime.parse(inputStartDato.getText()), LocalDateTime.parse(inputSlutDato.getText()), inputMængde.getTextAsDouble(), inputAlkoholProcent.getTextAsDouble());
+        ConfirmationWindow alert = new ConfirmationWindow(newMake);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == alert.getButtonTypes().get(1)){
+                Controller.createNewMake(inputNavn.getText(), LocalDateTime.parse(inputStartDato.getText()), LocalDateTime.parse(inputSlutDato.getText()), inputMængde.getTextAsDouble(), inputAlkoholProcent.getTextAsDouble());
+                clearContent();
+            }
+        });
     }
 }
