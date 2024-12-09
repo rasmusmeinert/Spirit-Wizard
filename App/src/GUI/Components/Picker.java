@@ -26,6 +26,7 @@ public class Picker<T> extends ComboBox implements Observer {
         setOnAction(e -> onAction());
         getSelectionModel().select(0);
         this.listUpdater = listUpdater;
+        onAction();
     }
 
     public Picker(Collection list) {
@@ -47,6 +48,7 @@ public class Picker<T> extends ComboBox implements Observer {
     @Override
     public void update(Object message) {
         getItems().setAll(listUpdater.update(message));
+        onAction();
         getSelectionModel().select(0);
     }
 

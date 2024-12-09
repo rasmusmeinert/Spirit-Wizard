@@ -16,10 +16,10 @@ public class IntegerValidationWithMax implements Validation, Observer {
     public boolean isValid(String string) {
         try {
             int num = Integer.parseInt(string);
-            if (num <= 0){
-                errorMessage =  "Indtast et tal over 0";
+            if (num <= 0) {
+                errorMessage = "Indtast et tal over 0";
                 return false;
-            } else if (num > max){
+            } else if (num > max) {
                 errorMessage = "Indtast et tal under " + max;
                 return false;
             } else {
@@ -37,13 +37,16 @@ public class IntegerValidationWithMax implements Validation, Observer {
 
     @Override
     public void update(Object message) {
-        if (message.getClass().equals(Lager.class)){
-            Lager lager = (Lager) message;
-            if (lookingFor.equalsIgnoreCase("Reoler")){
-                max = lager.getReoler().size();
-            } else if (lookingFor.equalsIgnoreCase("Hylder")){
-                max = lager.getHylderPerReol();
+        if (message != null) {
+            if (message.getClass().equals(Lager.class)) {
+                Lager lager = (Lager) message;
+                if (lookingFor.equalsIgnoreCase("Reoler")) {
+                    max = lager.getReoler().size();
+                } else if (lookingFor.equalsIgnoreCase("Hylder")) {
+                    max = lager.getHylderPerReol();
+                }
             }
+
         }
     }
 }

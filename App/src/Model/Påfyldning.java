@@ -2,17 +2,18 @@ package Model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Påfyldning implements Serializable, Printable {
     private String medarbejder;
     private LocalDate dato;
     private Fad fad;
-    private List<MængdePåfyldt> mængdePåfyldt;
+    private ArrayList<MængdePåfyldt> mængdePåfyldt;
     private double samletMængde;
     private double samletMængdePåfyldt;
 
-    public Påfyldning(String medarbejder, LocalDate dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt) {
+    public Påfyldning(String medarbejder, LocalDate dato, Fad fad, ArrayList<MængdePåfyldt> mængdePåfyldt) {
         this.medarbejder = medarbejder;
         this.dato = dato;
         this.fad = fad;

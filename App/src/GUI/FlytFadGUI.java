@@ -1,10 +1,7 @@
 package GUI;
 
 import Controller.Controller;
-import GUI.Components.CreateButton;
-import GUI.Components.InfoBox;
-import GUI.Components.Input;
-import GUI.Components.Picker;
+import GUI.Components.*;
 import GUI.Components.Validations.IntegerValidation;
 import GUI.Components.Validations.IntegerValidationWithMax;
 import Model.Fad;
@@ -15,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 
-public class FlytFadGUI extends Tab {
+public class FlytFadGUI extends Tab implements Observer {
     private final IntegerValidationWithMax hylderValidation = new IntegerValidationWithMax("Hylder");
     private final IntegerValidationWithMax reolerValidation = new IntegerValidationWithMax("Reoler");
     private final Input inputReol = new Input("Reol", reolerValidation);
@@ -35,6 +32,7 @@ public class FlytFadGUI extends Tab {
         selectedProperty().addListener(e -> clearContent());
         initContent(pane);
         setContent(pane);
+        Controller.addObserver(this);
     }
 
     private void clearContent() {
@@ -75,5 +73,13 @@ public class FlytFadGUI extends Tab {
         inputReol.addObserver(btnFlyt);
         inputHylde.addObserver(btnFlyt);
         pane.add(btnFlyt,1,7);
+    }
+
+    @Override
+    public void update(Object message) {
+        pickerFad.getItems().setAll(Controller.getFade());
+        pickerFad.getSelectionModel().select(0);
+        pickerLager.getItems().setAll(Controller.getLagere());
+        pickerLager.getSelectionModel().select(0);
     }
 }

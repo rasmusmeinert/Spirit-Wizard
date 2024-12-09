@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class PåfyldningsGui extends Tab implements Observer {
     private final Validation mængdeValidation = new MængdeValidation();
@@ -37,7 +38,7 @@ public class PåfyldningsGui extends Tab implements Observer {
     private final Picker<Fad> pickerFad = new Picker<>(Controller.getTommeFade());
 
     private final Validation fadValidation = new MængdeValidation();
-    private final ObjectListWithMessage<MængdePåfyldt> olValgteNewMakes = new ObjectListWithMessage<>(fadValidation);
+    private final ObjectListWithMessage<MængdePåfyldt> olValgteNewMakes = new ObjectListWithMessage<MængdePåfyldt>(fadValidation);
 
     private final CustomButton btnAddNewMake = new CustomButton("+");
     private final CustomButton btnRemoveNewMake = new CustomButton("-");
@@ -141,11 +142,12 @@ public class PåfyldningsGui extends Tab implements Observer {
     public void createPåfyldning() {
         Fad fad = (Fad) pickerFad.getSelectionModel().getSelectedItem();
         String medarbejder = inputMedarbejder.getText();
-        Påfyldning påfyldning = new Påfyldning(medarbejder,LocalDate.now(),fad,olValgteNewMakes.getItems());
+        ArrayList<MængdePåfyldt> valgteNewMakes = olValgteNewMakes.getAllItems();
+        Påfyldning påfyldning = new Påfyldning(medarbejder, LocalDate.now(), fad, valgteNewMakes);
         ConfirmationWindow alert = new ConfirmationWindow(påfyldning);
         alert.showAndWait().ifPresent(response -> {
             if (response == alert.getButtonTypes().get(1)) {
-                Controller.createPåfyldning(medarbejder, LocalDate.now(), fad, olValgteNewMakes.getItems());
+                Controller.createPåfyldning(medarbejder, LocalDate.now(), fad, valgteNewMakes);
                 clearContent();
             }
         });

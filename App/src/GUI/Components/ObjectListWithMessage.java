@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * A Listview that holds objects,
+ *
  * @param <T>
  */
 public class ObjectListWithMessage<T> extends VBox implements Observer {
@@ -32,6 +33,7 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
 
     /**
      * Notify butons that should be disabled if the list is empty
+     *
      * @param disable
      */
     public void notifyButtons(boolean disable) {
@@ -45,6 +47,7 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
 
     /**
      * Notify any create buttons with the ObjectList contains valid objects
+     *
      * @param disable
      */
     public void notifyCreateButton(boolean disable) {
@@ -66,6 +69,7 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
             }
         }
     }
+
     public void notifyDynamicLabels() {
         for (Observer observer : observers) {
             if (observer.getClass().getSuperclass().equals(DynamicLabel.class)) {
@@ -155,6 +159,14 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
     public void removeSelectedItem() {
         removeObject(getSelectedItem());
         checkIfValid();
+    }
+
+    public ArrayList<T> getAllItems() {
+        ArrayList<T> list = new ArrayList<>();
+        for (T item : listView.getItems()) {
+            list.add(item);
+        }
+        return list;
     }
 
     public void removeObject(Object object) {

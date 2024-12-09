@@ -55,7 +55,7 @@ public abstract class Controller {
 
     //Returnere tomme fade
     public static List<Fad> getTommeFade() {
-        List<Fad> fade = storage.getFade();
+        List<Fad> fade = getFade();
         List<Fad> tommeFade = new ArrayList<>();
         for (Fad fad : fade) {
             if (!fad.isPåfyldt()) {
@@ -177,7 +177,7 @@ public abstract class Controller {
     //================================== Påfyldning ===========================================================
 
 
-    public static Påfyldning createPåfyldning(String medarbejder, LocalDate dato, Fad fad, List<MængdePåfyldt> mængdePåfyldt) {
+    public static Påfyldning createPåfyldning(String medarbejder, LocalDate dato, Fad fad, ArrayList<MængdePåfyldt> mængdePåfyldt) {
         Påfyldning påfyldning = new Påfyldning(medarbejder, dato, fad, mængdePåfyldt);
         fad.setPåfyldt(true);
         for (MængdePåfyldt mp : mængdePåfyldt) {
