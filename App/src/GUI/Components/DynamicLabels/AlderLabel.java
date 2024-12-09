@@ -1,6 +1,7 @@
 package GUI.Components.DynamicLabels;
 
 import Model.Påfyldning;
+import Model.Tapning;
 import com.sun.javafx.collections.ObservableListWrapper;
 
 import java.time.LocalDate;
@@ -16,16 +17,17 @@ public class AlderLabel extends DynamicLabel{
     @Override
     public void update(Object object) {
         if (object.getClass().equals(ObservableListWrapper.class)) {
-            List<Påfyldning> liste = (List)object;
+            List<Tapning> liste = (List)object;
+
             if (liste.isEmpty()) {
                 this.setText(labelName);
             }
             else {
-                Påfyldning ældstePåfyldning = liste.get(0);
-                for (Object o : liste) {
-                    Påfyldning påfyldning = (Påfyldning) o;
-                    if (((Påfyldning) o).getDato().getYear() > ældstePåfyldning.getDato().getYear()) {
-                        ældstePåfyldning = (Påfyldning) o;
+                Påfyldning ældstePåfyldning = liste.get(0).getPåfyldning();
+                for (Tapning tapning : liste) {
+                    Påfyldning påfyldning = tapning.getPåfyldning();
+                    if (påfyldning.getDato().getYear() > ældstePåfyldning.getDato().getYear()) {
+                        ældstePåfyldning = påfyldning;
                     }
                 }
                 int alder = LocalDate.now().getYear() - ældstePåfyldning.getDato().getYear();

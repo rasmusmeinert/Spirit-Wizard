@@ -213,7 +213,7 @@ public abstract class Controller {
         ArrayList<Påfyldning> tapbarePåfyldninger = new ArrayList<>();
         for (Påfyldning p : storage.getPåfyldninger()) {
             //Tjekker om påfyldningens dato er mere end 3 år gammel
-            if (p.getDato().isBefore(LocalDate.now().minusYears(3))) {
+            if (p.getDato().isBefore(LocalDate.now().minusYears(3)) && p.getSamletMængde() > 0) {
                 tapbarePåfyldninger.add(p);
             }
         }

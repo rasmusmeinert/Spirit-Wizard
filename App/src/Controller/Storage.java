@@ -22,6 +22,8 @@ public interface Storage {
     void storeWhiskyProdukt(WhiskyProdukt whiskyProdukt);
     void deleteWhiskyProdukt(WhiskyProdukt whiskyProdukt);
 
+    List<WhiskyProdukt> getWhiskyProdukter();
+
     void storeLager(Lager lager);
 
     void deleteLager(Lager lager);

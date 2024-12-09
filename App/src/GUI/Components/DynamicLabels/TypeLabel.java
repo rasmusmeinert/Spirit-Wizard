@@ -38,7 +38,7 @@ public class TypeLabel extends DynamicLabel {
         //Hvis fortyndingsMængde ændres
         else if (object.getClass().equals(Double.class)){
             double input = (Double)object;
-            if (input > 0.01 && typeNavn != "") {
+            if (input < 0.01 && typeNavn != "") {
                 caskStrength = ", cask strength";
             }
             else {

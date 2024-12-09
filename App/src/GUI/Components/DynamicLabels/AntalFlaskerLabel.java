@@ -3,8 +3,10 @@ package GUI.Components.DynamicLabels;
 import GUI.Components.Input;
 import GUI.Components.UpdateMessage;
 import Model.Påfyldning;
+import Model.Tapning;
 import com.sun.javafx.collections.ObservableListWrapper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,15 +32,15 @@ public class AntalFlaskerLabel extends DynamicLabel{
 
         //Hvis valgte fade ændres
         if (object.getClass().equals(ObservableListWrapper.class)) {
-            List<Påfyldning> liste = (List)object;
+            ArrayList<Tapning> liste = (ArrayList)object;
             if (liste.isEmpty()) {
                 mængdePåfyldninger = 0;
                 this.setText(labelName);
             }
             else {
                 double udregnetMængdePåfyldninger = 0;
-                for (Påfyldning p : liste) {
-                    udregnetMængdePåfyldninger += p.getSamletMængde();
+                for (Tapning t : liste) {
+                    udregnetMængdePåfyldninger += t.getMængde();
                 }
                 mængdePåfyldninger = udregnetMængdePåfyldninger;
             }

@@ -22,6 +22,10 @@ public class ListStorage implements Storage, Serializable {
         return new ArrayList<>(newMakes);
     }
 
+    public List<WhiskyProdukt> getWhiskyProdukter() {
+        return new ArrayList<>(whiskyProdukter);
+    }
+
     public void storeFad(Fad fad) {
         fade.add(fad);
     }
@@ -45,7 +49,6 @@ public class ListStorage implements Storage, Serializable {
     public void deleteWhiskyProdukt(WhiskyProdukt whiskyProdukt) {
         whiskyProdukter.remove(whiskyProdukt);
     }
-
 
     public void storeLager(Lager lager) {
         lagere.add(lager);

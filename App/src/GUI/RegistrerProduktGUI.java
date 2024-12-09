@@ -23,6 +23,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class RegistrerProduktGUI extends Tab implements Observer {
     private final Validation mængdeValidation = new MængdeValidation();
     private final Input inputMængde = new Input("Mængde:", mængdeValidation);
@@ -96,6 +98,7 @@ public class RegistrerProduktGUI extends Tab implements Observer {
         lvwValgtePåfyldninger.addObserver(lblType);
         lvwValgtePåfyldninger.addObserver(lblAlder);
         lvwValgtePåfyldninger.addObserver(lblAntalFlakser);
+        lvwValgtePåfyldninger.addObserver(btnOpret);
 
         btnRemovePåfyldning.setOnAction(e -> removePåfyldning());
         HBox removeBtnBox = new HBox(btnRemovePåfyldning);
@@ -112,16 +115,20 @@ public class RegistrerProduktGUI extends Tab implements Observer {
         pane.add(horizontalSeparator, 0, 1, 2, 1);
 
         inputFortynding.addObserver(lblType);
-        inputFortynding.addObserver(btnOpret);
         inputFortynding.addObserver(lblAntalFlakser);
+        inputFortynding.setTextFieldPrefWidth(45);
+
         inputAlkoholProcent.addObserver(btnOpret);
-        HBox inputBox = new HBox(inputFlaskeStørrelse, inputFortynding, inputAlkoholProcent);
-        pane.add(inputBox, 0, 2, 2, 1);
+        inputAlkoholProcent.addObserver(btnOpret);
+        inputAlkoholProcent.setTextFieldPrefWidth(45);
 
         inputFlaskeStørrelse.setTextFieldPrefWidth(45);
         inputFlaskeStørrelse.addObserver(lblAntalFlakser);
-        inputFortynding.setTextFieldPrefWidth(45);
-        inputAlkoholProcent.setTextFieldPrefWidth(45);
+        inputFlaskeStørrelse.addObserver(btnOpret);
+
+        HBox inputBox = new HBox(inputFlaskeStørrelse, inputFortynding, inputAlkoholProcent);
+
+        pane.add(inputBox, 0, 2, 2, 1);
         inputBox.setSpacing(15);
 
         Label lblBeskrivelse = new Label("Beskrivelse:");
@@ -148,7 +155,7 @@ public class RegistrerProduktGUI extends Tab implements Observer {
         pane.add(dynamiskeLabelsBox, 0, 5, 2, 1);
 
         btnOpret.setAlignment(Pos.CENTER);
-        btnOpret.setOnAction(e -> opretProdukt());
+        btnOpret.setOnAction(e -> opretWhiskyProdukt());
         pane.add(btnOpret, 1, 6);
         GridPane.setHalignment(btnOpret, HPos.CENTER);
     }
@@ -160,9 +167,6 @@ public class RegistrerProduktGUI extends Tab implements Observer {
 
     }
 
-    public void opretProdukt() {
-
-    }
 
     private void removePåfyldning() {
         lvwValgtePåfyldninger.removeSelectedItem();
@@ -171,6 +175,14 @@ public class RegistrerProduktGUI extends Tab implements Observer {
     @Override
     public void update(Object message) {
         pickerPåfyldninger.getItems().setAll(Controller.getTapbarePåfyldninger());
+    }
+
+    public void opretWhiskyProdukt() {
+        ArrayList<Tapning> tapninger = new ArrayList<>(lvwValgtePåfyldninger.getItems());
+        Controller.createWhiskyProdukt(inputNavn.getText(), inputAlkoholProcent.getTextAsDouble(), inputFlaskeStørrelse.getTextAsDouble(), txtABeskerivelse.getText(), inputFortynding.getTextAsDouble(), tapninger);
+        lvwValgtePåfyldninger.getItems().clear();
+        inputNavn.clear();
+        txtABeskerivelse.clear();
     }
 }
 
