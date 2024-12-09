@@ -17,6 +17,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -25,9 +26,9 @@ import java.util.ArrayList;
 
 public class PåfyldningsGui extends Tab implements Observer {
     private final Validation mængdeValidation = new MængdeValidation();
-    private final Input inputMængde = new Input("Mængde", mængdeValidation);
+    private final Input inputMængde = new Input("Mængde:", mængdeValidation);
 
-    private final Input inputMedarbejder = new Input("Medarbejder", new StringValidation());
+    private final Input inputMedarbejder = new Input("Medarbejder:", new StringValidation());
 
     private final CheckBox cbxFlytFad = new CheckBox("Flyt Fad?");
 
@@ -72,44 +73,50 @@ public class PåfyldningsGui extends Tab implements Observer {
 
         Label lblNewMakes = new Label("New Makes");
         lblNewMakes.setStyle("-fx-font-weight: bold");
-        pane.add(lblNewMakes, 0, 0);
-        pane.add(pickerNewMakes, 0, 1);
         pickerNewMakes.addObserver(ibNewMakeInfo);
         pickerNewMakes.addObserver((Observer) mængdeValidation);
         pickerNewMakes.addObserver(inputMængde);
-        pane.add(ibNewMakeInfo, 0, 2, 2, 1);
-        pane.add(inputMængde, 0, 3);
         inputMængde.addObserver(btnAddNewMake);
-        pane.add(btnAddNewMake, 1, 3);
-        GridPane.setValignment(btnAddNewMake, VPos.TOP);
         btnAddNewMake.setOnAction(e -> addNewMake());
+        HBox mængdeBox = new HBox(inputMængde,btnAddNewMake);
+        VBox newMakesBox = new VBox(lblNewMakes,pickerNewMakes,ibNewMakeInfo,mængdeBox);
+        mængdeBox.setSpacing(15);
+        newMakesBox.setSpacing(15);
+        pane.add(newMakesBox,0,0);
 
         //==================== Valgte NewMakes ========================================//
 
         Label lblValgteNewMakes = new Label("Valgte NewMakes");
         lblValgteNewMakes.setStyle("-fx-font-weight: bold");
-        pane.add(lblValgteNewMakes, 2, 0);
-        GridPane.setHalignment(lblValgteNewMakes, HPos.CENTER);
-        pane.add(olValgteNewMakes, 2, 2, 1, 2);
+        ComboBox usynligComboBox = new ComboBox();
+        usynligComboBox.setVisible(false);
         olValgteNewMakes.addObserver(btnRemoveNewMake);
         olValgteNewMakes.addObserver(pickerNewMakes);
         olValgteNewMakes.addObserver(btnOpret);
-        GridPane.setHalignment(olValgteNewMakes, HPos.CENTER);
-        GridPane.setValignment(olValgteNewMakes, VPos.TOP);
-        pane.add(btnRemoveNewMake, 2, 3);
-        GridPane.setValignment(btnRemoveNewMake, VPos.TOP);
         btnRemoveNewMake.setOnAction(e -> removeNewMake());
+        HBox removeBtnBox = new HBox(btnRemoveNewMake);
+        VBox valgteNewMakesBox = new VBox(lblValgteNewMakes,usynligComboBox,olValgteNewMakes,removeBtnBox);
+        valgteNewMakesBox.setSpacing(15);
+        olValgteNewMakes.setSpacing(-17);
+        pane.add(valgteNewMakesBox,1,0);
+
+
+        //=================== Separators ==============================================//
+
+        Separator horizontalSeparator = new Separator();
+        horizontalSeparator.setPrefWidth(300);
+        pane.add(horizontalSeparator,0,1,2,1);
 
         //==================== Fade =================================================//
 
         Label lblFad = new Label("Fad");
         lblFad.setStyle("-fx-font-weight: bold");
-        pane.add(lblFad, 0, 4);
-        pane.add(pickerFad, 0, 5);
+        pane.add(lblFad, 0, 2);
+        pane.add(pickerFad, 0, 3);
         pickerFad.addObserver(ibFadInfo);
         pickerFad.addObserver((Observer) fadValidation);
         pickerFad.addObserver(olValgteNewMakes);
-        pane.add(ibFadInfo, 0, 6, 2, 1);
+        pane.add(ibFadInfo, 0, 4, 2, 1);
 
         //============================ Medarbejder / Fadflyt / Opret ===============//
 
@@ -118,7 +125,7 @@ public class PåfyldningsGui extends Tab implements Observer {
         opretBox.setSpacing(15);
         opretBox.getChildren().addAll(inputMedarbejder, cbxFlytFad, btnOpret);
         inputMedarbejder.addObserver(btnOpret);
-        pane.add(opretBox, 2, 6);
+        pane.add(opretBox, 1, 4);
         btnOpret.setOnAction(e -> createPåfyldning());
     }
 

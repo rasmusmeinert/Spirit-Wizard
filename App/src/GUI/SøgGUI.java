@@ -49,7 +49,7 @@ public class SøgGUI extends Tab {
 
     public void initContent(GridPane pane) {
 //        pane.setGridLinesVisible(true);
-        pane.setAlignment(Pos.CENTER);
+//        pane.setAlignment(Pos.CENTER);
         pane.setPadding(new Insets(15));
         pane.setHgap(15);
         pane.setVgap(10);

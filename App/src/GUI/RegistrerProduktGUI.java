@@ -25,8 +25,8 @@ import javafx.stage.Stage;
 
 public class RegistrerProduktGUI extends Tab implements Observer {
     private final Validation mængdeValidation = new MængdeValidation();
-    private final Input inputMængde = new Input("Mængde: ", mængdeValidation);
-    private final Input inputFortynding = new Input("Fortynding (Liter): ", new NumberValidationWithZero());
+    private final Input inputMængde = new Input("Mængde:", mængdeValidation);
+    private final Input inputFortynding = new Input("Fortynding (Liter):", new NumberValidationWithZero());
     private final Input inputAlkoholProcent = new Input("ABV (%):", new NumberValidation());
     private final Input inputFlaskeStørrelse = new Input("Flaskestørrelse (Liter): ", new NumberValidation());
     private final Input inputNavn = new Input("Navn:", new StringValidation());

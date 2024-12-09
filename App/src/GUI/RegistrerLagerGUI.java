@@ -18,10 +18,10 @@ import javafx.stage.Stage;
 
 public class RegistrerLagerGUI extends Tab {
     private final Validation integerValidator = new IntegerValidation();
-    private final Input inputNavn = new Input("Navn", new StringValidation());
-    private final Input inputAdresse = new Input("Adresse", new AdresseValidation());
-    private final Input inputReoler = new Input("Reoler", integerValidator);
-    private final Input inputHylder = new Input("Hylder pr Reol", integerValidator);
+    private final Input inputNavn = new Input("Navn:", new StringValidation());
+    private final Input inputAdresse = new Input("Adresse:", new AdresseValidation());
+    private final Input inputReoler = new Input("Reoler:", integerValidator);
+    private final Input inputHylder = new Input("Hylder pr Reol:", integerValidator);
 
     private final CreateButton btnCreate = new CreateButton();
 
