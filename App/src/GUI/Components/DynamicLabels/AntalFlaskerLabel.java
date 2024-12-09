@@ -6,6 +6,7 @@ import Model.Påfyldning;
 import Model.Tapning;
 import com.sun.javafx.collections.ObservableListWrapper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

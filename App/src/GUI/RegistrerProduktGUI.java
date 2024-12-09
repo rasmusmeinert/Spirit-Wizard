@@ -10,30 +10,27 @@ import GUI.Components.Validations.MængdeValidation;
 import GUI.Components.Validations.Validation;
 import GUI.Components.CreateButton;
 import Model.Påfyldning;
+import Model.WhiskyProdukt;
 import Model.Tapning;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class RegistrerProduktGUI extends Application {
+public class RegistrerProduktGUI extends Tab implements Observer {
     private final Validation mængdeValidation = new MængdeValidation();
-    private final Input inputMængde = new Input("Mængde: ", mængdeValidation);
-    private final Input inputFortynding = new Input("Fortynding (Liter): ", new NumberValidationWithZero());
+    private final Input inputMængde = new Input("Mængde:", mængdeValidation);
+    private final Input inputFortynding = new Input("Fortynding (Liter):", new NumberValidationWithZero());
     private final Input inputAlkoholProcent = new Input("ABV (%):", new NumberValidation());
-    private final Input inputFlaskeStørrelse = new Input("Flaskestørrelse (Liter): ", new NumberValidation() );
+    private final Input inputFlaskeStørrelse = new Input("Flaskestørrelse (Liter): ", new NumberValidation());
     private final Input inputNavn = new Input("Navn:", new StringValidation());
     private final InfoBox påfyldningsInfo = new InfoBox();
     private final Picker<Påfyldning> pickerPåfyldninger = new Picker<>(Controller.getTapbarePåfyldninger(), new PåfyldningsUpdater());
@@ -46,16 +43,24 @@ public class RegistrerProduktGUI extends Application {
     private final AlderLabel lblAlder = new AlderLabel("Alder: ");
     private final AntalFlaskerLabel lblAntalFlakser = new AntalFlaskerLabel("Antal flasker: ", inputFlaskeStørrelse.getLabelText(), inputFortynding.getLabelText());
 
-    @Override
-    public void start(Stage stage) throws Exception {
+    public RegistrerProduktGUI(String s) {
+        super(s);
         GridPane pane = new GridPane();
+        selectedProperty().addListener(e -> clearContent());
         initContent(pane);
-        pane.setGridLinesVisible(false);
+        setContent(pane);
+        Controller.addObserver(this);
+    }
 
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+    private void clearContent() {
+        inputFlaskeStørrelse.clear();
+        inputAlkoholProcent.clear();
+        inputFortynding.clear();
+        inputMængde.clear();
+        inputNavn.clear();
+        txtABeskerivelse.clear();
+        lvwValgtePåfyldninger.getItems().clear();
+        pickerPåfyldninger.getSelectionModel().select(0);
     }
 
     public void initContent(GridPane pane) {
@@ -66,6 +71,7 @@ public class RegistrerProduktGUI extends Application {
         //==================== Påfyldninger/Fade ==============================================//
 
         Label lblFade = new Label("Fade");
+        lblFade.setStyle("-fx-font-weight: bold");
         pickerPåfyldninger.addObserver(påfyldningsInfo);
         pickerPåfyldninger.addObserver((Observer) mængdeValidation);
         pickerPåfyldninger.addObserver(inputMængde);
@@ -80,10 +86,10 @@ public class RegistrerProduktGUI extends Application {
         pane.add(fadeBox, 0, 0);
 
 
-
         //====================== Valgte fade ==================
 
         Label lblValgteFade = new Label("Valgte fade");
+        lblValgteFade.setStyle("-fx-font-weight: bold");
         ComboBox usynligComboBox = new ComboBox();
         usynligComboBox.setVisible(false);
         lvwValgtePåfyldninger.addObserver(pickerPåfyldninger);
@@ -98,18 +104,8 @@ public class RegistrerProduktGUI extends Application {
         HBox removeBtnBox = new HBox(btnRemovePåfyldning);
         VBox valgteFadeBox = new VBox(lblValgteFade, usynligComboBox, lvwValgtePåfyldninger, removeBtnBox);
         valgteFadeBox.setSpacing(15);
+        lvwValgtePåfyldninger.setSpacing(-17);
         pane.add(valgteFadeBox, 1, 0);
-
-//        lblFade.setStyle("-fx-border-color: red;");
-//        pickerPåfyldninger.setStyle("-fx-border-color: blue;");
-//        påfyldningsInfo.setStyle("-fx-border-color: green;");
-//        mængdeBox.setStyle("-fx-border-color: yellow;");
-//
-//        lblValgteFade.setStyle("-fx-border-color: red;");
-//        usynligComboBox.setStyle("-fx-border-color: blue;");
-//        lvwValgtePåfyldninger.setStyle("-fx-border-color: green;");
-//        btnRemovePåfyldning.setStyle("-fx-border-color: yellow;");
-
 
 
         //=================== Inputs og seperators ===========================//
@@ -158,20 +154,10 @@ public class RegistrerProduktGUI extends Application {
         dynamiskeLabelsBox.setSpacing(60);
         pane.add(dynamiskeLabelsBox, 0, 5, 2, 1);
 
-//        Label lblBeskrivelse = new Label("Beskrivelse:");
-//        pane.add(lblBeskrivelse, 0, 10);
-//        lblBeskrivelse.setAlignment(Pos.TOP_LEFT);
-//        pane.add(txtABeskerivelse, 0, 11);
-
-
-        //============================ Opret ===============//
-
-        //Kan dette simplificeres da der ikke skal være andet sammen med opret knappen?
         btnOpret.setAlignment(Pos.CENTER);
         btnOpret.setOnAction(e -> opretWhiskyProdukt());
         pane.add(btnOpret, 1, 6);
         GridPane.setHalignment(btnOpret, HPos.CENTER);
-//        btnOpret.setOnAction(e -> createPåfyldning());
     }
 
     public void addPåfyldning() {
@@ -181,16 +167,27 @@ public class RegistrerProduktGUI extends Application {
 
     }
 
-    //TODO
-    // Virker ikke ordenligt endnu
+
     private void removePåfyldning() {
         lvwValgtePåfyldninger.removeSelectedItem();
     }
+
+    @Override
+    public void update(Object message) {
+        pickerPåfyldninger.getItems().setAll(Controller.getTapbarePåfyldninger());
+    }
+
+
     public void opretWhiskyProdukt() {
         ArrayList<Tapning> tapninger = new ArrayList<>(lvwValgtePåfyldninger.getItems());
-        Controller.createWhiskyProdukt(inputNavn.getText(), inputAlkoholProcent.getTextAsDouble(), inputFlaskeStørrelse.getTextAsDouble(), txtABeskerivelse.getText(), inputFortynding.getTextAsDouble(), tapninger);
-        lvwValgtePåfyldninger.getItems().clear();
-        inputNavn.clear();
-        txtABeskerivelse.clear();
+        WhiskyProdukt whiskyProdukt = new WhiskyProdukt(inputNavn.getText(), inputAlkoholProcent.getTextAsDouble(), inputFlaskeStørrelse.getTextAsDouble(), txtABeskerivelse.getText(), inputFortynding.getTextAsDouble(), tapninger);
+        ConfirmationWindow alert = new ConfirmationWindow(whiskyProdukt);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == alert.getButtonTypes().get(1)){
+                Controller.createWhiskyProdukt(inputNavn.getText(), inputAlkoholProcent.getTextAsDouble(), inputFlaskeStørrelse.getTextAsDouble(), txtABeskerivelse.getText(), inputFortynding.getTextAsDouble(), tapninger);
+                clearContent();
+            }
+        });
     }
 }
+

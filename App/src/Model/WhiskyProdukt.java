@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WhiskyProdukt implements Serializable, Printable {
@@ -14,10 +15,10 @@ public class WhiskyProdukt implements Serializable, Printable {
     private double flaskeStørrelse;
     private String beskrivelse; //Kan være null
     private int antalFlasker;
-    private double mængdeVandTilFortynding; //Kan være null
-    private List<Tapning> tapninger;
+    private double mængdeVandTilFortynding;
+    private ArrayList<Tapning> tapninger;
 
-    public WhiskyProdukt(String navn, double alkoholProcent, double flaskeStørrelse, String beskrivelse, double mængdeVandTilFortynding, List<Tapning> tapninger) {
+    public WhiskyProdukt(String navn, double alkoholProcent, double flaskeStørrelse, String beskrivelse, double mængdeVandTilFortynding, ArrayList<Tapning> tapninger) {
         this.navn = navn;
         this.alkoholProcent = alkoholProcent;
         this.flaskeStørrelse = flaskeStørrelse;

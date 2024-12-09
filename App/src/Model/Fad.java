@@ -8,6 +8,15 @@ public class Fad implements Printable, Serializable{
     private double størrelse;
     private String tidligereIndhold;
     private boolean påfyldt = false;
+    private Reol reol;
+
+    public Reol getReol() {
+        return reol;
+    }
+
+    public void setReol(Reol reol) {
+        this.reol = reol;
+    }
 
     public Fad(int nummer, String trætype, double størrelse, String tidligereIndhold) {
         this.nummer = nummer;
@@ -25,7 +34,7 @@ public class Fad implements Printable, Serializable{
 
     @Override
     public String toString() {
-        return "Fad " + nummer + ": "  + trætype + ", " + tidligereIndhold;
+        return "Fad " + nummer;
     }
 
     public boolean isPåfyldt(){
@@ -37,6 +46,19 @@ public class Fad implements Printable, Serializable{
         return String.format("Fad Nummer: %d \n" +
                 "Træsort: %s \n" +
                 "Størrelse: %.2f L \n" +
-                "Tidligere Indhold: %s \n", nummer, trætype,størrelse,tidligereIndhold);
+                "Tidligere Indhold: %s \n" +
+                "Påfyldt: %s", nummer, trætype,størrelse,tidligereIndhold, isPåfyldt() ? "Ja" : "Nej");
+    }
+
+    public int getNummer() {
+        return nummer;
+    }
+
+    public String getTrætype() {
+        return trætype;
+    }
+
+    public String getTidligereIndhold() {
+        return tidligereIndhold;
     }
 }
