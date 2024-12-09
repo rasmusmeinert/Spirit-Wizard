@@ -51,7 +51,7 @@ public class App {
         //Test af WhiskyProdukt
         Tapning tapning1 = Controller.createTapning(20, påfyldning2);
         Tapning tapning2 = Controller.createTapning(20, påfyldning3);
-        List<Tapning> tapninger1 = List.of(tapning1);
+        ArrayList<Tapning> tapninger1 = new ArrayList<>(List.of(tapning1));
         WhiskyProdukt whiskyProdukt = Controller.createWhiskyProdukt("Kaptajnens", 52, 0.5, "Kaptajnens pishamrende skipperskrås whisky!", 0.1, tapninger1);
 
         //Test af Lager

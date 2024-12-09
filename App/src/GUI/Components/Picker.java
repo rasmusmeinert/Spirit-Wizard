@@ -33,6 +33,7 @@ public class Picker<T> extends ComboBox implements Observer {
         getItems().setAll(list);
         setOnAction(e -> onAction());
         getSelectionModel().select(0);
+        onAction();
     }
     public void addObserver(Observer observer) {
         observers.add(observer);
