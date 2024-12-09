@@ -18,7 +18,6 @@ public class TypeLabel extends DynamicLabel {
 
     @Override
     public void update(Object object) {
-        System.out.println(object.getClass());
         //Hvis valgte fade ændres
         if (object.getClass().equals(ObservableListWrapper.class)) {
             List<Påfyldning> liste = (List)object;

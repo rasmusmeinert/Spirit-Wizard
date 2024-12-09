@@ -1,15 +1,28 @@
 package Controller;
 
+import GUI.Components.Observer;
 import Model.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class Controller {
+    private static final List<Observer> observers = new ArrayList<>();
     private static Storage storage;
+
+
+    public static void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public static void notifyObservers() {
+        observers.forEach(observer -> observer.update(""));
+    }
 
     public static void setStorage(Storage storage) {
         Controller.storage = storage;
@@ -24,6 +37,7 @@ public abstract class Controller {
     public static Fad createFad(int nummer, String trætype, double størrelse, String tidligereIndhold) {
         Fad fad = new Fad(nummer, trætype, størrelse, tidligereIndhold);
         storage.storeFad(fad);
+        notifyObservers();
         return fad;
     }
 
@@ -32,6 +46,7 @@ public abstract class Controller {
      */
     public static void deleteFad(Fad fad) {
         storage.deleteFad(fad);
+        notifyObservers();
     }
 
     public static List<Fad> getFade() {
@@ -50,6 +65,76 @@ public abstract class Controller {
         return tommeFade;
     }
 
+
+    /**
+     * Searches for a "fad" matching any of the search input
+     * Pre: Search inputs that dont matter should be null!
+     *
+     * @param nummer
+     * @param træType
+     * @param størrelse
+     * @param tidligereIndhold
+     * @param isPåfyldt
+     * @return
+     */
+    public static List<Fad> søgFad(Integer nummer, String træType, Double størrelse, String tidligereIndhold, boolean isPåfyldt) {
+        List<Fad> søgeResultat = storage.getFade();
+        Iterator<Fad> iter = søgeResultat.iterator();
+        if (nummer != null) {
+            while (iter.hasNext()) {
+                Fad fad = iter.next();
+                if (fad.getNummer() != nummer) {
+                    iter.remove();
+                }
+            }
+        }
+
+        iter = søgeResultat.iterator();
+
+        if (træType != null) {
+            while (iter.hasNext()) {
+                Fad fad = iter.next();
+                if (!fad.getTrætype().equalsIgnoreCase(træType)) {
+                    iter.remove();
+                }
+            }
+        }
+
+        iter = søgeResultat.iterator();
+
+        if (størrelse != null) {
+            while (iter.hasNext()) {
+                Fad fad = iter.next();
+                if (fad.getStørrelse() != størrelse) {
+                    iter.remove();
+                }
+            }
+
+        }
+
+        iter = søgeResultat.iterator();
+
+        if (tidligereIndhold != null) {
+            while (iter.hasNext()) {
+                Fad fad = iter.next();
+                if (!fad.getTidligereIndhold().equalsIgnoreCase(tidligereIndhold)) {
+                    iter.remove();
+                }
+            }
+
+        }
+
+        iter = søgeResultat.iterator();
+        while (iter.hasNext()) {
+            Fad fad = iter.next();
+            if (fad.isPåfyldt() != isPåfyldt) {
+                iter.remove();
+            }
+        }
+
+        return søgeResultat;
+    }
+
     // ======================= New Make ========================================
 
     /**
@@ -59,6 +144,7 @@ public abstract class Controller {
     public static NewMake createNewMake(String navn, LocalDateTime startDato, LocalDateTime slutDato, double startMængde, double alkoholPct) {
         NewMake newMake = new NewMake(navn, startDato, slutDato, startMængde, alkoholPct);
         storage.storeNewMake(newMake);
+        notifyObservers();
         return newMake;
     }
 
@@ -68,6 +154,7 @@ public abstract class Controller {
      */
     public static void deleteNewMake(NewMake newMake) {
         storage.deleteNewMake(newMake);
+        notifyObservers();
     }
 
     public static List<NewMake> getNewMakes() {
@@ -97,12 +184,14 @@ public abstract class Controller {
             mp.getNewMake().reducerMængde(mp.getMængde());
         }
         storage.storePåfyldning(påfyldning);
+        notifyObservers();
         return påfyldning;
     }
 
     public static void deletePåfyldning(Påfyldning påfyldning) {
         påfyldning.getFad().setPåfyldt(false);
         storage.deletePåfyldning(påfyldning);
+        notifyObservers();
     }
 
     public static List<Påfyldning> getPåfyldninger() {
@@ -133,6 +222,7 @@ public abstract class Controller {
 
     public static Tapning createTapning(double mængde, Påfyldning påfyldning) {
         Tapning tapning = new Tapning(mængde, påfyldning);
+        notifyObservers();
         return tapning;
     }
 
@@ -146,6 +236,7 @@ public abstract class Controller {
         }
 
         storage.storeWhiskyProdukt(whiskyProdukt);
+        notifyObservers();
         return whiskyProdukt;
     }
 
@@ -154,6 +245,16 @@ public abstract class Controller {
     public static Lager createLager(String navn, String lokation, int reoler, int hylderPerReol) {
         Lager lager = new Lager(navn, lokation, reoler, hylderPerReol);
         storage.storeLager(lager);
+        notifyObservers();
         return lager;
+    }
+
+    public static void deleteLager(Lager lager) {
+        storage.deleteLager(lager);
+        notifyObservers();
+    }
+
+    public static List<Lager> getLagere() {
+        return storage.getLagere();
     }
 }

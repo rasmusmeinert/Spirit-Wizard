@@ -40,7 +40,6 @@ public class WhiskyProdukt implements Serializable, Printable {
             }
         }
         double udregnetAlder = ChronoUnit.YEARS.between(yngsteTapning.getPåfyldning().getDato(), LocalDate.now());
-        System.out.println("udregnet alder for helvede " + udregnetAlder);
         return udregnetAlder;
     }
     private int udregnAntalFlasker() {

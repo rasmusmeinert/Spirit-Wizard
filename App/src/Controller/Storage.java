@@ -25,4 +25,6 @@ public interface Storage {
     void storeLager(Lager lager);
 
     void deleteLager(Lager lager);
+
+    List<Lager> getLagere();
 }

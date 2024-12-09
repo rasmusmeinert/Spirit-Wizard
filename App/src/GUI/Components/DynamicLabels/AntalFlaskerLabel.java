@@ -30,7 +30,6 @@ public class AntalFlaskerLabel extends DynamicLabel{
 
         //Hvis valgte fade ændres
         if (object.getClass().equals(ObservableListWrapper.class)) {
-            System.out.println("Liste");
             List<Påfyldning> liste = (List)object;
             if (liste.isEmpty()) {
                 mængdePåfyldninger = 0;
@@ -48,7 +47,6 @@ public class AntalFlaskerLabel extends DynamicLabel{
         //Hvis flaskestørrelse eller fortynding ændres
         else if (object.getClass().equals(UpdateMessage.class)) {
             UpdateMessage um = (UpdateMessage) object;
-            System.out.println(String.valueOf(um.getObject()));
             String inputLabel = String.valueOf(um.getObject());
             double input = (double) um.getMessage();
             //Hvis flaskestørrelse ændres

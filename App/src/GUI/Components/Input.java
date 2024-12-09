@@ -109,7 +109,15 @@ public class Input extends GridPane implements Observer {
             else if(observer.getClass().getSuperclass().equals(DynamicLabel.class)) {
                 observer.update(this.getTextAsDouble());
             }
-            else {
+            else if (observer.getClass().equals(SearchList.class)){
+                if (getText().isEmpty() || disable){
+                    observer.update(new UpdateMessage(this.label.getText(), null));
+                } else {
+                    observer.update(new UpdateMessage(this.label.getText(), this.getText()));
+                }
+
+            }
+            else if (observer.getClass().equals(CustomButton.class))  {
                 observer.update(disable);
             }
         }

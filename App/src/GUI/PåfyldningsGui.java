@@ -8,6 +8,7 @@ import GUI.Components.Validations.Validation;
 import Model.Fad;
 import Model.MængdePåfyldt;
 import Model.NewMake;
+import Model.Påfyldning;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -21,7 +22,7 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
-public class PåfyldningsGui extends Application {
+public class PåfyldningsGui extends Tab implements Observer {
     private final Validation mængdeValidation = new MængdeValidation();
     private final Input inputMængde = new Input("Mængde", mængdeValidation);
 
@@ -42,15 +43,23 @@ public class PåfyldningsGui extends Application {
     private final CustomButton btnRemoveNewMake = new CustomButton("-");
     private final CreateButton btnOpret = new CreateButton();
 
-    @Override
-    public void start(Stage stage) throws Exception {
+
+    public PåfyldningsGui(String s) {
+        super(s);
         GridPane pane = new GridPane();
         initContent(pane);
+        selectedProperty().addListener(e -> clearContent());
+        setContent(pane);
+        Controller.addObserver(this);
+    }
 
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+    private void clearContent() {
+        inputMængde.clear();
+        inputMedarbejder.clear();
+        olValgteNewMakes.getItems().clear();
+        cbxFlytFad.setSelected(false);
+        pickerFad.getSelectionModel().select(0);
+        pickerNewMakes.getSelectionModel().select(0);
     }
 
     public void initContent(GridPane pane) {
@@ -80,7 +89,7 @@ public class PåfyldningsGui extends Application {
         lblValgteNewMakes.setStyle("-fx-font-weight: bold");
         pane.add(lblValgteNewMakes, 2, 0);
         GridPane.setHalignment(lblValgteNewMakes, HPos.CENTER);
-        pane.add(olValgteNewMakes, 2, 2 , 1, 2);
+        pane.add(olValgteNewMakes, 2, 2, 1, 2);
         olValgteNewMakes.addObserver(btnRemoveNewMake);
         olValgteNewMakes.addObserver(pickerNewMakes);
         olValgteNewMakes.addObserver(btnOpret);
@@ -132,7 +141,19 @@ public class PåfyldningsGui extends Application {
     public void createPåfyldning() {
         Fad fad = (Fad) pickerFad.getSelectionModel().getSelectedItem();
         String medarbejder = inputMedarbejder.getText();
-        Controller.createPåfyldning(medarbejder, LocalDate.now(), fad, olValgteNewMakes.getItems());
-        System.out.println(Controller.getPåfyldninger());
+        Påfyldning påfyldning = new Påfyldning(medarbejder,LocalDate.now(),fad,olValgteNewMakes.getItems());
+        ConfirmationWindow alert = new ConfirmationWindow(påfyldning);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == alert.getButtonTypes().get(1)) {
+                Controller.createPåfyldning(medarbejder, LocalDate.now(), fad, olValgteNewMakes.getItems());
+                clearContent();
+            }
+        });
+    }
+
+    @Override
+    public void update(Object message) {
+        pickerNewMakes.getItems().setAll(Controller.getAktuelleNewMakes());
+        pickerFad.getItems().setAll(Controller.getTommeFade());
     }
 }

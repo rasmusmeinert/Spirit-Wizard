@@ -56,6 +56,11 @@ public class ListStorage implements Storage, Serializable {
     }
 
     @Override
+    public List<Lager> getLagere() {
+        return new ArrayList<>(lagere);
+    }
+
+    @Override
     public List<Påfyldning> getPåfyldninger() {
         return new ArrayList<>(påfyldninger);
     }

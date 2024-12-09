@@ -29,7 +29,6 @@ public class AlderLabel extends DynamicLabel{
                     }
                 }
                 int alder = LocalDate.now().getYear() - ældstePåfyldning.getDato().getYear();
-                System.out.println("alder: " + alder);
                 this.setText(labelName + alder + " år");
             }
         }
