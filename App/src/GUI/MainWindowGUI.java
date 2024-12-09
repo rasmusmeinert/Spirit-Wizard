@@ -23,7 +23,7 @@ public class MainWindowGUI extends Application {
         Tab tab3 = new RegistrerProduktGUI("Opret Whisky Produkt");
         Tab tab4 = new FlytFadGUI("Flyt Fad");
         Tab tab5 = new SøgGUI("Søg Fad");
-        tabPane.getTabs().addAll(tab1,tab2,tab3,tab4,tab5);
+        tabPane.getTabs().addAll(tab1,tab2,tab3, tab4,tab5);
 
         pane.setCenter(tabPane);
         Scene scene = new Scene(pane);
