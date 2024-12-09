@@ -2,6 +2,7 @@ package GUI.Components;
 
 import Controller.Controller;
 import Model.Påfyldning;
+import Model.Tapning;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,11 @@ public class PåfyldningsUpdater implements ListUpdater {
     @Override
     public List<Object> update(Object list) {
         List<Object> nyListe = new ArrayList<>();
-        List<Påfyldning> påfyldninger = (List<Påfyldning>) list;
+        List<Tapning> tapninger = (List<Tapning>) list;
         for (Object påfyldning : Controller.getTapbarePåfyldninger()) {
             boolean found = false;
-            for (Påfyldning p : påfyldninger) {
-                if (p.equals(påfyldning)) {
+            for (Tapning t : tapninger) {
+                if (t.getPåfyldning().equals(påfyldning)) {
                     found = true;
                 }
             }

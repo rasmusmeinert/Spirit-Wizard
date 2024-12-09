@@ -27,12 +27,17 @@ public class Tapning implements Serializable {
         return påfyldning;
     }
 
-    @Override
-    public String toString() {
+    public String print() {
         return "Tapning{" +
                 "mængde=" + mængde +
                 ", dato=" + dato +
                 ", påfyldning=" + påfyldning +
                 '}';
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%.2f liter)", påfyldning.getFad().toString(), mængde);
+
     }
 }

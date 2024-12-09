@@ -2,9 +2,7 @@ package Model;
 
 import Controller.Controller;
 import Controller.Storage;
-import GUI.PåfyldningsGui;
-import GUI.RegistrerLagerGUI;
-import GUI.RegistrerProduktGUI;
+import GUI.*;
 import Storage.ListStorage;
 import javafx.application.Application;
 
@@ -25,9 +23,11 @@ public class App {
             Controller.setStorage(storage);
         }
 
-        Application.launch(RegistrerProduktGUI.class);
+//        Application.launch(RegistrerProduktGUI.class);
 //        Application.launch(PåfyldningsGui.class);
+        Application.launch(RegistrerNewMakeGUI.class);
 //        Application.launch(RegistrerLagerGUI.class);
+//        Application.launch(RegistrerFadGUI.class);
 
 
         ListStorage.saveStorage(storage);
