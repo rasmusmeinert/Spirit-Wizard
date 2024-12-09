@@ -4,7 +4,7 @@ public class StringValidation implements Validation {
     private String errorMessage = "Indtast et ord";
     @Override
     public boolean isValid(String string) {
-        if (!string.equals("") && string.matches("^[a-zA-Z ]*$")){
+        if (!string.equals("") && string.matches("^[a-zA-ZÆØÅæøå ]*$")){
             return true;
         } else {
             return false;

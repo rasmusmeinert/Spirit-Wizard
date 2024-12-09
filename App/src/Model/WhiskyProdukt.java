@@ -12,9 +12,9 @@ public class WhiskyProdukt implements Serializable, Printable {
     private String type;
     private double alkoholProcent;
     private double flaskeStørrelse;
-    private String beskrivelse;
+    private String beskrivelse; //Kan være null
     private int antalFlasker;
-    private double mængdeVandTilFortynding;
+    private double mængdeVandTilFortynding; //Kan være null
     private List<Tapning> tapninger;
 
     public WhiskyProdukt(String navn, double alkoholProcent, double flaskeStørrelse, String beskrivelse, double mængdeVandTilFortynding, List<Tapning> tapninger) {
@@ -40,7 +40,6 @@ public class WhiskyProdukt implements Serializable, Printable {
             }
         }
         double udregnetAlder = ChronoUnit.YEARS.between(yngsteTapning.getPåfyldning().getDato(), LocalDate.now());
-        System.out.println("udregnet alder for helvede " + udregnetAlder);
         return udregnetAlder;
     }
     private int udregnAntalFlasker() {
@@ -67,19 +66,23 @@ public class WhiskyProdukt implements Serializable, Printable {
         return sb.toString();
     }
 
+    public void setBeskrivelse(String beskrivelse) {
+        this.beskrivelse = beskrivelse;
+    }
+
     @Override
     public String toString() {
-        return "WhiskyProdukt{" +
-                "navn='" + navn + '\'' +
-                ", alder=" + alder +
-                ", type='" + type + '\'' +
-                ", alkoholProcent=" + alkoholProcent +
-                ", flaskeStørrelse=" + flaskeStørrelse +
-                ", beskrivelse='" + beskrivelse + '\'' +
-                ", antalFlasker=" + antalFlasker +
-                ", mængdeVandTilFortynding=" + mængdeVandTilFortynding +
+        return "WhiskyProdukt{"
+                + navn + ": " +
+                alder + " års " +
+                type + ", " +
+                alkoholProcent + "%, " +
+                antalFlasker + " flasker  af " +
+                flaskeStørrelse * 10 + "cl" +
                 ", tapninger=" + tapninger +
-                '}';
+                ", fortynding " + mængdeVandTilFortynding + "l" +
+                ", beskrivelse: " + beskrivelse +
+                "}";
     }
 
     @Override

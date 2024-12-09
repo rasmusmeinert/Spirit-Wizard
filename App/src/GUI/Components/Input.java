@@ -1,6 +1,7 @@
 package GUI.Components;
 
 import GUI.Components.DynamicLabels.*;
+import GUI.Components.Validations.StringValidation;
 import javafx.geometry.HPos;
 import GUI.Components.Validations.Validation;
 import javafx.geometry.Pos;
@@ -44,7 +45,10 @@ public class Input extends GridPane implements Observer {
 
         setVgap(5);
         setHgap(5);
+
+        //Det er den her som fucker med navne inputtet i opret påfyldningsGUIen
         setAlignment(Pos.CENTER);
+
         this.validation = validation;
         textField.textProperty().addListener(e -> {
             validateTextField();
@@ -130,6 +134,10 @@ public class Input extends GridPane implements Observer {
 
     public String getLabelText() {
         return this.label.getText();
+    }
+
+    public void setText(String string) {
+        this.textField.setText(string);
     }
 
     @Override

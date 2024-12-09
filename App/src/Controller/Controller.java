@@ -59,6 +59,7 @@ public abstract class Controller {
     public static NewMake createNewMake(String navn, LocalDateTime startDato, LocalDateTime slutDato, double startMængde, double alkoholPct) {
         NewMake newMake = new NewMake(navn, startDato, slutDato, startMængde, alkoholPct);
         storage.storeNewMake(newMake);
+        System.out.println(newMake);
         return newMake;
     }
 
@@ -124,7 +125,7 @@ public abstract class Controller {
         ArrayList<Påfyldning> tapbarePåfyldninger = new ArrayList<>();
         for (Påfyldning p : storage.getPåfyldninger()) {
             //Tjekker om påfyldningens dato er mere end 3 år gammel
-            if (p.getDato().isBefore(LocalDate.now().minusYears(3))) {
+            if (p.getDato().isBefore(LocalDate.now().minusYears(3)) && p.getSamletMængde() > 0) {
                 tapbarePåfyldninger.add(p);
             }
         }
@@ -146,6 +147,9 @@ public abstract class Controller {
         }
 
         storage.storeWhiskyProdukt(whiskyProdukt);
+//        for (WhiskyProdukt wp : storage.getWhiskyProdukter()) {
+//            System.out.println(wp);
+//        }
         return whiskyProdukt;
     }
 

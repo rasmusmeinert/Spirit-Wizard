@@ -18,7 +18,6 @@ public class TypeLabel extends DynamicLabel {
 
     @Override
     public void update(Object object) {
-        System.out.println(object.getClass());
         //Hvis valgte fade ændres
         if (object.getClass().equals(ObservableListWrapper.class)) {
             List<Påfyldning> liste = (List)object;
@@ -39,7 +38,7 @@ public class TypeLabel extends DynamicLabel {
         //Hvis fortyndingsMængde ændres
         else if (object.getClass().equals(Double.class)){
             double input = (Double)object;
-            if (input > 0.01 && typeNavn != "") {
+            if (input < 0.01 && typeNavn != "") {
                 caskStrength = ", cask strength";
             }
             else {

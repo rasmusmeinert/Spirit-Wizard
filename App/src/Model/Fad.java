@@ -25,7 +25,7 @@ public class Fad implements Printable, Serializable{
 
     @Override
     public String toString() {
-        return Integer.toString(nummer);
+        return "Fad " + nummer + ": "  + trætype + ", " + tidligereIndhold;
     }
 
     public boolean isPåfyldt(){

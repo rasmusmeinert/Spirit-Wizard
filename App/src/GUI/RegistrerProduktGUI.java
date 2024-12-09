@@ -25,6 +25,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RegistrerProduktGUI extends Application {
     private final Validation mængdeValidation = new MængdeValidation();
     private final Input inputMængde = new Input("Mængde: ", mængdeValidation);
@@ -89,14 +92,12 @@ public class RegistrerProduktGUI extends Application {
         lvwValgtePåfyldninger.addObserver(lblType);
         lvwValgtePåfyldninger.addObserver(lblAlder);
         lvwValgtePåfyldninger.addObserver(lblAntalFlakser);
+        lvwValgtePåfyldninger.addObserver(btnOpret);
 
         btnRemovePåfyldning.setOnAction(e -> removePåfyldning());
         HBox removeBtnBox = new HBox(btnRemovePåfyldning);
         VBox valgteFadeBox = new VBox(lblValgteFade, usynligComboBox, lvwValgtePåfyldninger, removeBtnBox);
-//        valgteFadeBox.setPadding(new Insets(15));
         valgteFadeBox.setSpacing(15);
-        //OMFG hvorfor kan jeg ikke få det her allignet bedre? Hjælp?
-        lvwValgtePåfyldninger.setSpacing(-17);
         pane.add(valgteFadeBox, 1, 0);
 
 //        lblFade.setStyle("-fx-border-color: red;");
@@ -118,16 +119,20 @@ public class RegistrerProduktGUI extends Application {
         pane.add(horizontalSeparator, 0, 1, 2, 1);
 
         inputFortynding.addObserver(lblType);
-        inputFortynding.addObserver(btnOpret);
         inputFortynding.addObserver(lblAntalFlakser);
+        inputFortynding.setTextFieldPrefWidth(45);
+
         inputAlkoholProcent.addObserver(btnOpret);
-        HBox inputBox = new HBox(inputFlaskeStørrelse, inputFortynding, inputAlkoholProcent);
-        pane.add(inputBox, 0, 2, 2, 1);
+        inputAlkoholProcent.addObserver(btnOpret);
+        inputAlkoholProcent.setTextFieldPrefWidth(45);
 
         inputFlaskeStørrelse.setTextFieldPrefWidth(45);
         inputFlaskeStørrelse.addObserver(lblAntalFlakser);
-        inputFortynding.setTextFieldPrefWidth(45);
-        inputAlkoholProcent.setTextFieldPrefWidth(45);
+        inputFlaskeStørrelse.addObserver(btnOpret);
+
+        HBox inputBox = new HBox(inputFlaskeStørrelse, inputFortynding, inputAlkoholProcent);
+
+        pane.add(inputBox, 0, 2, 2, 1);
         inputBox.setSpacing(15);
 
         Label lblBeskrivelse = new Label("Beskrivelse:");
@@ -163,6 +168,7 @@ public class RegistrerProduktGUI extends Application {
 
         //Kan dette simplificeres da der ikke skal være andet sammen med opret knappen?
         btnOpret.setAlignment(Pos.CENTER);
+        btnOpret.setOnAction(e -> opretWhiskyProdukt());
         pane.add(btnOpret, 1, 6);
         GridPane.setHalignment(btnOpret, HPos.CENTER);
 //        btnOpret.setOnAction(e -> createPåfyldning());
@@ -179,5 +185,12 @@ public class RegistrerProduktGUI extends Application {
     // Virker ikke ordenligt endnu
     private void removePåfyldning() {
         lvwValgtePåfyldninger.removeSelectedItem();
+    }
+    public void opretWhiskyProdukt() {
+        ArrayList<Tapning> tapninger = new ArrayList<>(lvwValgtePåfyldninger.getItems());
+        Controller.createWhiskyProdukt(inputNavn.getText(), inputAlkoholProcent.getTextAsDouble(), inputFlaskeStørrelse.getTextAsDouble(), txtABeskerivelse.getText(), inputFortynding.getTextAsDouble(), tapninger);
+        lvwValgtePåfyldninger.getItems().clear();
+        inputNavn.clear();
+        txtABeskerivelse.clear();
     }
 }
