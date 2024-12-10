@@ -238,6 +238,9 @@ public abstract class Controller {
         notifyObservers();
         return whiskyProdukt;
     }
+    public static ArrayList<WhiskyProdukt> getWhiskyProukter() {
+        return new ArrayList(storage.getWhiskyProdukter());
+    }
 
     //====================================== Lager ========================================================
 
@@ -256,4 +259,5 @@ public abstract class Controller {
     public static List<Lager> getLagere() {
         return storage.getLagere();
     }
+
 }

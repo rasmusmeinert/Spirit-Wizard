@@ -40,6 +40,18 @@ public class Påfyldning implements Serializable, Printable {
         }
     }
 
+    public String getMedarbejder() {
+        return medarbejder;
+    }
+
+    public ArrayList<MængdePåfyldt> getMængdePåfyldt() {
+        return mængdePåfyldt;
+    }
+
+    public double getSamletMængdePåfyldt() {
+        return samletMængdePåfyldt;
+    }
+
     public LocalDate getDato() {
         return dato;
     }

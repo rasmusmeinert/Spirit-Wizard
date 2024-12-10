@@ -71,19 +71,46 @@ public class WhiskyProdukt implements Serializable, Printable {
         this.beskrivelse = beskrivelse;
     }
 
+
+    public String getNavn() {
+        return navn;
+    }
+
+    public double getAlder() {
+        return alder;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public double getAlkoholProcent() {
+        return alkoholProcent;
+    }
+
+    public double getFlaskeStørrelse() {
+        return flaskeStørrelse;
+    }
+
+    public String getBeskrivelse() {
+        return beskrivelse;
+    }
+
+    public int getAntalFlasker() {
+        return antalFlasker;
+    }
+
+    public double getMængdeVandTilFortynding() {
+        return mængdeVandTilFortynding;
+    }
+
+    public ArrayList<Tapning> getTapninger() {
+        return tapninger;
+    }
+
     @Override
     public String toString() {
-        return "WhiskyProdukt{"
-                + navn + ": " +
-                alder + " års " +
-                type + ", " +
-                alkoholProcent + "%, " +
-                antalFlasker + " flasker  af " +
-                flaskeStørrelse * 10 + "cl" +
-                ", tapninger=" + tapninger +
-                ", fortynding " + mængdeVandTilFortynding + "l" +
-                ", beskrivelse: " + beskrivelse +
-                "}";
+        return navn;
     }
 
     @Override

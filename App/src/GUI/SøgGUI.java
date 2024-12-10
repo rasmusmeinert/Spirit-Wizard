@@ -53,6 +53,7 @@ public class SøgGUI extends Tab {
         pane.setPadding(new Insets(15));
         pane.setHgap(15);
         pane.setVgap(10);
+        pane.setAlignment(Pos.BASELINE_CENTER);
 
         Label lblOpretLager = new Label("Søg Fad");
         lblOpretLager.setStyle("-fx-font-weight: bold");
