@@ -47,6 +47,7 @@ public class FlytFadGUI extends Tab implements Observer {
         pane.setPadding(new Insets(15));
         pane.setHgap(15);
         pane.setVgap(15);
+        pane.setAlignment(Pos.BASELINE_CENTER);
 
         //============================ Fad ============================
 

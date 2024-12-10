@@ -181,6 +181,8 @@ public class ObjectListWithMessage<T> extends VBox implements Observer {
         return listView.getItems();
     }
 
-
+    public ListView<T> getListView() {
+        return listView;
+    }
 }
 
