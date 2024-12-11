@@ -14,11 +14,10 @@ public class Lager implements Serializable, Printable {
         this.lokation = lokation;
         this.reoler = new ArrayList<>();
         this.hylderPerReol = hylderPerReol;
-        for (int i = 0; i < reoler; i++) {
-            this.reoler.add(new Reol(i+1, hylderPerReol));
+        for (int i = 0; i < reoler + 1; i++) {
+            this.reoler.add(new Reol(i, hylderPerReol));
         }
     }
-
 
     public String getNavn() {
         return navn;
@@ -32,6 +31,32 @@ public class Lager implements Serializable, Printable {
         return reoler;
     }
 
+    public int getHylderPerReol() {
+        return hylderPerReol;
+    }
+
+    public int getSamledeAntalHylder() {
+        int antalHylder = 0;
+        for (Reol reol : reoler) {
+            antalHylder += reol.getHylder().length;
+        }
+        return antalHylder;
+    }
+
+    public ArrayList<Fad> getFade() {
+        ArrayList<Fad> alleFadePåLageret = new ArrayList<>();
+        for (Reol reol : reoler) {
+            if (!reol.isEmpty()) {
+                alleFadePåLageret.addAll(reol.getFade());
+            }
+        }
+        return alleFadePåLageret;
+    }
+
+    public Reol getReol(int reolNummer) {
+        return reoler.get(reolNummer-1);
+    }
+
     @Override
     public String toString() {
         return navn;
@@ -42,10 +67,7 @@ public class Lager implements Serializable, Printable {
         return String.format("Navn: %s \n" +
                 "Adresse: %s \n" +
                 "Reoler: %d \n" +
-                "Hylder per Reol: %d \n", navn,lokation,reoler.size(),hylderPerReol);
-    }
-
-    public int getHylderPerReol() {
-        return hylderPerReol;
+                "Hylder pr Reol: %d \n" +
+                "Antal fade %d", navn, lokation, reoler.size()-1, getHylderPerReol(), getFade().size());
     }
 }

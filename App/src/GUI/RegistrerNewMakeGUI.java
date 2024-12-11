@@ -5,10 +5,7 @@ import GUI.Components.ConfirmationWindow;
 import GUI.Components.CreateButton;
 import GUI.Components.Input;
 import GUI.Components.LocalDateTimePicker;
-import GUI.Components.Validations.AdresseValidation;
-import GUI.Components.Validations.LocalDateTimeValidator;
-import GUI.Components.Validations.NumberValidation;
-import GUI.Components.Validations.StringValidation;
+import GUI.Components.Validations.*;
 import Model.NewMake;
 import javafx.application.Application;
 import javafx.geometry.HPos;
@@ -21,6 +18,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
@@ -29,9 +27,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class RegistrerNewMakeGUI extends Tab {
-    private final Input inputNavn = new Input("Navn: ", new AdresseValidation());
+    private final Input inputNavn = new Input("Navn: ", new StringValidation());
     private final Input inputStartDato = new Input("Start dato: ", new LocalDateTimeValidator());
-    private final Input inputSlutDato = new Input("Slut dato: ", new LocalDateTimeValidator());
+    private final Input inputSlutDato = new Input("Slut dato: ", new LocalDateTimeValidatorAfter(inputStartDato));
     private final Input inputMængde = new Input("Mængde (liter): ", new NumberValidation());
     private final Input inputAlkoholProcent = new Input("Alkoholprocent (%): ", new NumberValidation());
 

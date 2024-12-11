@@ -11,9 +11,9 @@ public class LocalDateTimeValidator implements Validation {
         DateTimeFormatter datoFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         try {
             LocalDateTime.parse(localDateTimeString, datoFormat);
-            return true; // Parsing succeeded, the string is valid
+            return true;
         } catch (DateTimeParseException e) {
-            return false; // Parsing failed, the string is invalid
+            return false;
         }
     }
     public String getErrorMessage() {

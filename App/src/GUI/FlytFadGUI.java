@@ -2,8 +2,10 @@ package GUI;
 
 import Controller.Controller;
 import GUI.Components.*;
+import GUI.Components.Validations.HyldeValidation;
 import GUI.Components.Validations.IntegerValidation;
 import GUI.Components.Validations.IntegerValidationWithMax;
+import GUI.Components.Validations.ReolValidation;
 import Model.Fad;
 import Model.Lager;
 import javafx.geometry.Insets;
@@ -13,10 +15,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 
 public class FlytFadGUI extends Tab implements Observer {
-    private final IntegerValidationWithMax hylderValidation = new IntegerValidationWithMax("Hylder");
-    private final IntegerValidationWithMax reolerValidation = new IntegerValidationWithMax("Reoler");
-    private final Input inputReol = new Input("Reol", reolerValidation);
-    private final Input inputHylde = new Input("Hylde", hylderValidation);
+    private final ReolValidation reolValidation = new ReolValidation();
+    private final HyldeValidation hyldeValidation = new HyldeValidation();
+    private final Input inputReol = new Input("Reol: ", reolValidation);
+    private final Input inputHylde = new Input("Hylde: ", hyldeValidation);
 
     private final Picker<Fad> pickerFad = new Picker<>(Controller.getFade());
     private final Picker<Lager> pickerLager = new Picker<>(Controller.getLagere());
@@ -66,14 +68,31 @@ public class FlytFadGUI extends Tab implements Observer {
         pane.add(pickerLager,0,4);
         pane.add(ibLager,0,5,1,2);
         pickerLager.addObserver(ibLager);
-        pickerLager.addObserver(hylderValidation);
-        pickerLager.addObserver(reolerValidation);
+        pickerLager.addObserver(hyldeValidation);
+        pickerLager.addObserver(reolValidation);
 
         pane.add(inputReol,1,5);
+        inputReol.setWidth(40);
         pane.add(inputHylde,1,6);
+        inputHylde.setWidth(40);
+        inputHylde.addObserver(inputReol);
         inputReol.addObserver(btnFlyt);
         inputHylde.addObserver(btnFlyt);
+        inputReol.addObserver(hyldeValidation);
+//        inputHylde.addObserver(inputReol);
+
+        btnFlyt.setOnAction(e -> flytFad());
         pane.add(btnFlyt,1,7);
+
+    }
+
+    private void flytFad() {
+        Fad fad = (Fad) pickerFad.getSelectionModel().getSelectedItem();
+        Lager lager = (Lager) pickerLager.getSelectionModel().getSelectedItem();
+        Controller.flytFad(fad, inputReol.getTextAsInt(), inputHylde.getTextAsInt(), lager);
+        inputReol.clear();
+        inputHylde.clear();
+        update(null);
     }
 
     @Override

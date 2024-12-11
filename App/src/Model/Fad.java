@@ -1,6 +1,10 @@
 package Model;
 
+import Controller.Controller;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fad implements Printable, Serializable{
     private int nummer;
@@ -8,7 +12,7 @@ public class Fad implements Printable, Serializable{
     private double størrelse;
     private String tidligereIndhold;
     private boolean påfyldt = false;
-    private Reol reol;
+    private Reol reol = null;
 
     public Reol getReol() {
         return reol;
@@ -47,7 +51,7 @@ public class Fad implements Printable, Serializable{
                 "Træsort: %s \n" +
                 "Størrelse: %.2f L \n" +
                 "Tidligere Indhold: %s \n" +
-                "Påfyldt: %s", nummer, trætype,størrelse,tidligereIndhold, isPåfyldt() ? "Ja" : "Nej");
+                "Påfyldt: %s \n", nummer, trætype,størrelse,tidligereIndhold, isPåfyldt() ? "Ja" : "Nej");
     }
 
     public int getNummer() {

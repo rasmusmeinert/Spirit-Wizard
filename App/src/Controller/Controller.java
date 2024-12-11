@@ -65,6 +65,16 @@ public abstract class Controller {
         return tommeFade;
     }
 
+    public static void flytFad(Fad fad, int reol, int hylde, Lager lager) {
+        Reol gamleReol = fad.getReol();
+        if (gamleReol != null) {
+            gamleReol.removeFad(fad);
+        }
+        Reol nyeReol = lager.getReol(reol + 1);
+        fad.setReol(nyeReol);
+        nyeReol.getHylder()[hylde] = fad;
+    }
+
 
     /**
      * Searches for a "fad" matching any of the search input
@@ -269,6 +279,17 @@ public abstract class Controller {
 
     public static List<Lager> getLagere() {
         return storage.getLagere();
+    }
+
+
+    public static Lager getLagerByFad(Fad fad) {
+        List<Lager> lagre = getLagere();
+        for (Lager lager : lagre) {
+            for (Reol reol : lager.getReoler()) {
+                if (reol.getFade().contains(fad)) return lager;
+            }
+        }
+        return null;
     }
 
 }
