@@ -125,6 +125,7 @@ public class PåfyldningsGui extends Tab implements Observer {
         opretBox.setAlignment(Pos.TOP_CENTER);
         opretBox.setSpacing(15);
         opretBox.getChildren().addAll(inputMedarbejder, cbxFlytFad, btnOpret);
+        cbxFlytFad.setVisible(false);
         inputMedarbejder.addObserver(btnOpret);
         pane.add(opretBox, 1, 4);
         btnOpret.setOnAction(e -> createPåfyldning());

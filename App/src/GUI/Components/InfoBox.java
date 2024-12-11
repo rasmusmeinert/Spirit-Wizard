@@ -37,7 +37,6 @@ public class InfoBox extends TextArea implements Observer {
                 Reol reol = fad.getReol();
                 int hylde = 0;
                 for (int i = 0; i < reol.getHylder().length - 1; i++) {
-                    System.out.println(i);
                     if (reol.getHylder()[i] != null && reol.getHylder()[i].equals(fad)) {
                         hylde = i;
                     }
