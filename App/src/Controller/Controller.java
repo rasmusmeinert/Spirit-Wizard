@@ -70,7 +70,7 @@ public abstract class Controller {
         if (gamleReol != null) {
             gamleReol.removeFad(fad);
         }
-        Reol nyeReol = lager.getReol(reol+1);
+        Reol nyeReol = lager.getReol(reol + 1);
         fad.setReol(nyeReol);
         nyeReol.getHylder()[hylde] = fad;
     }
@@ -279,6 +279,17 @@ public abstract class Controller {
 
     public static List<Lager> getLagere() {
         return storage.getLagere();
+    }
+
+
+    public static Lager getLagerByFad(Fad fad) {
+        List<Lager> lagre = getLagere();
+        for (Lager lager : lagre) {
+            for (Reol reol : lager.getReoler()) {
+                if (reol.getFade().contains(fad)) return lager;
+            }
+        }
+        return null;
     }
 
 }

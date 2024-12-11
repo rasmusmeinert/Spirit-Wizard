@@ -12,7 +12,7 @@ public class Fad implements Printable, Serializable{
     private double størrelse;
     private String tidligereIndhold;
     private boolean påfyldt = false;
-    private Reol reol;
+    private Reol reol = null;
 
     public Reol getReol() {
         return reol;

@@ -3,7 +3,10 @@ package GUI.Components;
 
 import Controller.Controller;
 import Model.Fad;
+import Model.Lager;
 import Model.Printable;
+import Model.Reol;
+import javafx.scene.control.Control;
 import javafx.scene.control.TextArea;
 
 
@@ -25,10 +28,26 @@ public class InfoBox extends TextArea implements Observer {
         if (message == null) {
             setText("");
         } else if (message.getClass().equals(Fad.class)) {
+            Fad fad = (Fad) message;
             StringBuilder sb = new StringBuilder();
             Printable printableFad = (Printable) message;
             sb.append(printableFad.print());
-            if (((Fad) message).isPåfyldt()) {
+            if (fad.getReol() != null) {
+                Lager lager = Controller.getLagerByFad(fad);
+                Reol reol = fad.getReol();
+                int hylde = 0;
+                for (int i = 0; i < reol.getHylder().length - 1; i++) {
+                    System.out.println(i);
+                    if (reol.getHylder()[i] != null && reol.getHylder()[i].equals(fad)) {
+                        hylde = i;
+                    }
+
+                }
+                sb.append("\nLager: " + lager.getNavn());
+                sb.append("\nReol: " + reol.getNummer());
+                sb.append(" Hylde: " + hylde);
+            }
+            if (fad.isPåfyldt()) {
                 sb.append("\n \nPåfyldning: \n" + Controller.getPåfyldningByFad((Fad) message).print());
             }
             setText(sb.toString());

@@ -15,4 +15,12 @@ public class ConfirmationWindow extends Alert {
         setHeaderText("Bekræft oprettelse");
         setContentText(object.print());
     }
+    public ConfirmationWindow(String string) {
+        super(AlertType.CONFIRMATION);
+        ButtonType btnBekræft = new ButtonType("Bekræft", ButtonBar.ButtonData.OK_DONE);
+        ButtonType btnAnuller = new ButtonType("Anuller", ButtonBar.ButtonData.CANCEL_CLOSE);
+        getButtonTypes().setAll(btnAnuller,btnBekræft);
+        setHeaderText("Bekræft oprettelse");
+        setContentText(string);
+    }
 }
