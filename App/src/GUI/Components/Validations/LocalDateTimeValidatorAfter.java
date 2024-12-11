@@ -17,6 +17,9 @@ public class LocalDateTimeValidatorAfter implements Validation {
 
     public boolean isValid(String localDateTimeString) {
 
+        if (localDateTimeString.isEmpty()){
+            return false;
+        }
         if (LocalDateTime.parse(localDateTimeString).isBefore(input.getTextAsLocalDateTime())) {
             errorMessage = "Indast en dato og klokkeslet som er efter start dato";
             return false;

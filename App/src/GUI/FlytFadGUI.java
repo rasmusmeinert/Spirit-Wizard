@@ -44,7 +44,7 @@ public class FlytFadGUI extends Tab implements Observer {
         pickerLager.getSelectionModel().select(0);
     }
 
-    public void initContent(GridPane pane){
+    public void initContent(GridPane pane) {
 //        pane.setAlignment(Pos.CENTER);
         pane.setPadding(new Insets(15));
         pane.setHgap(15);
@@ -55,25 +55,25 @@ public class FlytFadGUI extends Tab implements Observer {
 
         Label lblFad = new Label("Fad");
         lblFad.setStyle("-fx-font-weight: bold");
-        pane.add(lblFad,0,0);
-        pane.add(pickerFad,0,1);
-        pane.add(ibFad,0,2);
+        pane.add(lblFad, 0, 0);
+        pane.add(pickerFad, 0, 1);
+        pane.add(ibFad, 0, 2);
         pickerFad.addObserver(ibFad);
 
         //============================= Lager ============================
 
         Label lblLager = new Label("Ny Placering");
         lblLager.setStyle("-fx-font-weight: bold");
-        pane.add(lblLager,0,3);
-        pane.add(pickerLager,0,4);
-        pane.add(ibLager,0,5,1,2);
+        pane.add(lblLager, 0, 3);
+        pane.add(pickerLager, 0, 4);
+        pane.add(ibLager, 0, 5, 1, 2);
         pickerLager.addObserver(ibLager);
         pickerLager.addObserver(hyldeValidation);
         pickerLager.addObserver(reolValidation);
 
-        pane.add(inputReol,1,5);
+        pane.add(inputReol, 1, 5);
         inputReol.setWidth(40);
-        pane.add(inputHylde,1,6);
+        pane.add(inputHylde, 1, 6);
         inputHylde.setWidth(40);
         inputHylde.addObserver(inputReol);
         inputReol.addObserver(btnFlyt);
@@ -82,17 +82,24 @@ public class FlytFadGUI extends Tab implements Observer {
 //        inputHylde.addObserver(inputReol);
 
         btnFlyt.setOnAction(e -> flytFad());
-        pane.add(btnFlyt,1,7);
+        pane.add(btnFlyt, 1, 7);
 
     }
 
     private void flytFad() {
         Fad fad = (Fad) pickerFad.getSelectionModel().getSelectedItem();
         Lager lager = (Lager) pickerLager.getSelectionModel().getSelectedItem();
-        Controller.flytFad(fad, inputReol.getTextAsInt(), inputHylde.getTextAsInt(), lager);
-        inputReol.clear();
-        inputHylde.clear();
-        update(null);
+        ConfirmationWindow alert = new ConfirmationWindow("" +
+                "Flyt " + fad + " til " + lager +"\n" +
+                "Reol: " + inputHylde.getText() + " Hylde: " + inputReol.getText());
+        alert.showAndWait().ifPresent(response -> {
+            if (response == alert.getButtonTypes().get(1)) {
+                Controller.flytFad(fad, inputReol.getTextAsInt(), inputHylde.getTextAsInt(), lager);
+                inputReol.clear();
+                inputHylde.clear();
+                update(null);
+            }
+        });
     }
 
     @Override
