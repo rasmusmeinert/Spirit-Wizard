@@ -31,7 +31,7 @@ public class RegistrerProduktGUI extends Tab implements Observer {
     private final Input inputFortynding = new Input("Fortynding (Liter):", new NumberValidationWithZero());
     private final Input inputAlkoholProcent = new Input("ABV (%):", new NumberValidation());
     private final Input inputFlaskeStørrelse = new Input("Flaskestørrelse (Liter): ", new NumberValidation());
-    private final Input inputNavn = new Input("Navn:", new StringValidation());
+    private final Input inputNavn = new Input("Navn:", new AdresseValidation());
     private final InfoBox påfyldningsInfo = new InfoBox();
     private final Picker<Påfyldning> pickerPåfyldninger = new Picker<>(Controller.getTapbarePåfyldninger(), new PåfyldningsUpdater());
     private final ObjectListWithMessage<Tapning> lvwValgtePåfyldninger = new ObjectListWithMessage<>();
@@ -65,6 +65,7 @@ public class RegistrerProduktGUI extends Tab implements Observer {
 
     public void initContent(GridPane pane) {
         pane.setPadding(new Insets(15));
+        pane.setAlignment(Pos.BASELINE_CENTER);
         pane.setHgap(15);
         pane.setVgap(15);
 
@@ -113,16 +114,17 @@ public class RegistrerProduktGUI extends Tab implements Observer {
         Separator horizontalSeparator = new Separator();
         horizontalSeparator.setPrefWidth(300);
         pane.add(horizontalSeparator, 0, 1, 2, 1);
+        int inputWidth = 70;
 
         inputFortynding.addObserver(lblType);
         inputFortynding.addObserver(lblAntalFlakser);
-        inputFortynding.setTextFieldPrefWidth(45);
+        inputFortynding.setTextFieldPrefWidth(inputWidth);
 
         inputAlkoholProcent.addObserver(btnOpret);
         inputAlkoholProcent.addObserver(btnOpret);
-        inputAlkoholProcent.setTextFieldPrefWidth(45);
+        inputAlkoholProcent.setTextFieldPrefWidth(inputWidth);
 
-        inputFlaskeStørrelse.setTextFieldPrefWidth(45);
+        inputFlaskeStørrelse.setTextFieldPrefWidth(inputWidth);
         inputFlaskeStørrelse.addObserver(lblAntalFlakser);
         inputFlaskeStørrelse.addObserver(btnOpret);
 
@@ -135,11 +137,12 @@ public class RegistrerProduktGUI extends Tab implements Observer {
 
         VBox navnBeskrivelseBox = new VBox(inputNavn, lblBeskrivelse, txtABeskerivelse);
 
+        inputNavn.setAlignment(Pos.BASELINE_LEFT);
         inputNavn.addObserver(btnOpret);
 
         txtABeskerivelse.setMaxHeight(75);
         txtABeskerivelse.setMaxWidth(300);
-        pane.add(navnBeskrivelseBox, 0, 6);
+        pane.add(navnBeskrivelseBox, 0, 6, 1, 2);
 
         Separator horizontalSeparator2 = new Separator();
         horizontalSeparator2.setPrefWidth(300);
@@ -182,7 +185,7 @@ public class RegistrerProduktGUI extends Tab implements Observer {
         WhiskyProdukt whiskyProdukt = new WhiskyProdukt(inputNavn.getText(), inputAlkoholProcent.getTextAsDouble(), inputFlaskeStørrelse.getTextAsDouble(), txtABeskerivelse.getText(), inputFortynding.getTextAsDouble(), tapninger);
         ConfirmationWindow alert = new ConfirmationWindow(whiskyProdukt);
         alert.showAndWait().ifPresent(response -> {
-            if (response == alert.getButtonTypes().get(1)){
+            if (response == alert.getButtonTypes().get(1)) {
                 Controller.createWhiskyProdukt(inputNavn.getText(), inputAlkoholProcent.getTextAsDouble(), inputFlaskeStørrelse.getTextAsDouble(), txtABeskerivelse.getText(), inputFortynding.getTextAsDouble(), tapninger);
                 clearContent();
             }

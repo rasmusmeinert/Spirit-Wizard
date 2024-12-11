@@ -40,6 +40,18 @@ public class Påfyldning implements Serializable, Printable {
         }
     }
 
+    public String getMedarbejder() {
+        return medarbejder;
+    }
+
+    public ArrayList<MængdePåfyldt> getMængdePåfyldt() {
+        return mængdePåfyldt;
+    }
+
+    public double getSamletMængdePåfyldt() {
+        return samletMængdePåfyldt;
+    }
+
     public LocalDate getDato() {
         return dato;
     }
@@ -56,7 +68,7 @@ public class Påfyldning implements Serializable, Printable {
     @Override
     public String print() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Lagret %s af %s \n" +
+        sb.append(String.format("Påfyldt %s af %s \n" +
                 "%.2f liter \n" +
                 "Består af: \n", dato, medarbejder, samletMængde));
         for(MængdePåfyldt mp : mængdePåfyldt) {

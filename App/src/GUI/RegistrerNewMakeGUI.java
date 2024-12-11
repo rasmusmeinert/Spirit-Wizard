@@ -61,11 +61,14 @@ public class RegistrerNewMakeGUI extends Tab {
         inputNavn.addObserver(btnCreate);
 
         pane.add(inputStartDato, 0, 2);
+        inputStartDato.getTextField().setEditable(false);
         inputStartDato.setWidth(labelWidth);
         inputStartDato.addObserver(btnCreate);
         inputStartDato.getTextField().setOnMouseClicked(e -> launchDateTimePicker(inputStartDato));
+//        inputStartDato.getTextField().focusedProperty().addListener(e -> launchDateTimePicker(inputStartDato));
 
         pane.add(inputSlutDato, 0, 3);
+        inputSlutDato.getTextField().setEditable(false);
         inputSlutDato.setWidth(labelWidth);
         inputSlutDato.addObserver(btnCreate);
         inputSlutDato.getTextField().setOnMouseClicked(e -> launchDateTimePicker(inputSlutDato));
