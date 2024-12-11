@@ -194,6 +194,16 @@ public abstract class Controller {
         notifyObservers();
     }
 
+    public static Påfyldning getPåfyldningByFad(Fad fad) {
+        List<Påfyldning> påfyldninger = getPåfyldninger();
+        for (Påfyldning p : påfyldninger) {
+            if (p.getFad().equals(fad)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     public static List<Påfyldning> getPåfyldninger() {
         return storage.getPåfyldninger();
     }
@@ -238,6 +248,7 @@ public abstract class Controller {
         notifyObservers();
         return whiskyProdukt;
     }
+
     public static ArrayList<WhiskyProdukt> getWhiskyProukter() {
         return new ArrayList(storage.getWhiskyProdukter());
     }

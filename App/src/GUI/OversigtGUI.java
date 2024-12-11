@@ -3,6 +3,7 @@ package GUI;
 import Controller.Controller;
 import GUI.Components.InfoBox;
 import GUI.Components.ObjectListWithMessage;
+import GUI.Components.Observer;
 import GUI.Components.SearchList;
 import Model.Fad;
 import Model.NewMake;
@@ -15,7 +16,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 
-public class OversigtGUI extends Tab {
+public class OversigtGUI extends Tab implements Observer {
     private final TabPane tabPane = new TabPane();
 
     private final InfoBox infoBox = new InfoBox();
@@ -31,6 +32,7 @@ public class OversigtGUI extends Tab {
         GridPane pane = new GridPane();
         initContent(pane);
         setContent(pane);
+        Controller.addObserver(this);
     }
 
     private void initContent(GridPane pane) {
@@ -71,5 +73,12 @@ public class OversigtGUI extends Tab {
         olFad.getSelectionModel().clearSelection();
         olNewMake.getSelectionModel().clearSelection();
         olWhiskyProdukt.getSelectionModel().clearSelection();
+    }
+
+    @Override
+    public void update(Object message) {
+        olWhiskyProdukt.getItems().setAll(Controller.getWhiskyProukter());
+        olNewMake.getItems().setAll(Controller.getNewMakes());
+        olFad.getItems().setAll(Controller.getFade());
     }
 }

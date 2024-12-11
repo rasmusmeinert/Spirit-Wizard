@@ -14,6 +14,7 @@ public class MainWindowGUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Spirit Wizard");
+        stage.setResizable(false);
         BorderPane pane = new BorderPane();
 
         TabPane tabPane = new TabPane();
