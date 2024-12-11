@@ -115,8 +115,10 @@ public class WhiskyProdukt implements Serializable, Printable {
 
     @Override
     public String print() {
-        return String.format("%s \n" +
-                "%d års %s whisky\n" +
-                "%.2f cl, %d %%", navn, (int)alder, type, flaskeStørrelse, (int)alkoholProcent);
+        return String.format("Navn: %s \n" +
+                "Type: %d års %s whisky\n" +
+                "Flaskestørrelse: %.2f cl \n" +
+                "ABV: %d %% \n" +
+                "Beskivelse: %s", navn, (int)alder, type, flaskeStørrelse, (int)alkoholProcent, beskrivelse);
     }
 }
