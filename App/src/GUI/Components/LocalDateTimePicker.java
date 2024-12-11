@@ -40,8 +40,8 @@ public class LocalDateTimePicker extends Application {
         pickerStage.setTitle("Vælg dato og tid");
 
         // Confirm button
-        Button confirmButton = new Button("OK");
-        confirmButton.setOnAction(e -> {
+        Button btnOk = new Button("OK");
+        btnOk.setOnAction(e -> {
             LocalDate date = datePicker.getValue();
             if (date != null) {
                 valgteTid = LocalDateTime.of(date, LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue()));
@@ -49,49 +49,28 @@ public class LocalDateTimePicker extends Application {
             }
         });
 
-        // Cancel button
-        Button cancelButton = new Button("Annuller");
-        cancelButton.setOnAction(e -> {
+        Button btnAnnuller = new Button("Annuller");
+        btnAnnuller.setOnAction(e -> {
             valgteTid = null;
             pickerStage.close();
         });
 
         // Layout
-        HBox timeBox = new HBox(10,
-                new Label("Hour:"), hourSpinner,
-                new Label("Minute:"), minuteSpinner);
+        HBox tidsBox = new HBox(10,
+                new Label("Time:"), hourSpinner,
+                new Label("Minut:"), minuteSpinner);
 
-        VBox layout = new VBox(10, datePicker, timeBox,
-                new HBox(10, confirmButton, cancelButton));
+        VBox layout = new VBox(10, datePicker, tidsBox,
+                new HBox(10, btnOk, btnAnnuller));
         layout.setPadding(new javafx.geometry.Insets(20));
 
-        // Scene setup
         Scene scene = new Scene(layout);
+        pickerStage.setOnShown(e -> {
+            datePicker.show();
+        });
         pickerStage.setScene(scene);
         pickerStage.showAndWait();
 
-        return valgteTid; // Return the result after the window is closed
+        return valgteTid;
     }
-
-    public DatePicker getDatePicker() {
-        return datePicker;
-    }
-
-    public Spinner<Integer> getHourSpinner() {
-        return hourSpinner;
-    }
-
-    public Spinner<Integer> getMinuteSpinner() {
-        return minuteSpinner;
-    }
-
-    private void updateLabel(DatePicker datePicker, Spinner<Integer> hourSpinner, Spinner<Integer> minuteSpinner, Label label) {
-        LocalDate date = datePicker.getValue();
-        if (date != null) {
-            LocalTime time = LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue());
-            LocalDateTime dateTime = LocalDateTime.of(date, time);
-            label.setText("Selected Date-Time: " + dateTime);
-        }
-    }
-
 }

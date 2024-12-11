@@ -1,6 +1,10 @@
 package Model;
 
+import Controller.Controller;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fad implements Printable, Serializable{
     private int nummer;
@@ -43,11 +47,24 @@ public class Fad implements Printable, Serializable{
 
     @Override
     public String print() {
+        List<Lager> lagere = Controller.getLagere();
+        int hylde = 0;
+        for (Lager l : lagere) {
+            for (Reol r : l.getReoler()) {
+                for (int i = 0; i < r.getHylder().length; i++) {
+                    if (r.getHylder()[i] == this) {
+                        hylde = i + 1;
+                    }
+                }
+            }
+        }
         return String.format("Fad Nummer: %d \n" +
                 "Træsort: %s \n" +
                 "Størrelse: %.2f L \n" +
                 "Tidligere Indhold: %s \n" +
-                "Påfyldt: %s", nummer, trætype,størrelse,tidligereIndhold, isPåfyldt() ? "Ja" : "Nej");
+                "Påfyldt: %s \n" +
+                "%s \n" +
+                "Hylde: %s", nummer, trætype,størrelse,tidligereIndhold, isPåfyldt() ? "Ja" : "Nej", reol, hylde);
     }
 
     public int getNummer() {

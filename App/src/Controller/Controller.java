@@ -65,6 +65,18 @@ public abstract class Controller {
         return tommeFade;
     }
 
+    public static void flytFad(Fad fad, int reol, int hylde, Lager lager) {
+        Reol gamleReol = fad.getReol();
+        if (gamleReol != null) {
+            gamleReol.removeFad(fad);
+        }
+        Reol nyeReol = lager.getReol(reol - 1);
+        fad.setReol(nyeReol);
+        nyeReol.getHylder()[hylde] = fad;
+        System.out.println("nyeReol: " + nyeReol);
+        System.out.println("nyeHylde: " + (hylde -1));
+    }
+
 
     /**
      * Searches for a "fad" matching any of the search input

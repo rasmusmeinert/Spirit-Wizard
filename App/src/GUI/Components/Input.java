@@ -1,6 +1,8 @@
 package GUI.Components;
 
 import GUI.Components.DynamicLabels.*;
+import GUI.Components.Validations.HyldeValidation;
+import GUI.Components.Validations.ReolValidation;
 import GUI.Components.Validations.StringValidation;
 import javafx.geometry.HPos;
 import GUI.Components.Validations.Validation;
@@ -11,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,19 +68,28 @@ public class Input extends GridPane implements Observer {
     }
 
     public int getTextAsInt(){
-        return Integer.parseInt(getText());
+        try {
+            return Integer.parseInt(getText());
+        }
+        catch (NumberFormatException e) {
+            return 0;
+        }
     }
+
     public TextField getTextField() {
         return textField;
     }
 
     public Double getTextAsDouble() {
         try {
-            return Double.parseDouble(this.textField.getText());
+            return Double.parseDouble(textField.getText());
         }
         catch (NumberFormatException e) {
             return 0.;
         }
+    }
+    public LocalDateTime getTextAsLocalDateTime() {
+        return LocalDateTime.parse(textField.getText());
     }
 
     //Checks if input is correct, also notifies observing buttons
@@ -113,13 +125,19 @@ public class Input extends GridPane implements Observer {
             else if(observer.getClass().getSuperclass().equals(DynamicLabel.class)) {
                 observer.update(this.getTextAsDouble());
             }
+            else if(observer.getClass().equals(ReolValidation.class)) {
+                observer.update(this.getTextAsInt());
+            }
+            else if(observer.getClass().equals(HyldeValidation.class)) {
+                observer.update(this.getTextAsInt());
+            }
+
             else if (observer.getClass().equals(SearchList.class)){
                 if (getText().isEmpty() || disable){
                     observer.update(new UpdateMessage(this.label.getText(), null));
                 } else {
                     observer.update(new UpdateMessage(this.label.getText(), this.getText()));
                 }
-
             }
             else if (observer.getClass().equals(CustomButton.class))  {
                 observer.update(disable);

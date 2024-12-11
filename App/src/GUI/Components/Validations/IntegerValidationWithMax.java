@@ -42,8 +42,9 @@ public class IntegerValidationWithMax implements Validation, Observer {
                 Lager lager = (Lager) message;
                 if (lookingFor.equalsIgnoreCase("Reoler")) {
                     max = lager.getReoler().size();
-                } else if (lookingFor.equalsIgnoreCase("Hylder")) {
-                    max = lager.getHylderPerReol();
+                }
+                else if (lookingFor.equalsIgnoreCase("Hylder")) {
+                    max = lager.getAntalHylder();
                 }
             }
 

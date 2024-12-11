@@ -167,7 +167,6 @@ public class RegistrerProduktGUI extends Tab implements Observer {
 
     }
 
-
     private void removePåfyldning() {
         lvwValgtePåfyldninger.removeSelectedItem();
     }

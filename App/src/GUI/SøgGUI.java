@@ -54,9 +54,9 @@ public class SøgGUI extends Tab {
         pane.setHgap(15);
         pane.setVgap(10);
 
-        Label lblOpretLager = new Label("Søg Fad");
-        lblOpretLager.setStyle("-fx-font-weight: bold");
-        pane.add(lblOpretLager, 0, 0);
+        Label lblSoegFad = new Label("Søg Fad");
+        lblSoegFad.setStyle("-fx-font-weight: bold");
+        pane.add(lblSoegFad, 0, 0);
         pane.add(cbxPåfyldt, 0, 1);
         pane.add(inputNummer, 0, 2);
         pane.add(inputType, 0, 3);

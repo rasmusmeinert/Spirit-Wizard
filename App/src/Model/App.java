@@ -55,6 +55,6 @@ public class App {
         WhiskyProdukt whiskyProdukt = Controller.createWhiskyProdukt("Kaptajnens", 52, 0.5, "Kaptajnens pishamrende skipperskrås whisky!", 0.1, tapninger1);
 
         //Test af Lager
-        Lager lager1 = Controller.createLager("Lars Lager", "Lars Tyndskids Mark 7, 8450 Hammel", 15, 7);
+        Lager lager1 = Controller.createLager("Lars Lager", "Lars Tyndskids Mark 7, 8450 Hammel", 5, 2);
     }
 }
