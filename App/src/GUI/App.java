@@ -1,8 +1,9 @@
-package Model;
+package GUI;
 
 import Controller.Controller;
 import Controller.Storage;
 import GUI.*;
+import Model.*;
 import Storage.ListStorage;
 import javafx.application.Application;
 
