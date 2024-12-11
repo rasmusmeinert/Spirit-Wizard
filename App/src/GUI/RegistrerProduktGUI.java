@@ -114,16 +114,17 @@ public class RegistrerProduktGUI extends Tab implements Observer {
         Separator horizontalSeparator = new Separator();
         horizontalSeparator.setPrefWidth(300);
         pane.add(horizontalSeparator, 0, 1, 2, 1);
+        int inputWidth = 70;
 
         inputFortynding.addObserver(lblType);
         inputFortynding.addObserver(lblAntalFlakser);
-        inputFortynding.setTextFieldPrefWidth(45);
+        inputFortynding.setTextFieldPrefWidth(inputWidth);
 
         inputAlkoholProcent.addObserver(btnOpret);
         inputAlkoholProcent.addObserver(btnOpret);
-        inputAlkoholProcent.setTextFieldPrefWidth(45);
+        inputAlkoholProcent.setTextFieldPrefWidth(inputWidth);
 
-        inputFlaskeStørrelse.setTextFieldPrefWidth(45);
+        inputFlaskeStørrelse.setTextFieldPrefWidth(inputWidth);
         inputFlaskeStørrelse.addObserver(lblAntalFlakser);
         inputFlaskeStørrelse.addObserver(btnOpret);
 

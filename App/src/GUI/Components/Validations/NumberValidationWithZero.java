@@ -1,7 +1,7 @@
 package GUI.Components.Validations;
 
 public class NumberValidationWithZero implements Validation {
-    private String errorMessage = "Indtast et tal eller 0";
+    private String errorMessage = "Indtast et tal";
     @Override
     public boolean isValid(String string){
         try {
