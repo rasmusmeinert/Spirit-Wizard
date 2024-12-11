@@ -53,7 +53,7 @@ public class Fad implements Printable, Serializable{
             for (Reol r : l.getReoler()) {
                 for (int i = 0; i < r.getHylder().length; i++) {
                     if (r.getHylder()[i] == this) {
-                        hylde = i + 1;
+                        hylde = i;
                     }
                 }
             }

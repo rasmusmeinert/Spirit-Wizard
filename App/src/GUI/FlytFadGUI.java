@@ -74,6 +74,7 @@ public class FlytFadGUI extends Tab implements Observer {
         inputReol.setWidth(40);
         pane.add(inputHylde,1,6);
         inputHylde.setWidth(40);
+        inputHylde.addObserver(inputReol);
         inputReol.addObserver(btnFlyt);
         inputHylde.addObserver(btnFlyt);
         inputReol.addObserver(hyldeValidation);
@@ -87,7 +88,7 @@ public class FlytFadGUI extends Tab implements Observer {
     private void flytFad() {
         Fad fad = (Fad) pickerFad.getSelectionModel().getSelectedItem();
         Lager lager = (Lager) pickerLager.getSelectionModel().getSelectedItem();
-        Controller.flytFad(fad, inputReol.getTextAsInt(), inputHylde.getTextAsInt() - 1, lager);
+        Controller.flytFad(fad, inputReol.getTextAsInt(), inputHylde.getTextAsInt(), lager);
         inputReol.clear();
         inputHylde.clear();
         update(null);

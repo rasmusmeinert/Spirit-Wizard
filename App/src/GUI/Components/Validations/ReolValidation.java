@@ -12,23 +12,26 @@ public class ReolValidation implements Validation, Observer {
     @Override
     public boolean isValid(String string) {
 
-            try {
-                int input = Integer.parseInt(string);
-                if (input <= lager.getReoler().size() && !lager.getReol(input).isFull() && input != 0) {
-                    return true;
-                }
-                else if (input > lager.getReoler().size() || input == 0){
-                    errorMessage = "Denne reol findes ikke";
-                    return false;
-                }
-                errorMessage = "Reolen er fyldt";
+        try {
+            int input = Integer.parseInt(string);
+            if (input == 0) {
+                errorMessage = "Denne reol findes ikke";
                 return false;
-
-            } catch (NumberFormatException e) {
-                errorMessage = "Indtast et tal";
+            } else if (input >= lager.getReoler().size()) {
+                errorMessage = "Denne reol findes ikke";
                 return false;
             }
+            if (input <= lager.getReoler().size() && !lager.getReol(input).isFull()) {
+                return true;
+            }
+            errorMessage = "Reolen er fyldt";
+            return false;
+
+        } catch (NumberFormatException e) {
+            errorMessage = "Indtast et tal";
+            return false;
         }
+    }
 
     public String getErrorMessage() {
         return errorMessage;

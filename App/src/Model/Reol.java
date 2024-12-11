@@ -9,7 +9,7 @@ public class Reol implements Serializable {
 
     public Reol(int nummer, int antalHylder) {
         this.nummer = nummer;
-        this.hylder = new Fad[antalHylder];
+        this.hylder = new Fad[antalHylder + 1];
     }
 
     public int getNummer() {

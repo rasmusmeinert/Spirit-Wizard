@@ -70,11 +70,11 @@ public abstract class Controller {
         if (gamleReol != null) {
             gamleReol.removeFad(fad);
         }
-        Reol nyeReol = lager.getReol(reol - 1);
+        Reol nyeReol = lager.getReol(reol+1);
         fad.setReol(nyeReol);
         nyeReol.getHylder()[hylde] = fad;
         System.out.println("nyeReol: " + nyeReol);
-        System.out.println("nyeHylde: " + (hylde -1));
+        System.out.println("nyeHylde: " + (hylde+1));
     }
 
 
