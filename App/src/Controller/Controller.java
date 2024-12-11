@@ -73,8 +73,6 @@ public abstract class Controller {
         Reol nyeReol = lager.getReol(reol+1);
         fad.setReol(nyeReol);
         nyeReol.getHylder()[hylde] = fad;
-        System.out.println("nyeReol: " + nyeReol);
-        System.out.println("nyeHylde: " + (hylde+1));
     }
 
 

@@ -47,24 +47,11 @@ public class Fad implements Printable, Serializable{
 
     @Override
     public String print() {
-        List<Lager> lagere = Controller.getLagere();
-        int hylde = 0;
-        for (Lager l : lagere) {
-            for (Reol r : l.getReoler()) {
-                for (int i = 0; i < r.getHylder().length; i++) {
-                    if (r.getHylder()[i] == this) {
-                        hylde = i;
-                    }
-                }
-            }
-        }
         return String.format("Fad Nummer: %d \n" +
                 "Træsort: %s \n" +
                 "Størrelse: %.2f L \n" +
                 "Tidligere Indhold: %s \n" +
-                "Påfyldt: %s \n" +
-                "%s \n" +
-                "Hylde: %s", nummer, trætype,størrelse,tidligereIndhold, isPåfyldt() ? "Ja" : "Nej", reol, hylde);
+                "Påfyldt: %s \n", nummer, trætype,størrelse,tidligereIndhold, isPåfyldt() ? "Ja" : "Nej");
     }
 
     public int getNummer() {
