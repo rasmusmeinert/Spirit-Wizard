@@ -37,7 +37,6 @@ public class InfoBox extends TextArea implements Observer {
                 Reol reol = fad.getReol();
                 int hylde = 0;
                 for (int i = 0; i < reol.getHylder().length - 1; i++) {
-                    System.out.println(i);
                     if (reol.getHylder()[i] != null && reol.getHylder()[i].equals(fad)) {
                         hylde = i;
                     }
@@ -45,7 +44,7 @@ public class InfoBox extends TextArea implements Observer {
                 }
                 sb.append("\nLager: " + lager.getNavn());
                 sb.append("\nReol: " + reol.getNummer());
-                sb.append(" Hylde: " + hylde);
+                sb.append(" Hylde: " + (hylde + 1));
             }
             if (fad.isPåfyldt()) {
                 sb.append("\n \nPåfyldning: \n" + Controller.getPåfyldningByFad((Fad) message).print());
