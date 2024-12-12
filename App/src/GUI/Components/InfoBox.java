@@ -44,7 +44,7 @@ public class InfoBox extends TextArea implements Observer {
                 }
                 sb.append("\nLager: " + lager.getNavn());
                 sb.append("\nReol: " + reol.getNummer());
-                sb.append(" Hylde: " + hylde);
+                sb.append(" Hylde: " + (hylde + 1));
             }
             if (fad.isPåfyldt()) {
                 sb.append("\n \nPåfyldning: \n" + Controller.getPåfyldningByFad((Fad) message).print());
